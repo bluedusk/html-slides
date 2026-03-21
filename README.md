@@ -20,28 +20,83 @@ A skill for creating stunning, animation-rich HTML presentations — from scratc
 
 ## Installation
 
-### For Claude Code
-
-```bash
-git clone https://github.com/bluedusk/html-slides.git ~/.claude/skills/html-slides
-```
-
-Then use it by typing `/html-slides` in Claude Code.
-
-### For Cursor / Windsurf / Copilot
-
-Clone or copy this repo into your project workspace:
+First, clone the repo somewhere on your machine:
 
 ```bash
 git clone https://github.com/bluedusk/html-slides.git
 ```
 
-Then tell your agent:
-> "Read SKILL.md in the html-slides folder and follow it to create a presentation about [topic]."
+Then set up your agent to use it:
 
-### For any IDE-based agent
+### Claude Code
 
-As long as the agent can read files from a local directory, it can use this skill. Point it at `SKILL.md` as the entry point.
+```bash
+git clone https://github.com/bluedusk/html-slides.git ~/.claude/skills/html-slides
+```
+
+Then type `/html-slides` in any session.
+
+### Cursor
+
+Create `.cursor/rules/html-slides.mdc` in your project:
+
+```yaml
+---
+description: "HTML slide presentation generator"
+alwaysApply: false
+---
+When asked to create a presentation or slides, read and follow
+the instructions in html-slides/SKILL.md
+```
+
+Then in chat: `@html-slides.mdc create a presentation about [topic]`
+Or simply: `@SKILL.md` to reference the file directly.
+
+### Windsurf
+
+Create `.windsurf/rules/html-slides.md` in your project:
+
+```markdown
+When asked to create a presentation or slides, read and follow
+the instructions in html-slides/SKILL.md
+```
+
+Set activation to "Model Decision". Then ask Cascade to create slides.
+
+### GitHub Copilot (VS Code)
+
+Add to `.github/copilot-instructions.md`:
+
+```markdown
+When asked to create a presentation or slides, read and follow
+the instructions in html-slides/SKILL.md
+```
+
+Or reference directly in chat: `#file:html-slides/SKILL.md create a presentation about [topic]`
+
+### Aider
+
+Add to `.aider.conf.yml`:
+
+```yaml
+read: html-slides/SKILL.md
+```
+
+Or in-session: `/read html-slides/SKILL.md`
+
+### Cline
+
+Create `.clinerules/html-slides.md`:
+
+```markdown
+When asked to create a presentation or slides, read and follow
+the instructions in html-slides/SKILL.md
+```
+
+### Any other IDE-based agent
+
+As long as the agent can read local files, point it at `SKILL.md` as the entry point:
+> "Read html-slides/SKILL.md and follow it to create a presentation about [topic]."
 
 ## Usage
 

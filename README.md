@@ -1,56 +1,54 @@
-# Frontend Slides
+# HTML Slides
 
-A Claude Code skill for creating stunning, animation-rich HTML presentations — from scratch or by converting PowerPoint files.
+A skill for creating stunning, animation-rich HTML presentations — from scratch or by converting PowerPoint files. Works with any IDE-based AI agent (Claude Code, Cursor, Copilot, Windsurf, Aider, etc.).
 
 ## What This Does
 
-**Frontend Slides** helps non-designers create beautiful web presentations without knowing CSS or JavaScript. It uses a "show, don't tell" approach: instead of asking you to describe your aesthetic preferences in words, it generates visual previews and lets you pick what you like.
+**HTML Slides** helps non-designers create beautiful web presentations without knowing CSS or JavaScript. It offers two modes:
 
-Here is a deck about the skill, made through the skill:
-
-https://github.com/user-attachments/assets/ef57333e-f879-432a-afb9-180388982478
-
+1. **Creative mode** — "show, don't tell" style discovery with 12 curated visual presets
+2. **Structured mode** — deterministic output using 11 interactive component templates (flip cards, code blocks, architecture flows, stats, etc.)
 
 ### Key Features
 
 - **Zero Dependencies** — Single HTML files with inline CSS/JS. No npm, no build tools, no frameworks.
-- **Visual Style Discovery** — Can't articulate design preferences? No problem. Pick from generated visual previews.
+- **Cross-Agent Compatible** — Works with any AI agent that can read local files (Claude Code, Cursor, Copilot, Windsurf, etc.)
+- **Visual Style Discovery** — Can't articulate design preferences? Pick from generated visual previews.
+- **11 Interactive Components** — Flip cards, expandable cards, code blocks, architecture flows, stats cards, timelines, and more.
 - **PPT Conversion** — Convert existing PowerPoint files to web, preserving all images and content.
-- **Anti-AI-Slop** — Curated distinctive styles that avoid generic AI aesthetics (bye-bye, purple gradients on white).
-- **Production Quality** — Accessible, responsive, well-commented code you can customize.
+- **Anti-AI-Slop** — Curated distinctive styles that avoid generic AI aesthetics.
 
 ## Installation
 
-### For Claude Code Users
-
-Copy the skill files to your Claude Code skills directory:
+### For Claude Code
 
 ```bash
-# Create the skill directory
-mkdir -p ~/.claude/skills/frontend-slides/scripts
-
-# Copy all files (or clone this repo directly)
-cp SKILL.md STYLE_PRESETS.md viewport-base.css html-template.md animation-patterns.md ~/.claude/skills/frontend-slides/
-cp scripts/extract-pptx.py ~/.claude/skills/frontend-slides/scripts/
+git clone https://github.com/bluedusk/html-slides.git ~/.claude/skills/html-slides
 ```
 
-Or clone directly:
+Then use it by typing `/html-slides` in Claude Code.
+
+### For Cursor / Windsurf / Copilot
+
+Clone or copy this repo into your project workspace:
 
 ```bash
-git clone https://github.com/zarazhangrui/frontend-slides.git ~/.claude/skills/frontend-slides
+git clone https://github.com/bluedusk/html-slides.git
 ```
 
-Then use it by typing `/frontend-slides` in Claude Code.
+Then tell your agent:
+> "Read SKILL.md in the html-slides folder and follow it to create a presentation about [topic]."
+
+### For any IDE-based agent
+
+As long as the agent can read files from a local directory, it can use this skill. Point it at `SKILL.md` as the entry point.
 
 ## Usage
 
 ### Create a New Presentation
 
-```
-/frontend-slides
-
-> "I want to create a pitch deck for my AI startup"
-```
+Tell your AI agent:
+> "Create a presentation about [topic] using the html-slides skill"
 
 The skill will:
 1. Ask about your content (slides, messages, images)
@@ -59,19 +57,16 @@ The skill will:
 4. Create the full presentation in your chosen style
 5. Open it in your browser
 
+### Use Structured Components (Dark Interactive)
+
+For technical presentations with deterministic output:
+> "Create a presentation about [topic] using the Dark Interactive preset from html-slides"
+
+This uses the 11 component templates with copy-verbatim CSS/JS for consistent results across different AI agents.
+
 ### Convert a PowerPoint
 
-```
-/frontend-slides
-
-> "Convert my presentation.pptx to a web slideshow"
-```
-
-The skill will:
-1. Extract all text, images, and notes from your PPT
-2. Show you the extracted content for confirmation
-3. Let you pick a visual style
-4. Generate an HTML presentation with all your original assets
+> "Convert my presentation.pptx to a web slideshow using html-slides"
 
 ## Included Styles
 
@@ -93,43 +88,34 @@ The skill will:
 - **Swiss Modern** — Minimal, Bauhaus-inspired, geometric
 - **Paper & Ink** — Literary, drop caps, pull quotes
 
+### Structured
+- **Dark Interactive** — 11 interactive component templates with deterministic output. Best for technical presentations and cross-agent reliability.
+
 ## Architecture
 
-This skill uses **progressive disclosure** — the main `SKILL.md` is a concise map (~180 lines), with supporting files loaded on-demand only when needed:
+This skill uses **progressive disclosure** — the main `SKILL.md` is a concise map, with supporting files loaded on-demand:
 
 | File | Purpose | Loaded When |
 |------|---------|-------------|
-| `SKILL.md` | Core workflow and rules | Always (skill invocation) |
-| `STYLE_PRESETS.md` | 12 curated visual presets | Phase 2 (style selection) |
-| `viewport-base.css` | Mandatory responsive CSS | Phase 3 (generation) |
-| `html-template.md` | HTML structure and JS features | Phase 3 (generation) |
-| `animation-patterns.md` | CSS/JS animation reference | Phase 3 (generation) |
+| `SKILL.md` | Core workflow and rules | Always (entry point) |
+| `STYLE_PRESETS.md` | 13 curated visual presets | Phase 2 (style selection) |
+| `viewport-base.css` | Mandatory responsive CSS | Phase 3 (creative presets) |
+| `html-template.md` | HTML structure and JS features | Phase 3 (creative presets) |
+| `animation-patterns.md` | CSS/JS animation reference | Phase 3 (creative presets) |
+| `component-templates.md` | 11 structured component templates | Phase 3 (Dark Interactive) |
+| `dark-interactive.css` | Complete CSS for Dark Interactive | Phase 3 (Dark Interactive) |
+| `dark-interactive-nav.js` | Navigation JS for Dark Interactive | Phase 3 (Dark Interactive) |
 | `scripts/extract-pptx.py` | PPT content extraction | Phase 4 (conversion) |
-
-This design follows [OpenAI's harness engineering](https://openai.com/index/harness-engineering/) principle: "give the agent a map, not a 1,000-page instruction manual."
-
-## Philosophy
-
-This skill was born from the belief that:
-
-1. **You don't need to be a designer to make beautiful things.** You just need to react to what you see.
-
-2. **Dependencies are debt.** A single HTML file will work in 10 years. A React project from 2019? Good luck.
-
-3. **Generic is forgettable.** Every presentation should feel custom-crafted, not template-generated.
-
-4. **Comments are kindness.** Code should explain itself to future-you (or anyone else who opens it).
 
 ## Requirements
 
-- [Claude Code](https://claude.ai/claude-code) CLI
+- Any IDE-based AI agent that can read local files
 - For PPT conversion: Python with `python-pptx` library
 
 ## Credits
 
-Created by [@zarazhangrui](https://github.com/zarazhangrui) with Claude Code.
-
-Inspired by the "Vibe Coding" philosophy — building beautiful things without being a traditional software engineer.
+Originally created by [@zarazhangrui](https://github.com/zarazhangrui) with Claude Code.
+Dark Interactive component system added by [@bluedusk](https://github.com/bluedusk).
 
 ## License
 

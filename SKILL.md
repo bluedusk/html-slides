@@ -171,14 +171,22 @@ Generate the full presentation using content from Phase 1 (text, or text + curat
 
 If images were provided, the slide outline already incorporates them from Step 1.2. If not, CSS-generated visuals (gradients, shapes, patterns) provide visual interest — this is a fully supported first-class path.
 
-**Before generating, read these supporting files:**
+**Before generating, read these supporting files based on the chosen style:**
+
+**For creative presets (presets 1-12):**
 - [html-template.md](html-template.md) — HTML architecture and JS features
 - [viewport-base.css](viewport-base.css) — Mandatory CSS (include in full)
 - [animation-patterns.md](animation-patterns.md) — Animation reference for the chosen feeling
 
+**For Dark Interactive (preset 13 — structured component mode):**
+- [component-templates.md](component-templates.md) — 11 HTML component templates with decision table
+- [dark-interactive.css](dark-interactive.css) — Complete CSS (copy verbatim into `<style>`)
+- [dark-interactive-nav.js](dark-interactive-nav.js) — Navigation JS (copy verbatim into `<script>`)
+
 **Key requirements:**
 - Single self-contained HTML file, all CSS/JS inline
-- Include the FULL contents of viewport-base.css in the `<style>` block
+- For presets 1-12: include the FULL contents of viewport-base.css in the `<style>` block
+- For preset 13: include the FULL contents of dark-interactive.css in the `<style>` block, and dark-interactive-nav.js in the `<script>` block
 - Use fonts from Fontshare or Google Fonts — never system fonts
 - Add detailed comments explaining each section
 - Every section needs a clear `/* === SECTION NAME === */` comment block
@@ -212,8 +220,11 @@ When converting PowerPoint files:
 
 | File | Purpose | When to Read |
 |------|---------|-------------|
-| [STYLE_PRESETS.md](STYLE_PRESETS.md) | 12 curated visual presets with colors, fonts, and signature elements | Phase 2 (style selection) |
-| [viewport-base.css](viewport-base.css) | Mandatory responsive CSS — copy into every presentation | Phase 3 (generation) |
-| [html-template.md](html-template.md) | HTML structure, JS features, code quality standards | Phase 3 (generation) |
-| [animation-patterns.md](animation-patterns.md) | CSS/JS animation snippets and effect-to-feeling guide | Phase 3 (generation) |
+| [STYLE_PRESETS.md](STYLE_PRESETS.md) | 13 curated visual presets with colors, fonts, and signature elements | Phase 2 (style selection) |
+| [viewport-base.css](viewport-base.css) | Mandatory responsive CSS — copy into every presentation (presets 1-12) | Phase 3 (generation) |
+| [html-template.md](html-template.md) | HTML structure, JS features, code quality standards (presets 1-12) | Phase 3 (generation) |
+| [animation-patterns.md](animation-patterns.md) | CSS/JS animation snippets and effect-to-feeling guide (presets 1-12) | Phase 3 (generation) |
+| [component-templates.md](component-templates.md) | 11 structured HTML component templates with decision table (preset 13) | Phase 3 (Dark Interactive) |
+| [dark-interactive.css](dark-interactive.css) | Complete CSS for Dark Interactive preset — copy verbatim (preset 13) | Phase 3 (Dark Interactive) |
+| [dark-interactive-nav.js](dark-interactive-nav.js) | Navigation JS for Dark Interactive — copy verbatim (preset 13) | Phase 3 (Dark Interactive) |
 | [scripts/extract-pptx.py](scripts/extract-pptx.py) | Python script for PPT content extraction | Phase 4 (conversion) |

@@ -315,6 +315,46 @@ Curated visual styles for Frontend Slides. Each preset is inspired by real desig
 
 ---
 
+## Structured Themes
+
+### 13. Dark Interactive
+
+**Vibe:** Technical, polished, GitHub-dark aesthetic with interactive components
+
+**Layout:** Centered content on dark background. Floating particles. 11 structured component types.
+
+**Typography:**
+- Display: `Inter` (700/800/900)
+- Mono: `JetBrains Mono` (400/500/600)
+
+**Colors:**
+```css
+:root {
+    --bg: #0b0e14;
+    --bg-card: #131720;
+    --accent-blue: #58a6ff;
+    --accent-green: #3fb950;
+    --accent-orange: #f0883e;
+    --accent-red: #f85149;
+    --accent-purple: #a371f7;
+    --accent-yellow: #d29922;
+}
+```
+
+**Signature Elements:**
+- 11 structured component templates (flip cards, expandable cards, code blocks, architecture flows, stats, timelines, comparisons, etc.)
+- Floating particle background
+- Interactive flip/expand animations on click
+- One Dark Pro syntax highlighting for code blocks
+- Rainbow gradient text for hero titles
+- Glow blob ambient lighting
+
+**Special:** This preset uses a **structured component system** instead of creative interpretation. Read [component-templates.md](component-templates.md) for the 11 HTML templates, [dark-interactive.css](dark-interactive.css) for the complete CSS, and [dark-interactive-nav.js](dark-interactive-nav.js) for the navigation JS. Copy CSS and JS verbatim, use HTML templates as building blocks.
+
+**Best for:** Technical presentations, developer talks, API/architecture overviews, and cases where deterministic output across different AI agents is more important than visual variety.
+
+---
+
 ## DO NOT USE (Generic AI Patterns)
 
 **Fonts:** Inter, Roboto, Arial, system fonts as display

@@ -1,5 +1,8 @@
 ---
 name: html-slides
+metadata:
+  version: "0.3.0"
+  author: danzhu
 description: Generate polished single-file HTML slide presentations with a dark theme design system featuring 13 interactive component types (flip cards, expandable cards, code blocks, architecture flows, stats, charts, timelines, comparisons, and more). Use this skill whenever the user wants to create slides, presentations, decks, or any visual slide-based content as HTML. Also trigger when the user invokes /html-slides or mentions creating an HTML presentation, pitch deck, or slide deck.
 ---
 

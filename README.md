@@ -1,5 +1,7 @@
 # HTML Slides
 
+[![Version](https://img.shields.io/github/v/tag/bluedusk/html-slides?label=version)](https://github.com/bluedusk/html-slides/releases) [![Agent Skills](https://img.shields.io/badge/Agent_Skills-compatible-green)](https://agentskills.io) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 A skill for creating stunning, animation-rich HTML presentations — from scratch or by converting PowerPoint files. Works with AI coding agents (Claude Code, Gemini CLI, GitHub Copilot, OpenAI Codex).
 
 **[htmlslides.com](https://htmlslides.com)** | **[Live Demo: Intro to MCP](https://bluedusk.github.io/html-slides/intro-to-mcp.html)**

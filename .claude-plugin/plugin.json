@@ -1,7 +1,7 @@
 {
   "name": "html-slides",
   "description": "Generate single-file HTML slide presentations with 13 interactive component types including flip cards, code blocks, charts, stats, architecture flows, and more.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": {
     "name": "danzhu"
   }

@@ -30,12 +30,20 @@ cd html-slides
 ./install.sh
 ```
 
-The install script symlinks the repo into `~/.agents/skills/html-slides`, which is the [Agent Skills standard](https://agentskills.io/specification) discovery path. All compatible agents will automatically find and load the skill.
+The install script:
+1. Symlinks the repo into `~/.agents/skills/html-slides` ([Agent Skills standard](https://agentskills.io/specification)) — works for all agents
+2. If Claude Code is detected, also installs as a plugin for marketplace updates and `/html-slides` slash command
 
 Or install manually:
 
 ```bash
+# All agents (Agent Skills standard)
 ln -s /path/to/html-slides ~/.agents/skills/html-slides
+
+# Claude Code plugin (optional, for marketplace support)
+ln -s /path/to/html-slides ~/.claude/plugins/local-marketplace/plugins/html-slides
+claude plugin marketplace update local-plugins
+claude plugin install html-slides@local-plugins
 ```
 
 ## Usage

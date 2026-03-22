@@ -150,6 +150,17 @@ Best for: pitch decks, keynotes, non-technical presentations.
 
 > "Convert my presentation.pptx to a web slideshow"
 
+## Output
+
+Every generated presentation produces two files:
+
+```
+my-deck.html              ← the presentation (self-contained, open in any browser)
+my-deck.notes.json        ← speaker notes (for presenter apps)
+```
+
+The `.notes.json` file contains a script (full speech) and bullet point reminders for each slide, keyed by slide index. Presenter applications can read this file to display speaker notes alongside the presentation.
+
 ## Architecture
 
 This skill uses **progressive disclosure** — the main `SKILL.md` is a concise map, with supporting files loaded on-demand:

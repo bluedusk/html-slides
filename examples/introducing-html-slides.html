@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introducing HTML Slides</title>
+  <!-- Chart.js for data visualizations -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+  <style>
+/* ===========================================
+   DARK INTERACTIVE PRESET
+   Complete CSS for the structured component system.
+   =========================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0b0e14;
+  --bg-card: #131720;
+  --bg-card-hover: #1a1f2e;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --text-dim: #6e7681;
+  --accent-blue: #58a6ff;
+  --accent-green: #3fb950;
+  --accent-orange: #f0883e;
+  --accent-red: #f85149;
+  --accent-purple: #a371f7;
+  --accent-yellow: #d29922;
+  --border: rgba(255,255,255,0.07);
+  --border-hover: rgba(255,255,255,0.18);
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* -- Deck & Slides -- */
+.deck { position: relative; width: 100vw; height: 100vh; }
+
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  padding: 48px 56px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.45s cubic-bezier(.4,0,.2,1);
+  overflow: hidden;
+}
+.slide.active { opacity: 1; pointer-events: auto; }
+
+/* -- Particles -- */
+.particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.particle {
+  position: absolute; width: 2px; height: 2px; border-radius: 50%;
+  background: rgba(255,255,255,0.12); animation: floatP linear infinite;
+}
+@keyframes floatP {
+  0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+  10% { opacity: 0.8; } 90% { opacity: 0.8; }
+  100% { transform: translateY(-10vh) translateX(25px); opacity: 0; }
+}
+
+/* -- Chrome -- */
+.branding {
+  position: fixed; top: 24px; right: 32px; z-index: 100;
+  font-size: 13px; font-weight: 600; color: var(--text-dim);
+  display: flex; align-items: center; gap: 8px;
+}
+.branding-icon {
+  width: 20px; height: 20px; border: 2px solid var(--text-dim);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 800;
+}
+.progress-bar {
+  position: fixed; bottom: 0; left: 0; height: 3px; z-index: 100;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple), var(--accent-green));
+  transition: width 0.4s ease;
+}
+.slide-counter {
+  position: fixed; bottom: 20px; right: 32px; font-size: 13px;
+  font-weight: 500; color: var(--text-dim); z-index: 100; font-variant-numeric: tabular-nums;
+}
+.nav-hints {
+  position: fixed; bottom: 20px; left: 32px; font-size: 12px;
+  color: var(--text-dim); z-index: 100;
+}
+.nav-hints kbd {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 24px; height: 22px; padding: 0 6px;
+  background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+  border-radius: 4px; font-size: 11px; margin: 0 2px;
+}
+.slide-nav {
+  position: fixed; right: 16px; top: 50%; transform: translateY(-50%);
+  z-index: 100; display: flex; flex-direction: column; gap: 6px;
+}
+.slide-nav-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,0.15); cursor: pointer; transition: all 0.3s ease;
+}
+.slide-nav-dot.active {
+  background: var(--accent-blue); transform: scale(1.6);
+  box-shadow: 0 0 8px var(--accent-blue);
+}
+.slide-nav-dot:hover { background: rgba(255,255,255,0.4); transform: scale(1.3); }
+
+/* -- Typography -- */
+.slide-tag {
+  font-size: 12px; font-weight: 600; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--accent-blue); margin-bottom: 16px;
+}
+h1 { font-size: clamp(36px,5vw,64px); font-weight: 900; line-height: 1.1; letter-spacing: -1px; margin-bottom: 20px; text-align: center; }
+h2 { font-size: clamp(28px,3.5vw,48px); font-weight: 800; line-height: 1.15; letter-spacing: -0.5px; margin-bottom: 12px; text-align: center; }
+.subtitle { font-size: clamp(16px,1.8vw,22px); color: var(--text-muted); font-weight: 400; line-height: 1.5; text-align: center; max-width: 700px; }
+
+.highlight-orange { color: var(--accent-orange); }
+.highlight-blue { color: var(--accent-blue); }
+.highlight-green { color: var(--accent-green); }
+.highlight-purple { color: var(--accent-purple); }
+.highlight-red { color: var(--accent-red); }
+.highlight-yellow { color: var(--accent-yellow); }
+.gradient-text { background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.rainbow-text { background: linear-gradient(90deg, #58a6ff, #a371f7, #3fb950, #d29922, #f0883e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.rainbow-line { width: 200px; height: 2px; background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple), var(--accent-green), var(--accent-yellow), var(--accent-orange)); border-radius: 2px; margin: 20px 0; }
+
+.mt-16 { margin-top: 16px; }
+.mt-24 { margin-top: 24px; }
+
+/* -- Glow blobs -- */
+.glow-blob { position: absolute; width: 400px; height: 400px; border-radius: 50%; filter: blur(120px); opacity: 0.12; pointer-events: none; }
+.glow-blue { background: var(--accent-blue); }
+.glow-purple { background: var(--accent-purple); }
+.glow-green { background: var(--accent-green); }
+
+/* ====== ANIMATIONS ====== */
+@keyframes fadeInUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+@keyframes bounceIn {
+  0% { opacity:0; transform: scale(0.3) translateY(40px); }
+  50% { opacity:1; transform: scale(1.05) translateY(-8px); }
+  70% { transform: scale(0.95) translateY(4px); }
+  100% { opacity:1; transform: scale(1) translateY(0); }
+}
+@keyframes bounceInSoft {
+  0% { opacity:0; transform: translateY(30px); }
+  60% { opacity:1; transform: translateY(-6px); }
+  80% { transform: translateY(3px); }
+  100% { opacity:1; transform: translateY(0); }
+}
+@keyframes scaleReveal {
+  0% { opacity:0; transform: scale(0.85); }
+  100% { opacity:1; transform: scale(1); }
+}
+@keyframes slideInLeft { from { opacity:0; transform:translateX(-50px); } to { opacity:1; transform:translateX(0); } }
+@keyframes slideInRight { from { opacity:0; transform:translateX(50px); } to { opacity:1; transform:translateX(0); } }
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 rgba(88,166,255,0); }
+  50% { box-shadow: 0 0 20px rgba(88,166,255,0.15); }
+}
+@keyframes countPop {
+  0% { opacity:0; transform: scale(0.5); }
+  60% { transform: scale(1.1); }
+  100% { opacity:1; transform: scale(1); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes floatBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.slide.active .anim-1 { animation: fadeInUp 0.5s ease 0.1s both; }
+.slide.active .anim-2 { animation: fadeInUp 0.5s ease 0.25s both; }
+.slide.active .anim-3 { animation: bounceInSoft 0.6s ease 0.35s both; }
+.slide.active .anim-4 { animation: fadeInUp 0.5s ease 0.55s both; }
+.slide.active .anim-5 { animation: fadeInUp 0.5s ease 0.7s both; }
+.slide.active .bounce-1 { animation: bounceIn 0.7s ease 0.2s both; }
+.slide.active .bounce-2 { animation: bounceIn 0.7s ease 0.35s both; }
+.slide.active .bounce-3 { animation: bounceIn 0.7s ease 0.5s both; }
+.slide.active .bounce-4 { animation: bounceIn 0.7s ease 0.65s both; }
+.slide.active .slide-l { animation: slideInLeft 0.6s ease 0.3s both; }
+.slide.active .slide-r { animation: slideInRight 0.6s ease 0.3s both; }
+.slide.active .pop-1 { animation: countPop 0.6s ease 0.3s both; }
+.slide.active .pop-2 { animation: countPop 0.6s ease 0.45s both; }
+.slide.active .pop-3 { animation: countPop 0.6s ease 0.6s both; }
+
+/* ====== FLIP CARDS ====== */
+.flip-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  width: 100%; max-width: 820px; margin-top: 24px;
+}
+.flip-bounce-wrap { perspective: 1200px; }
+.flip-card {
+  height: 180px; cursor: pointer; position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(.4,0,.2,1);
+}
+.flip-card.flipped { transform: rotateY(180deg); }
+.flip-card:hover .flip-front { border-color: var(--border-hover); box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+
+.flip-front, .flip-back {
+  position: absolute; inset: 0; backface-visibility: hidden;
+  border-radius: 14px; padding: 24px;
+  display: flex; flex-direction: column;
+  border: 1.5px solid var(--border);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.flip-front { background: var(--bg-card); justify-content: center; }
+.flip-front .flip-hint {
+  position: absolute; bottom: 10px; right: 14px;
+  font-size: 10px; color: var(--text-dim); opacity: 0.5;
+  letter-spacing: 1px; text-transform: uppercase;
+}
+.flip-back {
+  background: linear-gradient(135deg, #161b28, #1c2233);
+  transform: rotateY(180deg);
+  justify-content: center; align-items: center; text-align: center;
+}
+.flip-back .flip-detail { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+.flip-back .flip-detail strong { color: var(--text); }
+.flip-back .flip-icon-big { font-size: 36px; margin-bottom: 12px; }
+
+.flip-front.border-orange { border-color: rgba(240,136,62,0.35); }
+.flip-front.border-yellow { border-color: rgba(210,153,34,0.35); }
+.flip-front.border-red { border-color: rgba(248,81,73,0.35); }
+.flip-card:hover .flip-front.border-orange { border-color: rgba(240,136,62,0.7); box-shadow: 0 0 24px rgba(240,136,62,0.1); }
+.flip-card:hover .flip-front.border-yellow { border-color: rgba(210,153,34,0.7); box-shadow: 0 0 24px rgba(210,153,34,0.1); }
+.flip-card:hover .flip-front.border-red { border-color: rgba(248,81,73,0.7); box-shadow: 0 0 24px rgba(248,81,73,0.1); }
+
+.flip-title { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+.flip-subtitle { font-size: 13px; font-weight: 600; }
+.flip-icon { font-size: 26px; margin-bottom: 10px; }
+
+/* ====== EXPANDABLE CARDS ====== */
+.card-v2 {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 24px; position: relative;
+  cursor: pointer; transition: all 0.35s cubic-bezier(.4,0,.2,1);
+  overflow: hidden;
+}
+.card-v2::before {
+  content: ''; position: absolute; inset: -1px; border-radius: 14px;
+  background: linear-gradient(135deg, transparent, transparent);
+  opacity: 0; transition: opacity 0.35s ease; z-index: -1;
+}
+.card-v2:hover {
+  transform: translateY(-4px) scale(1.02);
+  border-color: var(--border-hover); background: var(--bg-card-hover);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.06);
+}
+.card-v2:hover::before { opacity: 1; }
+.card-v2.glow-orange:hover { box-shadow: 0 12px 40px rgba(240,136,62,0.12), 0 0 30px rgba(240,136,62,0.08); border-color: rgba(240,136,62,0.5); }
+.card-v2.glow-blue:hover { box-shadow: 0 12px 40px rgba(88,166,255,0.12), 0 0 30px rgba(88,166,255,0.08); border-color: rgba(88,166,255,0.5); }
+.card-v2.glow-green:hover { box-shadow: 0 12px 40px rgba(63,185,80,0.12), 0 0 30px rgba(63,185,80,0.08); border-color: rgba(63,185,80,0.5); }
+.card-v2.glow-purple:hover { box-shadow: 0 12px 40px rgba(163,113,247,0.12), 0 0 30px rgba(163,113,247,0.08); border-color: rgba(163,113,247,0.5); }
+
+.card-v2 .card-icon { font-size: 26px; margin-bottom: 12px; transition: transform 0.3s ease; }
+.card-v2:hover .card-icon { transform: scale(1.15); }
+.card-v2 .card-title { font-size: 16px; font-weight: 700; margin-bottom: 3px; }
+.card-v2 .card-desc { font-size: 13px; color: var(--text-muted); line-height: 1.4; }
+
+.card-expand {
+  max-height: 0; overflow: hidden; opacity: 0;
+  transition: max-height 0.4s cubic-bezier(.4,0,.2,1), opacity 0.3s ease, margin-top 0.3s ease;
+  margin-top: 0;
+}
+.card-v2.expanded .card-expand { max-height: 120px; opacity: 1; margin-top: 12px; }
+.card-expand-inner {
+  padding-top: 12px; border-top: 1px solid var(--border);
+  font-size: 12px; color: var(--text-dim); line-height: 1.5;
+}
+.card-expand-inner code {
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(255,255,255,0.04); padding: 2px 6px; border-radius: 4px;
+  font-size: 11px;
+}
+.card-v2 .expand-hint {
+  position: absolute; bottom: 8px; right: 12px;
+  font-size: 10px; color: var(--text-dim); opacity: 0.4;
+  transition: opacity 0.3s ease;
+}
+.card-v2:hover .expand-hint { opacity: 0.8; }
+.card-v2.expanded .expand-hint { transform: rotate(180deg); }
+
+/* ====== CODE BLOCKS ====== */
+.code-window {
+  width: 100%; max-width: 680px; background: #0d1117;
+  border-radius: 12px; overflow: hidden; margin-top: 24px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5); text-align: left;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.code-window:hover {
+  box-shadow: 0 24px 72px rgba(0,0,0,0.6), 0 0 0 1px rgba(88,166,255,0.15);
+  transform: translateY(-2px);
+}
+.code-titlebar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 16px; background: rgba(255,255,255,0.025);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.code-dot { width: 12px; height: 12px; border-radius: 50%; }
+.code-dot.red { background: #ff5f56; }
+.code-dot.yellow { background: #ffbd2e; }
+.code-dot.green { background: #27c93f; }
+.code-filename {
+  font-size: 12px; color: var(--text-dim);
+  font-family: 'JetBrains Mono', monospace; margin-left: 8px;
+}
+.code-body {
+  padding: 18px 24px; font-family: 'JetBrains Mono', monospace;
+  font-size: 13px; line-height: 1.7; overflow-x: auto;
+  white-space: pre; text-align: left; color: #abb2bf;
+}
+.code-body .ln { color: #4b5263; user-select: none; display: inline-block; width: 24px; text-align: right; margin-right: 20px; }
+.code-body .tag { color: #e06c75; }
+.code-body .attr { color: #d19a66; }
+.code-body .str { color: #98c379; }
+.code-body .kw { color: #c678dd; }
+.code-body .fn { color: #61afef; }
+.code-body .prop { color: #e5c07b; }
+.code-body .punc { color: #56b6c2; }
+.code-body .comment { color: #5c6370; font-style: italic; }
+
+/* ====== ARCHITECTURE FLOW ====== */
+.arch-flow {
+  display: flex; align-items: center; gap: 16px;
+  width: 100%; max-width: 900px; margin-top: 32px;
+}
+.arch-box {
+  flex: 1; min-width: 0; background: var(--bg-card);
+  border: 1.5px solid var(--border); border-radius: 14px;
+  padding: 28px 16px; text-align: center;
+  transition: all 0.35s cubic-bezier(.4,0,.2,1); cursor: pointer;
+}
+.arch-box:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(0,0,0,0.4); border-color: var(--border-hover); }
+.arch-box.box-blue { border-color: rgba(88,166,255,0.4); }
+.arch-box.box-yellow { border-color: rgba(210,153,34,0.4); }
+.arch-box.box-green { border-color: rgba(63,185,80,0.4); }
+.arch-box:hover.box-blue { border-color: rgba(88,166,255,0.8); box-shadow: 0 16px 48px rgba(88,166,255,0.08); }
+.arch-box:hover.box-yellow { border-color: rgba(210,153,34,0.8); box-shadow: 0 16px 48px rgba(210,153,34,0.08); }
+.arch-box:hover.box-green { border-color: rgba(63,185,80,0.8); box-shadow: 0 16px 48px rgba(63,185,80,0.08); }
+
+.arch-icon { font-size: 40px; margin-bottom: 14px; transition: transform 0.3s ease; }
+.arch-box:hover .arch-icon { transform: scale(1.15); animation: floatBob 1.5s ease infinite; }
+.arch-label { font-size: 20px; font-weight: 800; }
+.arch-label.text-blue { color: var(--accent-blue); }
+.arch-label.text-yellow { color: var(--accent-yellow); }
+.arch-label.text-green { color: var(--accent-green); }
+.arch-role { font-size: 13px; color: var(--text-muted); margin-top: 4px; font-weight: 500; }
+.arch-detail {
+  font-size: 11px; color: var(--text-dim); margin-top: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(255,255,255,0.03); padding: 6px 10px; border-radius: 6px;
+}
+
+.arch-arrow {
+  font-size: 14px; color: var(--text-dim);
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  flex-shrink: 0; min-width: 60px;
+}
+.arch-arrow span { font-size: 10px; white-space: nowrap; }
+.arrow-line { width: 40px; height: 2px; background: var(--text-dim); position: relative; }
+.arrow-line::after {
+  content: ''; position: absolute; right: -1px; top: -4px;
+  border: 5px solid transparent; border-left: 6px solid var(--text-dim);
+}
+
+/* ====== STATS ====== */
+.stats-row { display: flex; gap: 24px; margin-top: 32px; width: 100%; max-width: 900px; }
+.stat-card {
+  flex: 1; background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 32px 24px; transition: all 0.35s ease; text-align: left;
+}
+.stat-card:hover {
+  transform: translateY(-6px) scale(1.02); border-color: var(--border-hover);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.35);
+}
+.stat-number { font-size: clamp(52px,7vw,80px); font-weight: 900; line-height: 1; margin-bottom: 8px; }
+.stat-number.blue { color: var(--accent-blue); }
+.stat-number.green { color: var(--accent-green); }
+.stat-number.orange { color: var(--accent-orange); }
+.stat-label { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.stat-desc { font-size: 13px; color: var(--text-muted); }
+
+/* ====== VS / COMPARISON ====== */
+.vs-container { display: flex; align-items: center; gap: 28px; margin-top: 32px; width: 100%; max-width: 860px; }
+.vs-card {
+  flex: 1; background: var(--bg-card); border-radius: 14px;
+  padding: 32px 24px; text-align: center;
+  border: 1.5px solid var(--border); transition: all 0.35s ease;
+}
+.vs-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+.vs-card.card-left { border-color: rgba(163,113,247,0.35); }
+.vs-card.card-right { border-color: rgba(88,166,255,0.35); }
+.vs-card.card-left:hover { border-color: rgba(163,113,247,0.7); box-shadow: 0 12px 40px rgba(163,113,247,0.1); }
+.vs-card.card-right:hover { border-color: rgba(88,166,255,0.7); box-shadow: 0 12px 40px rgba(88,166,255,0.1); }
+.vs-label-top { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+.vs-name { font-size: 36px; font-weight: 900; margin-bottom: 12px; }
+.vs-desc { font-size: 14px; color: var(--text-muted); margin-bottom: 8px; line-height: 1.5; }
+.vs-badge { display: inline-block; font-size: 12px; font-family: 'JetBrains Mono', monospace; padding: 4px 12px; border-radius: 20px; background: rgba(255,255,255,0.05); color: var(--text-dim); }
+.vs-plus {
+  width: 48px; height: 48px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; font-weight: 700; flex-shrink: 0;
+  background: linear-gradient(135deg, rgba(163,113,247,0.2), rgba(88,166,255,0.2));
+  border: 1px solid rgba(255,255,255,0.1); animation: pulseGlow 3s ease infinite;
+}
+
+/* ====== AUTH COMPARE (flip) ====== */
+.auth-compare { display: flex; align-items: center; gap: 28px; margin-top: 32px; width: 100%; max-width: 780px; perspective: 1200px; }
+.auth-flip-wrap { flex: 1; perspective: 1200px; }
+.auth-flip {
+  height: 260px; cursor: pointer; position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(.4,0,.2,1);
+}
+.auth-flip.flipped { transform: rotateY(180deg); }
+.auth-front, .auth-back {
+  position: absolute; inset: 0; backface-visibility: hidden;
+  border-radius: 14px; padding: 28px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border: 1.5px solid var(--border);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.auth-front { background: var(--bg-card); }
+.auth-back { background: linear-gradient(135deg, #161b28, #1c2233); transform: rotateY(180deg); }
+.auth-front.bad { border-color: rgba(248,81,73,0.3); }
+.auth-front.good { border-color: rgba(63,185,80,0.3); }
+.auth-flip:hover .auth-front.bad { border-color: rgba(248,81,73,0.6); box-shadow: 0 8px 32px rgba(248,81,73,0.08); }
+.auth-flip:hover .auth-front.good { border-color: rgba(63,185,80,0.6); box-shadow: 0 8px 32px rgba(63,185,80,0.08); }
+.auth-icon { font-size: 40px; margin-bottom: 14px; }
+.auth-name { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+.auth-status { font-size: 36px; margin-bottom: 8px; }
+.auth-desc { font-size: 12px; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; }
+.auth-vs { font-size: 18px; font-weight: 800; color: var(--text-dim); flex-shrink: 0; }
+.auth-front .flip-hint { position: absolute; bottom: 10px; font-size: 10px; color: var(--text-dim); opacity: 0.4; letter-spacing: 1px; text-transform: uppercase; }
+
+/* ====== USE CASES (expand grid) ====== */
+.use-case-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%; max-width: 820px; margin-top: 28px; }
+
+/* ====== STATUS TIMELINE ====== */
+.status-timeline { width: 100%; max-width: 700px; margin-top: 28px; display: flex; flex-direction: column; gap: 12px; }
+.status-item {
+  display: flex; align-items: center; gap: 16px;
+  padding: 14px 20px; background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; transition: all 0.3s ease; cursor: default;
+}
+.status-item:hover { transform: translateX(8px); border-color: var(--border-hover); background: var(--bg-card-hover); }
+.status-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.status-dot.green { background: var(--accent-green); box-shadow: 0 0 8px var(--accent-green); }
+.status-dot.yellow { background: var(--accent-yellow); box-shadow: 0 0 8px var(--accent-yellow); }
+.status-dot.orange { background: var(--accent-orange); box-shadow: 0 0 8px var(--accent-orange); }
+.status-dot.red { background: var(--accent-red); box-shadow: 0 0 8px var(--accent-red); }
+.status-text { font-size: 14px; font-weight: 500; }
+.status-text strong { font-weight: 700; color: var(--text); }
+.slide.active .stag-1 { animation: bounceInSoft 0.5s ease 0.15s both; }
+.slide.active .stag-2 { animation: bounceInSoft 0.5s ease 0.25s both; }
+.slide.active .stag-3 { animation: bounceInSoft 0.5s ease 0.35s both; }
+.slide.active .stag-4 { animation: bounceInSoft 0.5s ease 0.45s both; }
+.slide.active .stag-5 { animation: bounceInSoft 0.5s ease 0.55s both; }
+
+/* ====== CTA BOX ====== */
+.cta-box {
+  margin-top: 32px; padding: 28px 40px; border-radius: 16px;
+  background: linear-gradient(135deg, rgba(88,166,255,0.06), rgba(163,113,247,0.06));
+  border: 1px solid rgba(88,166,255,0.15); text-align: center; max-width: 600px;
+  transition: all 0.3s ease;
+}
+.cta-box:hover { border-color: rgba(88,166,255,0.3); box-shadow: 0 8px 40px rgba(88,166,255,0.06); }
+
+/* ====== CHART ====== */
+.chart-container {
+  width: 100%; max-width: 820px; height: min(50vh, 400px);
+  margin-top: 24px; position: relative;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 20px 24px;
+  transition: all 0.35s ease;
+}
+.chart-container:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+.chart-container.chart-square {
+  max-width: 480px; height: min(50vh, 420px);
+}
+.chart-container canvas {
+  width: 100% !important; height: 100% !important;
+}
+
+/* ====== TABLE ====== */
+.table-wrap {
+  width: 100%; max-width: 820px; margin-top: 24px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 14px; overflow: hidden;
+  transition: all 0.35s ease;
+}
+.table-wrap:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+.table-wrap table {
+  width: 100%; border-collapse: collapse;
+  font-size: clamp(12px, 1.2vw, 14px);
+}
+.table-wrap thead th {
+  padding: 14px 20px; text-align: left;
+  font-weight: 600; font-size: clamp(11px, 1.1vw, 13px);
+  color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;
+  background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border);
+}
+.table-wrap tbody td {
+  padding: 12px 20px; border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+.table-wrap tbody tr:last-child td { border-bottom: none; }
+.table-wrap tbody tr { transition: background 0.2s ease; }
+.table-wrap tbody tr:hover { background: var(--bg-card-hover); }
+.table-wrap .cell-highlight { font-weight: 600; }
+.table-wrap .cell-muted { color: var(--text-muted); }
+
+/* ====== REDUCED MOTION ====== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+  </style>
+</head>
+<body>
+
+<!-- === CHROME ELEMENTS === -->
+<div class="particles" id="particles"></div>
+<div class="branding"><div class="branding-icon">H</div> HTML Slides</div>
+<div class="slide-nav" id="slideNav"></div>
+<div class="progress-bar" id="progress"></div>
+<div class="slide-counter" id="counter"></div>
+<div class="nav-hints"><span><kbd>&larr;</kbd><kbd>&rarr;</kbd> navigate</span></div>
+
+<!-- === SLIDE DECK === -->
+<div class="deck">
+
+  <!-- =====================================================
+       SLIDE 1 — TITLE SLIDE
+       ===================================================== -->
+  <div class="slide active" data-slide="0">
+    <div class="glow-blob glow-blue" style="top:-100px;left:-100px;"></div>
+    <div class="glow-blob glow-purple" style="bottom:-120px;right:-80px;"></div>
+    <p class="slide-tag anim-1">Introducing</p>
+    <h1 class="anim-2"><span class="rainbow-text">HTML Slides</span></h1>
+    <p class="subtitle anim-3">Beautiful presentations from AI, zero dependencies</p>
+    <div class="rainbow-line anim-4"></div>
+    <p class="subtitle anim-5" style="font-size:14px;margin-top:8px;">by <strong>HTML Slides Team</strong></p>
+  </div>
+
+  <!-- =====================================================
+       SLIDE 2 — STATEMENT
+       ===================================================== -->
+  <div class="slide" data-slide="1">
+    <div class="glow-blob glow-purple" style="top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+    <p class="slide-tag anim-1">The Promise</p>
+    <h1 class="anim-2" style="font-size:clamp(32px,4.5vw,56px);">One HTML file. No frameworks.<br><span class="highlight-green">Just open and present.</span></h1>
+    <div class="rainbow-line anim-3"></div>
+    <p class="subtitle anim-4">Every deck is a self-contained .html file that runs anywhere &mdash; laptops, phones, projectors, even offline.</p>
+  </div>
+
+  <!-- =====================================================
+       SLIDE 3 — FLIP CARDS
+       ===================================================== -->
+  <div class="slide" data-slide="2">
+    <p class="slide-tag anim-1">Why HTML Slides?</p>
+    <h2 class="anim-2">Four Reasons Teams <span class="highlight-blue">Switch</span></h2>
+    <p class="subtitle anim-2" style="font-size:15px;">Click cards to flip &amp; reveal details</p>
+    <div class="flip-grid anim-3">
+      <div class="flip-bounce-wrap bounce-1">
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+          <div class="flip-front border-orange">
+            <div class="flip-icon">&#128230;</div>
+            <div class="flip-title">Zero Dependencies</div>
+            <div class="flip-subtitle highlight-orange">Self-contained</div>
+            <div class="flip-hint">click to flip</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-icon-big">&#128230;</div>
+            <div class="flip-detail">No npm install, no webpack, no React. One <strong>.html file</strong> with inline CSS and JS. Email it, Slack it, put it on a USB stick. <strong>It just works.</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-bounce-wrap bounce-2">
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+          <div class="flip-front border-yellow">
+            <div class="flip-icon">&#129302;</div>
+            <div class="flip-title">AI-Native</div>
+            <div class="flip-subtitle highlight-yellow">Agent-ready</div>
+            <div class="flip-hint">click to flip</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-icon-big">&#129302;</div>
+            <div class="flip-detail">Designed to be generated by <strong>AI agents</strong>. Works with Claude Code, Gemini CLI, GitHub Copilot, and OpenAI Codex <strong>out of the box</strong>.</div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-bounce-wrap bounce-3">
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+          <div class="flip-front border-orange">
+            <div class="flip-icon">&#128736;</div>
+            <div class="flip-title">13 Components</div>
+            <div class="flip-subtitle highlight-blue">Full toolkit</div>
+            <div class="flip-hint">click to flip</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-icon-big">&#128736;</div>
+            <div class="flip-detail">Flip cards, charts, tables, code blocks, architecture flows, timelines, stats &mdash; every component a <strong>technical presenter</strong> needs, built in.</div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-bounce-wrap bounce-4">
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+          <div class="flip-front border-red">
+            <div class="flip-icon">&#127912;</div>
+            <div class="flip-title">Anti-AI-Slop</div>
+            <div class="flip-subtitle highlight-red">Crafted design</div>
+            <div class="flip-hint">click to flip</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-icon-big">&#127912;</div>
+            <div class="flip-detail"><strong>13 curated visual presets</strong> inspired by real design references. No generic purple gradients. Every deck looks <strong>custom-crafted</strong>.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       SLIDE 4 — VS / COMPARISON
+       ===================================================== -->
+  <div class="slide" data-slide="3">
+    <div class="glow-blob glow-blue" style="top:30%;left:20%;"></div>
+    <p class="slide-tag anim-1">The Difference</p>
+    <h2 class="anim-2">Traditional Slides vs <span class="gradient-text">HTML Slides</span></h2>
+    <div class="vs-container anim-3">
+      <div class="vs-card card-left slide-l">
+        <div class="vs-label-top highlight-purple">Legacy</div>
+        <div class="vs-name highlight-purple">Traditional</div>
+        <div class="vs-desc">Large binary files, version control pain, limited animations, vendor lock-in, corporate templates</div>
+        <div class="vs-badge">PowerPoint / Google Slides</div>
+      </div>
+      <div class="vs-plus anim-3">vs</div>
+      <div class="vs-card card-right slide-r">
+        <div class="vs-label-top highlight-blue">Modern</div>
+        <div class="vs-name gradient-text">HTML Slides</div>
+        <div class="vs-desc">Git-friendly, rich CSS animations, runs anywhere, AI-generated in minutes, 13 distinctive style presets</div>
+        <div class="vs-badge">Single .html file</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       SLIDE 5 — ARCHITECTURE FLOW
+       ===================================================== -->
+  <div class="slide" data-slide="4">
+    <p class="slide-tag anim-1">How It Works</p>
+    <h2 class="anim-2">From Idea to <span class="highlight-green">Presentation</span></h2>
+    <p class="subtitle anim-2" style="font-size:14px;">Three steps, zero friction</p>
+    <div class="arch-flow anim-3">
+      <div class="arch-box box-blue bounce-1">
+        <div class="arch-icon">&#128196;</div>
+        <div class="arch-label text-blue">Your Content</div>
+        <div class="arch-role">Input</div>
+        <div class="arch-detail">Topic, notes, or outline</div>
+      </div>
+      <div class="arch-arrow anim-3">
+        <span>describes</span>
+        <div class="arrow-line"></div>
+      </div>
+      <div class="arch-box box-yellow bounce-2">
+        <div class="arch-icon">&#129302;</div>
+        <div class="arch-label text-yellow">AI Agent</div>
+        <div class="arch-role">Generator</div>
+        <div class="arch-detail">Reads SKILL.md, picks style, builds deck</div>
+      </div>
+      <div class="arch-arrow anim-3">
+        <span>produces</span>
+        <div class="arrow-line"></div>
+      </div>
+      <div class="arch-box box-green bounce-3">
+        <div class="arch-icon">&#127760;</div>
+        <div class="arch-label text-green">HTML File</div>
+        <div class="arch-role">Output</div>
+        <div class="arch-detail">Open in browser, present immediately</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       SLIDE 6 — CODE BLOCK
+       ===================================================== -->
+  <div class="slide" data-slide="5">
+    <p class="slide-tag anim-1">Under the Hood</p>
+    <h2 class="anim-2">What a Generated Slide <span class="highlight-orange">Looks Like</span></h2>
+    <p class="subtitle anim-2" style="font-size:14px;">Clean, semantic HTML with animation classes</p>
+    <div class="code-window anim-3">
+      <div class="code-titlebar">
+        <div class="code-dot red"></div>
+        <div class="code-dot yellow"></div>
+        <div class="code-dot green"></div>
+        <span class="code-filename">slide.html</span>
+      </div>
+      <div class="code-body">
+<span class="ln"> 1</span><span class="punc">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punc">=</span><span class="str">"slide active"</span> <span class="attr">data-slide</span><span class="punc">=</span><span class="str">"0"</span><span class="punc">&gt;</span>
+<span class="ln"> 2</span>  <span class="punc">&lt;</span><span class="tag">p</span> <span class="attr">class</span><span class="punc">=</span><span class="str">"slide-tag anim-1"</span><span class="punc">&gt;</span>Introducing<span class="punc">&lt;/</span><span class="tag">p</span><span class="punc">&gt;</span>
+<span class="ln"> 3</span>  <span class="punc">&lt;</span><span class="tag">h2</span> <span class="attr">class</span><span class="punc">=</span><span class="str">"anim-2"</span><span class="punc">&gt;</span>
+<span class="ln"> 4</span>    Build <span class="punc">&lt;</span><span class="tag">span</span> <span class="attr">class</span><span class="punc">=</span><span class="str">"rainbow-text"</span><span class="punc">&gt;</span>Beautiful<span class="punc">&lt;/</span><span class="tag">span</span><span class="punc">&gt;</span> Decks
+<span class="ln"> 5</span>  <span class="punc">&lt;/</span><span class="tag">h2</span><span class="punc">&gt;</span>
+<span class="ln"> 6</span>  <span class="punc">&lt;</span><span class="tag">p</span> <span class="attr">class</span><span class="punc">=</span><span class="str">"subtitle anim-3"</span><span class="punc">&gt;</span>
+<span class="ln"> 7</span>    Zero dependencies. One HTML file.
+<span class="ln"> 8</span>  <span class="punc">&lt;/</span><span class="tag">p</span><span class="punc">&gt;</span>
+<span class="ln"> 9</span>  <span class="punc">&lt;</span><span class="tag">div</span> <span class="attr">class</span><span class="punc">=</span><span class="str">"rainbow-line anim-4"</span><span class="punc">&gt;&lt;/</span><span class="tag">div</span><span class="punc">&gt;</span>
+<span class="ln">10</span><span class="punc">&lt;/</span><span class="tag">div</span><span class="punc">&gt;</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       SLIDE 7 — AUTH FLIP COMPARE
+       ===================================================== -->
+  <div class="slide" data-slide="6">
+    <p class="slide-tag anim-1">Before &amp; After</p>
+    <h2 class="anim-2">Presentation Workflow <span class="highlight-purple">Transformation</span></h2>
+    <p class="subtitle anim-2" style="font-size:14px;">Click to flip and compare</p>
+    <div class="auth-compare anim-3">
+      <div class="auth-flip-wrap slide-l">
+        <div class="auth-flip" onclick="this.classList.toggle('flipped')">
+          <div class="auth-front bad">
+            <div class="auth-icon">&#128547;</div>
+            <div class="auth-name">Before: Manual Design</div>
+            <div class="auth-status">&#10060;</div>
+            <div class="auth-desc">Hours of manual work</div>
+            <div class="flip-hint">click to flip</div>
+          </div>
+          <div class="auth-back">
+            <div class="auth-icon">&#128547;</div>
+            <div class="auth-name">The Old Way</div>
+            <div class="flip-detail" style="font-size:13px;color:var(--text-muted);margin-top:8px;">Hours in PowerPoint. Fighting alignment. Hunting for icons. Exporting to PDF. Emailing 50MB attachments.<br><strong style="color:var(--accent-red);">Broken fonts on the projector laptop.</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="auth-vs">vs</div>
+      <div class="auth-flip-wrap slide-r">
+        <div class="auth-flip" onclick="this.classList.toggle('flipped')">
+          <div class="auth-front good">
+            <div class="auth-icon">&#9889;</div>
+            <div class="auth-name">After: AI + HTML Slides</div>
+            <div class="auth-status">&#10004;&#65039;</div>
+            <div class="auth-desc">Minutes, not hours</div>
+            <div class="flip-hint">click to flip</div>
+          </div>
+          <div class="auth-back">
+            <div class="auth-icon">&#9889;</div>
+            <div class="auth-name">The New Way</div>
+            <div class="flip-detail" style="font-size:13px;color:var(--text-muted);margin-top:8px;">Describe your topic. AI picks the style. Full deck in 2 minutes. One .html file. Share a link.<br><strong style="color:var(--accent-green);">Looks perfect on every screen.</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       SLIDE 8 — STATS CARDS
+       ===================================================== -->
+  <div class="slide" data-slide="7">
+    <p class="slide-tag anim-1">By the Numbers</p>
+    <h2 class="anim-2">HTML Slides in <span class="highlight-green">Production</span></h2>
+    <div class="stats-row">
+      <div class="stat-card pop-1">
+        <div class="stat-number blue">13</div>
+        <div class="stat-label">Components</div>
+        <div class="stat-desc">Interactive component types</div>
+      </div>
+      <div class="stat-card pop-2">
+        <div class="stat-number green">13</div>
+        <div class="stat-label">Style Presets</div>
+        <div class="stat-desc">Curated visual themes</div>
+      </div>
+      <div class="stat-card pop-3">
+        <div class="stat-number orange">4</div>
+        <div class="stat-label">AI Agents</div>
+        <div class="stat-desc">Supported out of the box</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       SLIDE 9 — EXPANDABLE CARDS
+       ===================================================== -->
+  <div class="slide" data-slide="8">
+    <p class="slide-tag anim-1">Component Library</p>
+    <h2 class="anim-2">What You Can <span class="highlight-orange">Build</span></h2>
+    <p class="subtitle anim-2" style="font-size:15px;">Click any card to expand details</p>
+    <div class="use-case-grid anim-3">
+      <div class="card-v2 glow-orange bounce-1" onclick="this.classList.toggle('expanded')">
+        <div class="card-icon">&#128202;</div>
+        <div class="card-title">Data Visualization</div>
+        <div class="card-desc">Chart.js with 8 chart types</div>
+        <div class="card-expand"><div class="card-expand-inner">Chart.js integration with 8 chart types: <code>bar</code>, <code>line</code>, <code>pie</code>, <code>doughnut</code>, <code>radar</code>, <code>polarArea</code>, <code>scatter</code>, and <code>bubble</code>. All charts auto-theme from CSS variables.</div></div>
+        <div class="expand-hint">&#9660;</div>
+      </div>
+      <div class="card-v2 glow-blue bounce-2" onclick="this.classList.toggle('expanded')">
+        <div class="card-icon">&#128073;</div>
+        <div class="card-title">Interactive Elements</div>
+        <div class="card-desc">Flip cards, expandable panels, hover effects</div>
+        <div class="card-expand"><div class="card-expand-inner">Flip cards reveal details on click. Expandable cards show hidden content. Tables highlight rows on hover. Every interaction uses smooth <code>CSS transitions</code> with no JS libraries required.</div></div>
+        <div class="expand-hint">&#9660;</div>
+      </div>
+      <div class="card-v2 glow-purple bounce-3" onclick="this.classList.toggle('expanded')">
+        <div class="card-icon">&#128187;</div>
+        <div class="card-title">Code &amp; Architecture</div>
+        <div class="card-desc">Syntax highlighting, flow diagrams</div>
+        <div class="card-expand"><div class="card-expand-inner">Syntax-highlighted code blocks with <code>One Dark Pro</code> theme. Architecture flow diagrams with animated connected boxes. Perfect for technical talks and API overviews.</div></div>
+        <div class="expand-hint">&#9660;</div>
+      </div>
+      <div class="card-v2 glow-green bounce-4" onclick="this.classList.toggle('expanded')">
+        <div class="card-icon">&#128218;</div>
+        <div class="card-title">Narrative Components</div>
+        <div class="card-desc">Statements, stats, timelines, CTAs</div>
+        <div class="card-expand"><div class="card-expand-inner">Statement slides for bold claims. Stats cards for key metrics. Status timelines for roadmaps. VS comparison cards for head-to-head analysis. CTA boxes for closing with resources.</div></div>
+        <div class="expand-hint">&#9660;</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       SLIDE 10 — STATUS TIMELINE
+       ===================================================== -->
+  <div class="slide" data-slide="9">
+    <p class="slide-tag anim-1">Roadmap</p>
+    <h2 class="anim-2">HTML Slides <span class="highlight-blue">Development Timeline</span></h2>
+    <div class="status-timeline">
+      <div class="status-item stag-1"><div class="status-dot green"></div><div class="status-text"><strong>v0.1</strong> &mdash; 11 component templates with Dark Interactive preset</div></div>
+      <div class="status-item stag-2"><div class="status-dot green"></div><div class="status-text"><strong>v0.2</strong> &mdash; Chart.js integration with 8 chart types</div></div>
+      <div class="status-item stag-3"><div class="status-dot green"></div><div class="status-text"><strong>v0.3</strong> &mdash; Table component, Agent Skills standard, universal installer</div></div>
+      <div class="status-item stag-4"><div class="status-dot yellow"></div><div class="status-text"><strong>v0.4</strong> &mdash; Slide export to PDF, presenter notes view</div></div>
+      <div class="status-item stag-5"><div class="status-dot orange"></div><div class="status-text"><strong>v0.5</strong> &mdash; Live collaboration, real-time audience polls</div></div>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       SLIDE 11 — TABLE
+       ===================================================== -->
+  <div class="slide" data-slide="10">
+    <p class="slide-tag anim-1">Compatibility</p>
+    <h2 class="anim-2">Supported <span class="highlight-purple">AI Agents</span></h2>
+    <div class="table-wrap anim-3">
+      <table>
+        <thead>
+          <tr>
+            <th>Agent</th>
+            <th>User Install</th>
+            <th>Project Install</th>
+            <th>Plugin Support</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="cell-highlight">Claude Code</td>
+            <td>~/.claude/skills/</td>
+            <td>.claude/skills/</td>
+            <td>Yes (marketplace)</td>
+          </tr>
+          <tr>
+            <td class="cell-highlight">Gemini CLI</td>
+            <td>~/.gemini/skills/</td>
+            <td>.gemini/skills/</td>
+            <td>Via extensions</td>
+          </tr>
+          <tr>
+            <td class="cell-highlight">GitHub Copilot</td>
+            <td class="cell-muted">&mdash;</td>
+            <td>.github/skills/</td>
+            <td class="cell-muted">&mdash;</td>
+          </tr>
+          <tr>
+            <td class="cell-highlight">OpenAI Codex</td>
+            <td>~/.codex/skills/</td>
+            <td>.codex/skills/</td>
+            <td>Via config.toml</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       SLIDE 12 — BAR CHART
+       ===================================================== -->
+  <div class="slide" data-slide="11">
+    <p class="slide-tag anim-1">Benchmarks</p>
+    <h2 class="anim-2">Presentation Creation Time <span class="highlight-orange">(minutes)</span></h2>
+    <p class="subtitle anim-2" style="font-size:14px;">Time to create a 15-slide deck</p>
+    <div class="chart-container anim-3">
+      <canvas id="chart-11"></canvas>
+      <script type="application/json" data-chart-config="chart-11">
+      {
+        "type": "bar",
+        "data": {
+          "labels": ["PowerPoint", "Google Slides", "Reveal.js", "HTML Slides + AI"],
+          "datasets": [{
+            "label": "Time to create 15-slide deck",
+            "data": [120, 90, 60, 5]
+          }]
+        }
+      }
+      </script>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       SLIDE 13 — LINE CHART
+       ===================================================== -->
+  <div class="slide" data-slide="12">
+    <p class="slide-tag anim-1">Growth</p>
+    <h2 class="anim-2">Monthly Skill <span class="highlight-green">Installations</span></h2>
+    <p class="subtitle anim-2" style="font-size:14px;">Tracking adoption across AI agent platforms</p>
+    <div class="chart-container anim-3">
+      <canvas id="chart-12"></canvas>
+      <script type="application/json" data-chart-config="chart-12">
+      {
+        "type": "line",
+        "data": {
+          "labels": ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar"],
+          "datasets": [
+            {
+              "label": "Claude Code",
+              "data": [45, 120, 310, 580, 890, 1400]
+            },
+            {
+              "label": "All Agents",
+              "data": [45, 150, 420, 780, 1250, 2100]
+            }
+          ]
+        }
+      }
+      </script>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       SLIDE 14 — PIE CHART
+       ===================================================== -->
+  <div class="slide" data-slide="13">
+    <p class="slide-tag anim-1">Distribution</p>
+    <h2 class="anim-2">Component Usage Across <span class="highlight-blue">All Decks</span></h2>
+    <p class="subtitle anim-2" style="font-size:14px;">Which components do presenters reach for most?</p>
+    <div class="chart-container chart-square anim-3">
+      <canvas id="chart-13"></canvas>
+      <script type="application/json" data-chart-config="chart-13">
+      {
+        "type": "pie",
+        "data": {
+          "labels": ["Flip Cards", "Code Blocks", "Charts", "Stats", "Tables", "Other"],
+          "datasets": [{
+            "label": "Usage %",
+            "data": [28, 22, 18, 14, 10, 8]
+          }]
+        }
+      }
+      </script>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       SLIDE 15 — DOUGHNUT CHART
+       ===================================================== -->
+  <div class="slide" data-slide="14">
+    <p class="slide-tag anim-1">Breakdown</p>
+    <h2 class="anim-2">Style Preset <span class="highlight-purple">Popularity</span></h2>
+    <p class="subtitle anim-2" style="font-size:14px;">Dark Interactive dominates &mdash; but variety matters</p>
+    <div class="chart-container chart-square anim-3">
+      <canvas id="chart-14"></canvas>
+      <script type="application/json" data-chart-config="chart-14">
+      {
+        "type": "doughnut",
+        "data": {
+          "labels": ["Dark Interactive", "Neon Cyber", "Bold Signal", "Swiss Modern", "Notebook Tabs", "Other"],
+          "datasets": [{
+            "label": "Decks generated",
+            "data": [42, 15, 12, 10, 9, 12]
+          }]
+        }
+      }
+      </script>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       SLIDE 16 — RADAR CHART
+       ===================================================== -->
+  <div class="slide" data-slide="15">
+    <p class="slide-tag anim-1">Comparison</p>
+    <h2 class="anim-2">HTML Slides vs <span class="highlight-orange">Traditional Tools</span></h2>
+    <p class="subtitle anim-2" style="font-size:14px;">Multi-dimensional capability comparison</p>
+    <div class="chart-container chart-square anim-3">
+      <canvas id="chart-15"></canvas>
+      <script type="application/json" data-chart-config="chart-15">
+      {
+        "type": "radar",
+        "data": {
+          "labels": ["Speed", "Design Quality", "Portability", "Version Control", "Animations", "Offline Support"],
+          "datasets": [
+            {
+              "label": "HTML Slides",
+              "data": [95, 85, 98, 95, 90, 100]
+            },
+            {
+              "label": "PowerPoint",
+              "data": [40, 70, 50, 20, 60, 90]
+            }
+          ]
+        },
+        "options": {
+          "scales": {
+            "r": {
+              "beginAtZero": true,
+              "max": 100,
+              "ticks": { "stepSize": 20 }
+            }
+          }
+        }
+      }
+      </script>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       SLIDE 17 — POLAR AREA CHART
+       ===================================================== -->
+  <div class="slide" data-slide="16">
+    <p class="slide-tag anim-1">Reach</p>
+    <h2 class="anim-2">Agent Adoption by <span class="highlight-green">Category</span></h2>
+    <p class="subtitle anim-2" style="font-size:14px;">Active users across different segments</p>
+    <div class="chart-container chart-square anim-3">
+      <canvas id="chart-16"></canvas>
+      <script type="application/json" data-chart-config="chart-16">
+      {
+        "type": "polarArea",
+        "data": {
+          "labels": ["Solo Developers", "Startups", "Enterprise", "Education", "Open Source"],
+          "datasets": [{
+            "label": "Active users",
+            "data": [850, 620, 340, 280, 510]
+          }]
+        }
+      }
+      </script>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       SLIDE 18 — SCATTER CHART
+       ===================================================== -->
+  <div class="slide" data-slide="17">
+    <p class="slide-tag anim-1">Correlation</p>
+    <h2 class="anim-2">Slide Count vs <span class="highlight-yellow">Generation Time</span></h2>
+    <p class="subtitle anim-2" style="font-size:14px;">Linear scaling &mdash; more slides, predictable time</p>
+    <div class="chart-container anim-3">
+      <canvas id="chart-17"></canvas>
+      <script type="application/json" data-chart-config="chart-17">
+      {
+        "type": "scatter",
+        "data": {
+          "datasets": [{
+            "label": "Presentations",
+            "data": [
+              {"x":5,"y":1.2},{"x":8,"y":2.0},{"x":10,"y":2.5},
+              {"x":12,"y":3.1},{"x":15,"y":3.8},{"x":18,"y":4.5},
+              {"x":20,"y":5.2},{"x":25,"y":6.0},{"x":30,"y":7.5}
+            ]
+          }]
+        },
+        "options": {
+          "scales": {
+            "x": { "title": { "display": true, "text": "Number of slides" } },
+            "y": { "title": { "display": true, "text": "Generation time (minutes)" } }
+          }
+        }
+      }
+      </script>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       SLIDE 19 — BUBBLE CHART
+       ===================================================== -->
+  <div class="slide" data-slide="18">
+    <p class="slide-tag anim-1">Ecosystem</p>
+    <h2 class="anim-2">Style Preset <span class="highlight-blue">Ecosystem</span></h2>
+    <p class="subtitle anim-2" style="font-size:14px;">Complexity vs satisfaction vs adoption</p>
+    <div class="chart-container anim-3">
+      <canvas id="chart-18"></canvas>
+      <script type="application/json" data-chart-config="chart-18">
+      {
+        "type": "bubble",
+        "data": {
+          "datasets": [
+            {
+              "label": "Dark Interactive",
+              "data": [{"x":30,"y":92,"r":22}]
+            },
+            {
+              "label": "Neon Cyber",
+              "data": [{"x":70,"y":88,"r":15}]
+            },
+            {
+              "label": "Creative Voltage",
+              "data": [{"x":85,"y":82,"r":12}]
+            },
+            {
+              "label": "Bold Signal",
+              "data": [{"x":50,"y":90,"r":10}]
+            },
+            {
+              "label": "Swiss Modern",
+              "data": [{"x":40,"y":85,"r":9}]
+            }
+          ]
+        },
+        "options": {
+          "scales": {
+            "x": { "title": { "display": true, "text": "Design Complexity" } },
+            "y": { "title": { "display": true, "text": "User Satisfaction" }, "min": 75, "max": 100 }
+          }
+        }
+      }
+      </script>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       SLIDE 20 — STATEMENT
+       ===================================================== -->
+  <div class="slide" data-slide="19">
+    <div class="glow-blob glow-green" style="top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+    <p class="slide-tag anim-1">Get Started</p>
+    <h1 class="anim-2" style="font-size:clamp(32px,4.5vw,56px);">Install in <span class="highlight-blue">30 seconds</span>.<br>Present in <span class="highlight-green">5 minutes</span>.</h1>
+    <div class="rainbow-line anim-3"></div>
+    <p class="subtitle anim-4">git clone, ./install.sh, done. Works with every major AI coding agent.</p>
+  </div>
+
+  <!-- =====================================================
+       SLIDE 21 — CTA BOX
+       ===================================================== -->
+  <div class="slide" data-slide="20">
+    <div class="glow-blob glow-blue" style="top:30%;left:30%;"></div>
+    <div class="glow-blob glow-green" style="bottom:20%;right:20%;"></div>
+    <h2 class="anim-1" style="font-size:clamp(28px,3.5vw,44px);">Start Building <span class="gradient-text">Beautiful Presentations</span></h2>
+    <p class="subtitle anim-2 mt-16">One skill, four agents, thirteen components, zero dependencies.</p>
+    <div class="cta-box anim-3">
+      <p style="font-size:16px;font-weight:600;color:var(--text-muted);">Resources</p>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;font-size:14px;text-align:left;">
+        <div style="display:flex;gap:8px;align-items:center;"><span style="color:var(--accent-blue);">&#9679;</span><span><strong>GitHub:</strong> github.com/bluedusk/html-slides</span></div>
+        <div style="display:flex;gap:8px;align-items:center;"><span style="color:var(--accent-green);">&#9679;</span><span><strong>Website:</strong> htmlslides.com</span></div>
+        <div style="display:flex;gap:8px;align-items:center;"><span style="color:var(--accent-purple);">&#9679;</span><span><strong>Live Demo:</strong> bluedusk.github.io/html-slides/intro-to-mcp.html</span></div>
+        <div style="display:flex;gap:8px;align-items:center;"><span style="color:var(--accent-orange);">&#9679;</span><span><strong>Agent Skills Standard:</strong> agentskills.io</span></div>
+      </div>
+    </div>
+    <div class="rainbow-line anim-4 mt-24"></div>
+    <p class="subtitle anim-5" style="font-size:13px;margin-top:8px;">Built with HTML Slides</p>
+  </div>
+
+</div><!-- /deck -->
+
+<script>
+/* ===========================================
+   DARK INTERACTIVE NAVIGATION
+   =========================================== */
+
+// Particles
+const pc = document.getElementById('particles');
+for (let i = 0; i < 35; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.left = Math.random()*100+'%';
+  p.style.animationDuration = (8+Math.random()*14)+'s';
+  p.style.animationDelay = Math.random()*10+'s';
+  p.style.width = p.style.height = (1+Math.random()*2)+'px';
+  pc.appendChild(p);
+}
+
+// Navigation
+const slides = document.querySelectorAll('.slide');
+const progress = document.getElementById('progress');
+const counter = document.getElementById('counter');
+const slideNav = document.getElementById('slideNav');
+let current = 0;
+const total = slides.length;
+
+slides.forEach((_, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'slide-nav-dot' + (i===0?' active':'');
+  dot.addEventListener('click', () => goTo(i));
+  slideNav.appendChild(dot);
+});
+
+function updateUI() {
+  progress.style.width = ((current+1)/total*100)+'%';
+  counter.textContent = `${current+1} / ${total}`;
+  document.querySelectorAll('.slide-nav-dot').forEach((d,i) => d.classList.toggle('active', i===current));
+}
+
+function goTo(index) {
+  if (index<0 || index>=total || index===current) return;
+  const prev = current;
+  current = index;
+  slides.forEach((s,i) => s.classList.toggle('active', i===current));
+  updateUI();
+
+  // Chart lifecycle: destroy on exit, create on entry
+  if (typeof Chart !== 'undefined') {
+    slides[prev].querySelectorAll('.chart-container canvas').forEach(c => destroyChart(c.id));
+    setTimeout(() => {
+      slides[current].querySelectorAll('.chart-container canvas').forEach(c => createChart(c.id));
+    }, 350);
+  }
+}
+
+function next() { goTo(current+1); }
+function prev() { goTo(current-1); }
+
+document.addEventListener('keydown', (e) => {
+  if (e.key==='ArrowRight'||e.key===' '||e.key==='PageDown') { e.preventDefault(); next(); }
+  if (e.key==='ArrowLeft'||e.key==='PageUp') { e.preventDefault(); prev(); }
+  if (e.key==='Home') { e.preventDefault(); goTo(0); }
+  if (e.key==='End') { e.preventDefault(); goTo(total-1); }
+});
+
+let touchStart = 0;
+document.addEventListener('touchstart', (e) => { touchStart=e.touches[0].clientX; });
+document.addEventListener('touchend', (e) => {
+  const diff = touchStart - e.changedTouches[0].clientX;
+  if (Math.abs(diff)>50) { diff>0 ? next() : prev(); }
+});
+
+let wheelCD = false;
+document.addEventListener('wheel', (e) => {
+  if (wheelCD) return; wheelCD = true;
+  setTimeout(() => wheelCD=false, 600);
+  if (e.deltaY>0||e.deltaX>0) next(); else prev();
+}, {passive:true});
+
+updateUI();
+
+// =========================================
+// Chart.js Integration
+// =========================================
+
+function getThemePalette() {
+  const s = getComputedStyle(document.documentElement);
+  const get = (v) => s.getPropertyValue(v).trim();
+  return {
+    text: get('--text') || get('--text-primary') || '#e6edf3',
+    textMuted: get('--text-muted') || get('--text-secondary') || '#8b949e',
+    textDim: get('--text-dim') || '#6e7681',
+    border: get('--border') || 'rgba(255,255,255,0.07)',
+    bgCard: get('--bg-card') || get('--bg-secondary') || '#131720',
+    colors: [
+      get('--accent-blue') || '#58a6ff',
+      get('--accent-green') || '#3fb950',
+      get('--accent-orange') || '#f0883e',
+      get('--accent-purple') || '#a371f7',
+      get('--accent-yellow') || '#d29922',
+      get('--accent-red') || '#f85149'
+    ]
+  };
+}
+
+const chartInstances = {};
+
+function createChart(canvasId) {
+  if (typeof Chart === 'undefined') return;
+  const el = document.getElementById(canvasId);
+  if (!el) return;
+  const configEl = document.querySelector(`[data-chart-config="${canvasId}"]`);
+  if (!configEl) return;
+
+  // Destroy existing instance
+  if (chartInstances[canvasId]) {
+    chartInstances[canvasId].destroy();
+    delete chartInstances[canvasId];
+  }
+
+  try {
+    const palette = getThemePalette();
+    const userConfig = JSON.parse(configEl.textContent);
+    const chartType = userConfig.type;
+
+    // Auto-assign theme colors to datasets
+    userConfig.data.datasets.forEach((ds, i) => {
+      const color = palette.colors[i % palette.colors.length];
+      if (!ds.backgroundColor) {
+        if (['pie','doughnut','polarArea'].includes(chartType)) {
+          ds.backgroundColor = palette.colors.slice(0, ds.data.length);
+          ds.borderColor = palette.bgCard;
+          ds.borderWidth = 2;
+        } else {
+          ds.backgroundColor = color + '33';
+          ds.borderColor = color;
+          ds.borderWidth = 2;
+        }
+      }
+      if (!ds.pointBackgroundColor && ['line','radar','scatter','bubble'].includes(chartType)) {
+        ds.pointBackgroundColor = color;
+      }
+    });
+
+    // Theme-aware defaults
+    const themedOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: { duration: 800, easing: 'easeOutQuart' },
+      plugins: {
+        legend: {
+          labels: { color: palette.textMuted, font: { family: "'Inter', sans-serif", size: 12 } }
+        },
+        tooltip: {
+          backgroundColor: palette.bgCard,
+          titleColor: palette.text,
+          bodyColor: palette.textMuted,
+          borderColor: palette.border,
+          borderWidth: 1
+        }
+      }
+    };
+
+    // Add themed scales for axis-based charts
+    if (['bar','line','scatter','bubble'].includes(chartType)) {
+      themedOptions.scales = {
+        x: {
+          ticks: { color: palette.textDim, font: { family: "'Inter', sans-serif", size: 11 } },
+          grid: { color: palette.border }
+        },
+        y: {
+          ticks: { color: palette.textDim, font: { family: "'Inter', sans-serif", size: 11 } },
+          grid: { color: palette.border }
+        }
+      };
+    }
+
+    // Merge user options over themed defaults
+    if (userConfig.options) {
+      Object.assign(themedOptions.plugins, userConfig.options.plugins || {});
+      Object.assign(themedOptions, userConfig.options, { plugins: themedOptions.plugins });
+    }
+
+    chartInstances[canvasId] = new Chart(el, {
+      type: chartType,
+      data: userConfig.data,
+      options: themedOptions
+    });
+  } catch (e) {
+    // Graceful fallback if Chart.js fails
+    el.parentElement.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px;">Chart unavailable</p>';
+  }
+}
+
+function destroyChart(canvasId) {
+  if (chartInstances[canvasId]) {
+    chartInstances[canvasId].destroy();
+    delete chartInstances[canvasId];
+  }
+}
+
+// Initialize charts on first slide
+if (typeof Chart !== 'undefined') {
+  setTimeout(() => {
+    slides[0].querySelectorAll('.chart-container canvas').forEach(c => createChart(c.id));
+  }, 400);
+}
+</script>
+
+</body>
+</html>

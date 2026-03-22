@@ -1,7 +1,7 @@
 ---
 name: html-slides
 metadata:
-  version: "0.5.1"
+  version: "0.6.0"
   author: danzhu
 description: Generate polished single-file HTML slide presentations with interactive components (flip cards, charts, tables, code blocks, architecture flows, stats, timelines, and more) or creative visual themes. Use this skill whenever the user wants to create slides, presentations, decks, or any visual slide-based content as HTML. Also trigger when the user invokes /html-slides or mentions creating an HTML presentation, pitch deck, or slide deck.
 ---

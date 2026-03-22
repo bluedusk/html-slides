@@ -4,7 +4,7 @@
 
 A skill for creating stunning, animation-rich HTML presentations — from scratch, by converting PowerPoint files, or by converting any existing HTML. Works with AI coding agents (Claude Code, Gemini CLI, GitHub Copilot, OpenAI Codex).
 
-**[htmlslides.com](https://htmlslides.com)** | **[Live Demo: Introducing HTML Slides](https://bluedusk.github.io/html-slides/examples/introducing-html-slides.html)**
+**[htmlslides.com](https://htmlslides.com)** | **[Live Demo: Introducing HTML Slides](https://bluedusk.github.io/html-slides/introducing-html-slides.html)**
 
 ## What This Does
 

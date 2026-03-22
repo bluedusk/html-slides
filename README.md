@@ -24,7 +24,15 @@ A skill for creating stunning, animation-rich HTML presentations — from scratc
 
 ## Installation
 
-### Auto Install (Recommended)
+### Quick Install (Recommended)
+
+```bash
+curl -sSL https://raw.githubusercontent.com/bluedusk/html-slides/main/remote-install.sh | bash
+```
+
+This one command clones the repo, detects your agents, and sets up everything. **Run the same command again to update.**
+
+### Install from cloned repo
 
 ```bash
 git clone https://github.com/bluedusk/html-slides.git
@@ -32,7 +40,7 @@ cd html-slides
 ./install.sh
 ```
 
-The script detects which agents you have, asks user vs project scope, and symlinks the skill into each agent's discovery path. Restart your agent after installing.
+Interactive installer with user-level vs project-level scope choice.
 
 ### Manual Install
 

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML Slides — Theme & Component Preview</title>
+  <link rel="stylesheet" id="theme-css" href="assets/themes/dark-interactive.css">
+  <link rel="stylesheet" href="assets/components.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+  <style>
+    .theme-picker-bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+      background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+      padding: 8px 24px; display: flex; align-items: center; gap: 16px;
+      font-family: system-ui, sans-serif; font-size: 13px; color: #ccc;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .theme-picker-bar select {
+      background: #222; color: #fff; border: 1px solid #444;
+      padding: 4px 8px; border-radius: 4px; font-size: 13px;
+    }
+    .theme-picker-bar .label { font-weight: 600; color: #fff; }
+    .theme-picker-bar .slide-info { margin-left: auto; color: #888; }
+  </style>
+</head>
+<body>
+
+<!-- Theme Picker -->
+<div class="theme-picker-bar">
+  <span class="label">Theme:</span>
+  <select id="themePicker">
+    <option value="dark-interactive">Dark Interactive</option>
+    <option value="excalidraw">Excalidraw Light</option>
+    <option value="excalidraw-dark">Excalidraw Dark</option>
+  </select>
+  <span class="slide-info" id="slideInfo"></span>
+</div>
+
+<!-- Chrome -->
+<div class="particles" id="particles"></div>
+<div class="branding"><div class="branding-icon">H</div> HTML Slides</div>
+<div class="slide-nav" id="slideNav"></div>
+<div class="progress-bar" id="progress"></div>
+<div class="slide-counter" id="counter"></div>
+<div class="nav-hints"><span><kbd>&larr;</kbd><kbd>&rarr;</kbd> navigate</span></div>
+
+<div class="deck" id="deck">
+
+  <!-- Slide 0: Title -->
+  <div class="slide active" data-slide="0">
+    <div class="glow-blob glow-blue" style="top:-100px;left:-100px;"></div>
+    <div class="glow-blob glow-purple" style="bottom:-120px;right:-80px;"></div>
+    <p class="slide-tag anim-1">Component Preview</p>
+    <h1 class="anim-2">HTML Slides<br><span class="rainbow-text">Theme Preview</span></h1>
+    <p class="subtitle anim-3">All 13 components rendered with the selected theme</p>
+    <div class="rainbow-line anim-4"></div>
+    <p class="subtitle anim-5" style="font-size:14px;margin-top:8px;">by <strong>HTML Slides Team</strong></p>
+  </div>
+
+  <!-- Slide 1: Statement -->
+  <div class="slide" data-slide="1">
+    <div class="glow-blob glow-purple" style="top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+    <p class="slide-tag anim-1">Statement Component</p>
+    <h1 class="anim-2" style="font-size:clamp(32px,4.5vw,56px);">One file. Zero dependencies.<br><span class="highlight-green">Just open and present.</span></h1>
+    <div class="rainbow-line anim-3"></div>
+    <p class="subtitle anim-4">Every deck is a self-contained HTML file that runs anywhere.</p>
+  </div>
+
+  <!-- Slide 2: Flip Cards -->
+  <div class="slide" data-slide="2">
+    <h2 class="anim-1">Flip Cards <span class="highlight-blue">Component</span></h2>
+    <p class="subtitle anim-2" style="font-size:15px;">Click cards to flip &amp; reveal details</p>
+    <div class="flip-grid anim-3">
+      <div class="flip-bounce-wrap bounce-1">
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+          <div class="flip-front border-orange">
+            <div class="flip-icon">🚀</div>
+            <div class="flip-title">Zero Dependencies</div>
+            <div class="flip-subtitle highlight-orange">No build tools</div>
+            <div class="flip-hint">click to flip</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-icon-big">🚀</div>
+            <div class="flip-detail">Single HTML file with <strong>inline CSS and JS</strong>. No npm, no webpack.</div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-bounce-wrap bounce-2">
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+          <div class="flip-front border-yellow">
+            <div class="flip-icon">🤖</div>
+            <div class="flip-title">AI-Native</div>
+            <div class="flip-subtitle highlight-yellow">Agent Skills</div>
+            <div class="flip-hint">click to flip</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-icon-big">🤖</div>
+            <div class="flip-detail">Works with <strong>Claude, Gemini, Copilot, and Codex</strong> out of the box.</div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-bounce-wrap bounce-3">
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+          <div class="flip-front border-red">
+            <div class="flip-icon">📊</div>
+            <div class="flip-title">Charts Built In</div>
+            <div class="flip-subtitle highlight-red">Chart.js</div>
+            <div class="flip-hint">click to flip</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-icon-big">📊</div>
+            <div class="flip-detail"><strong>8 chart types</strong> with automatic theming from CSS variables.</div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-bounce-wrap bounce-4">
+        <div class="flip-card" onclick="this.classList.toggle('flipped')">
+          <div class="flip-front border-orange">
+            <div class="flip-icon">🎨</div>
+            <div class="flip-title">Multiple Themes</div>
+            <div class="flip-subtitle highlight-green">Switchable</div>
+            <div class="flip-hint">click to flip</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-icon-big">🎨</div>
+            <div class="flip-detail">Same components, <strong>different visual styles</strong>. Add a theme in 20 lines of CSS.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 3: VS/Comparison -->
+  <div class="slide" data-slide="3">
+    <div class="glow-blob glow-blue" style="top:30%;left:20%;"></div>
+    <p class="slide-tag anim-1">Comparison Component</p>
+    <h2 class="anim-2">Traditional vs HTML Slides</h2>
+    <div class="vs-container anim-3">
+      <div class="vs-card card-left slide-l">
+        <div class="vs-label-top highlight-purple">Traditional</div>
+        <div class="vs-name highlight-purple">PowerPoint</div>
+        <div class="vs-desc">Binary files, vendor lock-in, limited animations</div>
+        <div class="vs-badge">proprietary</div>
+      </div>
+      <div class="vs-plus anim-3">+</div>
+      <div class="vs-card card-right slide-r">
+        <div class="vs-label-top highlight-blue">Modern</div>
+        <div class="vs-name gradient-text">HTML Slides</div>
+        <div class="vs-desc">Git-friendly, runs anywhere, AI-generated</div>
+        <div class="vs-badge">open source</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 4: Architecture Flow -->
+  <div class="slide" data-slide="4">
+    <p class="slide-tag anim-1">Architecture Component</p>
+    <h2 class="anim-2">How It Works</h2>
+    <div class="arch-flow anim-3">
+      <div class="arch-box box-blue bounce-1">
+        <div class="arch-icon">📝</div>
+        <div class="arch-label text-blue">Content</div>
+        <div class="arch-role">Your topic or notes</div>
+        <div class="arch-detail">Markdown, outline, or topic</div>
+      </div>
+      <div class="arch-arrow anim-3">
+        <span>processes</span>
+        <div class="arrow-line"></div>
+      </div>
+      <div class="arch-box box-yellow bounce-2">
+        <div class="arch-icon">🤖</div>
+        <div class="arch-label text-yellow">AI Agent</div>
+        <div class="arch-role">Reads SKILL.md</div>
+        <div class="arch-detail">Maps to components</div>
+      </div>
+      <div class="arch-arrow anim-3">
+        <span>generates</span>
+        <div class="arrow-line"></div>
+      </div>
+      <div class="arch-box box-green bounce-3">
+        <div class="arch-icon">🌐</div>
+        <div class="arch-label text-green">HTML File</div>
+        <div class="arch-role">Open in browser</div>
+        <div class="arch-detail">Self-contained deck</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 5: Code Block -->
+  <div class="slide" data-slide="5">
+    <p class="slide-tag anim-1">Code Block Component</p>
+    <h2 class="anim-2">Syntax Highlighting</h2>
+    <div class="code-window anim-3">
+      <div class="code-titlebar">
+        <div class="code-dot red"></div>
+        <div class="code-dot yellow"></div>
+        <div class="code-dot green"></div>
+        <span class="code-filename">install.sh</span>
+      </div>
+      <div class="code-body">
+<span class="ln">1</span><span class="comment">#!/usr/bin/env bash</span>
+<span class="ln">2</span><span class="kw">curl</span> <span class="punc">-</span>sSL <span class="str">https://raw.githubusercontent.com/bluedusk/html-slides/main/remote-install.sh</span> <span class="punc">|</span> <span class="fn">bash</span>
+<span class="ln">3</span>
+<span class="ln">4</span><span class="comment"># That's it. All agents configured.</span>
+<span class="ln">5</span><span class="kw">echo</span> <span class="str">"HTML Slides installed!"</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 6: Auth Flip Compare -->
+  <div class="slide" data-slide="6">
+    <h2 class="anim-1">Before & After <span class="highlight-green">Compare</span></h2>
+    <p class="subtitle anim-2" style="font-size:14px;">Click to flip and compare</p>
+    <div class="auth-compare anim-3">
+      <div class="auth-flip-wrap slide-l">
+        <div class="auth-flip" onclick="this.classList.toggle('flipped')">
+          <div class="auth-front bad">
+            <div class="auth-icon">😩</div>
+            <div class="auth-name">Manual Design</div>
+            <div class="auth-status">&#10060;</div>
+            <div class="auth-desc">Hours in PowerPoint</div>
+            <div class="flip-hint">click to flip</div>
+          </div>
+          <div class="auth-back">
+            <div class="auth-icon">😩</div>
+            <div class="auth-name">The Old Way</div>
+            <div class="flip-detail" style="font-size:13px;color:var(--text-muted);margin-top:8px;">Fighting alignment. Hunting for icons. Broken fonts on the projector.<br><strong style="color:var(--accent-red);">Wasted hours.</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="auth-vs">vs</div>
+      <div class="auth-flip-wrap slide-r">
+        <div class="auth-flip" onclick="this.classList.toggle('flipped')">
+          <div class="auth-front good">
+            <div class="auth-icon">🎉</div>
+            <div class="auth-name">AI + HTML Slides</div>
+            <div class="auth-status">&#10004;&#65039;</div>
+            <div class="auth-desc">Full deck in 2 minutes</div>
+            <div class="flip-hint">click to flip</div>
+          </div>
+          <div class="auth-back">
+            <div class="auth-icon">🎉</div>
+            <div class="auth-name">The New Way</div>
+            <div class="flip-detail" style="font-size:13px;color:var(--text-muted);margin-top:8px;">Describe your topic. AI builds the deck. Share a link.<br><strong style="color:var(--accent-green);">Done in minutes.</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 7: Stats Cards -->
+  <div class="slide" data-slide="7">
+    <p class="slide-tag anim-1">Stats Component</p>
+    <h2 class="anim-2">By the Numbers</h2>
+    <div class="stats-row">
+      <div class="stat-card pop-1">
+        <div class="stat-number blue">13</div>
+        <div class="stat-label">Components</div>
+        <div class="stat-desc">Interactive templates</div>
+      </div>
+      <div class="stat-card pop-2">
+        <div class="stat-number green">4</div>
+        <div class="stat-label">Agents</div>
+        <div class="stat-desc">Claude, Gemini, Copilot, Codex</div>
+      </div>
+      <div class="stat-card pop-3">
+        <div class="stat-number orange">0</div>
+        <div class="stat-label">Dependencies</div>
+        <div class="stat-desc">Single HTML file</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 8: Expandable Cards -->
+  <div class="slide" data-slide="8">
+    <h2 class="anim-1">Expandable Cards <span class="highlight-purple">Component</span></h2>
+    <p class="subtitle anim-2" style="font-size:15px;">Click any card to expand details</p>
+    <div class="use-case-grid anim-3">
+      <div class="card-v2 glow-orange bounce-1" onclick="this.classList.toggle('expanded')">
+        <div class="card-icon">📊</div>
+        <div class="card-title">Data Visualization</div>
+        <div class="card-desc">8 chart types with auto-theming</div>
+        <div class="card-expand"><div class="card-expand-inner">Bar, line, pie, doughnut, radar, polar, scatter, bubble via <code>Chart.js</code></div></div>
+        <div class="expand-hint">&#9660;</div>
+      </div>
+      <div class="card-v2 glow-blue bounce-2" onclick="this.classList.toggle('expanded')">
+        <div class="card-icon">🔄</div>
+        <div class="card-title">Interactive Elements</div>
+        <div class="card-desc">Flip cards, expandable cards</div>
+        <div class="card-expand"><div class="card-expand-inner">Click interactions with smooth CSS transitions, no JS libraries needed</div></div>
+        <div class="expand-hint">&#9660;</div>
+      </div>
+      <div class="card-v2 glow-purple bounce-3" onclick="this.classList.toggle('expanded')">
+        <div class="card-icon">💻</div>
+        <div class="card-title">Code & Architecture</div>
+        <div class="card-desc">Syntax highlighting, flow diagrams</div>
+        <div class="card-expand"><div class="card-expand-inner">One Dark Pro theme, architecture boxes with <code>animated arrows</code></div></div>
+        <div class="expand-hint">&#9660;</div>
+      </div>
+      <div class="card-v2 glow-green bounce-4" onclick="this.classList.toggle('expanded')">
+        <div class="card-icon">📋</div>
+        <div class="card-title">Narrative Components</div>
+        <div class="card-desc">Stats, timelines, tables, CTAs</div>
+        <div class="card-expand"><div class="card-expand-inner">Statement slides, status timelines, styled tables, call-to-action boxes</div></div>
+        <div class="expand-hint">&#9660;</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 9: Status Timeline -->
+  <div class="slide" data-slide="9">
+    <p class="slide-tag anim-1">Timeline Component</p>
+    <h2 class="anim-2">Development Roadmap</h2>
+    <div class="status-timeline">
+      <div class="status-item stag-1"><div class="status-dot green"></div><div class="status-text"><strong>v0.1</strong> &mdash; 11 component templates</div></div>
+      <div class="status-item stag-2"><div class="status-dot green"></div><div class="status-text"><strong>v0.2</strong> &mdash; Chart.js integration</div></div>
+      <div class="status-item stag-3"><div class="status-dot green"></div><div class="status-text"><strong>v0.5</strong> &mdash; Multi-theme support, speaker notes</div></div>
+      <div class="status-item stag-4"><div class="status-dot yellow"></div><div class="status-text"><strong>v0.6</strong> &mdash; Presenter app integration</div></div>
+      <div class="status-item stag-5"><div class="status-dot orange"></div><div class="status-text"><strong>v1.0</strong> &mdash; Stable release</div></div>
+    </div>
+  </div>
+
+  <!-- Slide 10: Table -->
+  <div class="slide" data-slide="10">
+    <p class="slide-tag anim-1">Table Component</p>
+    <h2 class="anim-2">Agent Compatibility</h2>
+    <div class="table-wrap anim-3">
+      <table>
+        <thead>
+          <tr>
+            <th>Agent</th>
+            <th>User Install</th>
+            <th>Project Install</th>
+            <th>Plugin</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="cell-highlight">Claude Code</td>
+            <td>~/.claude/skills/</td>
+            <td>.claude/skills/</td>
+            <td>Marketplace</td>
+          </tr>
+          <tr>
+            <td class="cell-highlight">Gemini CLI</td>
+            <td>~/.gemini/skills/</td>
+            <td>.gemini/skills/</td>
+            <td class="cell-muted">Extensions</td>
+          </tr>
+          <tr>
+            <td class="cell-highlight">GitHub Copilot</td>
+            <td class="cell-muted">—</td>
+            <td>.github/skills/</td>
+            <td class="cell-muted">—</td>
+          </tr>
+          <tr>
+            <td class="cell-highlight">OpenAI Codex</td>
+            <td>~/.codex/skills/</td>
+            <td>.codex/skills/</td>
+            <td class="cell-muted">config.toml</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Slide 11: Chart -->
+  <div class="slide" data-slide="11">
+    <p class="slide-tag anim-1">Chart Component</p>
+    <h2 class="anim-2">Presentation Creation <span class="highlight-blue">Time</span></h2>
+    <div class="chart-container anim-3">
+      <canvas id="chart-11"></canvas>
+      <script type="application/json" data-chart-config="chart-11">
+      {
+        "type": "bar",
+        "data": {
+          "labels": ["PowerPoint", "Google Slides", "Reveal.js", "HTML Slides"],
+          "datasets": [{
+            "label": "Minutes to create 15 slides",
+            "data": [120, 90, 60, 5]
+          }]
+        }
+      }
+      </script>
+    </div>
+  </div>
+
+  <!-- Slide 12: CTA Box -->
+  <div class="slide" data-slide="12">
+    <div class="glow-blob glow-blue" style="top:30%;left:30%;"></div>
+    <div class="glow-blob glow-green" style="bottom:20%;right:20%;"></div>
+    <h2 class="anim-1" style="font-size:clamp(28px,3.5vw,44px);">Get Started with <span class="gradient-text">HTML Slides</span></h2>
+    <p class="subtitle anim-2 mt-16">One skill, four agents, zero dependencies.</p>
+    <div class="cta-box anim-3">
+      <p style="font-size:16px;font-weight:600;color:var(--text-muted);">Resources</p>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;font-size:14px;text-align:left;">
+        <div style="display:flex;gap:8px;align-items:center;"><span style="color:var(--accent-blue);">&#9679;</span><span>github.com/bluedusk/html-slides</span></div>
+        <div style="display:flex;gap:8px;align-items:center;"><span style="color:var(--accent-green);">&#9679;</span><span>htmlslides.com</span></div>
+        <div style="display:flex;gap:8px;align-items:center;"><span style="color:var(--accent-purple);">&#9679;</span><span>agentskills.io/specification</span></div>
+        <div style="display:flex;gap:8px;align-items:center;"><span style="color:var(--accent-orange);">&#9679;</span><span>curl install | one command setup</span></div>
+      </div>
+    </div>
+    <div class="rainbow-line anim-4 mt-24"></div>
+    <p class="subtitle anim-5" style="font-size:13px;margin-top:8px;">Built with HTML Slides</p>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.js"></script>
+<script src="assets/dark-interactive-nav.js"></script>
+<script>
+  // Theme switcher
+  var themePicker = document.getElementById('themePicker');
+  var slideInfo = document.getElementById('slideInfo');
+  var currentTheme = 'dark-interactive';
+
+  themePicker.addEventListener('change', function(e) {
+    currentTheme = e.target.value;
+    document.getElementById('theme-css').href = 'assets/themes/' + currentTheme + '.css';
+    // Redraw rough borders after theme CSS loads
+    setTimeout(drawRoughBorders, 100);
+  });
+
+  // Show component name for current slide
+  var componentNames = [
+    'Title Slide', 'Statement', 'Flip Cards', 'VS/Comparison',
+    'Architecture Flow', 'Code Block', 'Auth Flip Compare', 'Stats Cards',
+    'Expandable Cards', 'Status Timeline', 'Table', 'Chart', 'CTA Box'
+  ];
+
+  var origGoTo = goTo;
+  goTo = function(index) {
+    origGoTo(index);
+    slideInfo.textContent = 'Component: ' + (componentNames[current] || '');
+  };
+  slideInfo.textContent = 'Component: ' + componentNames[0];
+
+  // Rough.js hand-drawn borders for Excalidraw themes
+  function drawRoughBorders() {
+    // Remove existing rough borders
+    document.querySelectorAll('.rough-border').forEach(function(el) { el.remove(); });
+
+    // Only draw for excalidraw themes
+    if (!currentTheme.startsWith('excalidraw')) return;
+
+    var isDark = currentTheme === 'excalidraw-dark';
+    var strokeColor = isDark ? '#e3e3e8' : '#1e1e1e';
+
+    var targets = document.querySelectorAll(
+      '.flip-front, .flip-back, .card-v2, .stat-card, .arch-box, .vs-card, ' +
+      '.auth-front, .auth-back, .status-item, .chart-container, .table-wrap, ' +
+      '.cta-box, .code-window, .vs-plus'
+    );
+
+    targets.forEach(function(el) {
+      var w = el.offsetWidth;
+      var h = el.offsetHeight;
+      if (w === 0 || h === 0) return;
+
+      var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('width', w);
+      svg.setAttribute('height', h);
+      svg.classList.add('rough-border');
+
+      var rc = rough.svg(svg);
+
+      // Detect accent color from element
+      var accentColor = strokeColor;
+      if (el.classList.contains('border-orange') || el.classList.contains('glow-orange') || el.classList.contains('box-yellow')) accentColor = isDark ? '#ff922b' : '#e8590c';
+      if (el.classList.contains('border-yellow')) accentColor = isDark ? '#fcc419' : '#e8b627';
+      if (el.classList.contains('border-red') || el.classList.contains('bad')) accentColor = isDark ? '#ff6b6b' : '#e03131';
+      if (el.classList.contains('glow-blue') || el.classList.contains('box-blue') || el.classList.contains('card-right')) accentColor = isDark ? '#4dabf7' : '#1971c2';
+      if (el.classList.contains('glow-purple') || el.classList.contains('card-left')) accentColor = isDark ? '#cc5de8' : '#9c36b5';
+      if (el.classList.contains('glow-green') || el.classList.contains('box-green') || el.classList.contains('good')) accentColor = isDark ? '#51cf66' : '#2f9e44';
+
+      // Draw rounded rectangle as a hand-drawn path
+      var r = 14;
+      var x1 = 1, y1 = 1, x2 = w - 2, y2 = h - 2;
+      var path = 'M ' + (x1+r) + ' ' + y1 +
+        ' L ' + (x2-r) + ' ' + y1 +
+        ' Q ' + x2 + ' ' + y1 + ' ' + x2 + ' ' + (y1+r) +
+        ' L ' + x2 + ' ' + (y2-r) +
+        ' Q ' + x2 + ' ' + y2 + ' ' + (x2-r) + ' ' + y2 +
+        ' L ' + (x1+r) + ' ' + y2 +
+        ' Q ' + x1 + ' ' + y2 + ' ' + x1 + ' ' + (y2-r) +
+        ' L ' + x1 + ' ' + (y1+r) +
+        ' Q ' + x1 + ' ' + y1 + ' ' + (x1+r) + ' ' + y1 +
+        ' Z';
+      var node = rc.path(path, {
+        stroke: accentColor,
+        strokeWidth: 2,
+        roughness: 1.2,
+        bowing: 1.5,
+        fill: 'none',
+        seed: Math.floor(Math.random() * 1000)
+      });
+      svg.appendChild(node);
+      el.appendChild(svg);
+    });
+  }
+
+  // Draw on load and on resize
+  window.addEventListener('load', function() { setTimeout(drawRoughBorders, 200); });
+  window.addEventListener('resize', function() { drawRoughBorders(); });
+</script>
+</body>
+</html>

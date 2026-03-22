@@ -227,13 +227,21 @@ Every generated presentation must include a separate `.notes.json` file alongsid
 {
   "0": {
     "title": "Introduction",
-    "script": "Welcome everyone. Today we're going to look at how HTML Slides lets you create beautiful presentations without any design skills.",
-    "notes": ["Pause after welcome", "Gauge audience familiarity with AI tools"]
+    "script": "HTML Slides lets you create beautiful presentations without design skills.",
+    "notes": [
+      "Zero dependencies",
+      "Works with 4 AI agents",
+      "Describe topic, get a deck"
+    ]
   },
   "1": {
     "title": "The Problem",
-    "script": "Most presentation tools force you into rigid templates or require design expertise. What if your AI agent could handle all of that?",
-    "notes": ["Rhetorical question — don't wait for answer", "Transition: next slide shows the solution"]
+    "script": "Current tools are slow and require design expertise.",
+    "notes": [
+      "PowerPoint: hours of manual work",
+      "Vendor lock-in, version control pain",
+      "AI builds the deck in minutes"
+    ]
   }
 }
 ```
@@ -242,13 +250,25 @@ Every generated presentation must include a separate `.notes.json` file alongsid
 
 **Format:** Object keyed by `data-slide` index (as string). Each entry has:
 - `title` — Slide heading (for presenter app navigation)
-- `script` — Full natural language the presenter can read verbatim or paraphrase
-- `notes` — Array of bullet point reminders (timing cues, transitions, delivery tips)
+- `script` — One sentence summary of this slide's key message
+- `notes` — Array of talking points the presenter should cover
 
 **Guidelines for generating notes:**
-- `script`: Write as natural speech, 2-4 sentences per slide. Focus on what to **say**, not what's on screen.
-- `notes`: 2-3 short bullet points. Include transition cues ("After this, we'll look at..."), timing hints ("Skip if short on time"), and delivery tips ("Pause here for effect").
+- `script`: One brief sentence capturing what this slide is about.
+- `notes`: Brief talking points — short phrases the presenter can expand on. Not full sentences.
 - Every slide must have an entry, including title and CTA slides.
+
+**Example — Stats slide showing "3.2x faster, 47% fewer incidents, 89% satisfaction":**
+```json
+{
+  "script": "AI-assisted development delivers measurable results.",
+  "notes": [
+    "3.2x faster code review",
+    "47% fewer production incidents",
+    "89% developer satisfaction"
+  ]
+}
+```
 
 ---
 

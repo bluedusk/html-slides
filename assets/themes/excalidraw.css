@@ -1,25 +1,322 @@
-/* Excalidraw Theme
-   Hand-drawn aesthetic with warm cream background,
-   sketch-like feel, and playful colors. */
+/* Excalidraw Light Theme
+   Hand-drawn aesthetic inspired by excalidraw.com.
+   Rough borders, visible cross-hatch fills, sketch shadows. */
 
-@import url('https://fonts.googleapis.com/css2?family=Virgil:wght@400;700&family=Cascadia+Code:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Cascadia+Code:wght@400;600&display=swap');
+
+@font-face {
+  font-family: 'Virgil';
+  src: url('../fonts/Virgil.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
-  --font-body: 'Virgil', 'Comic Sans MS', cursive;
+  --font-body: 'Virgil', 'Caveat', 'Segoe Print', cursive;
   --font-mono: 'Cascadia Code', monospace;
 
   --bg: #ffffff;
-  --bg-card: #f9f7f3;
-  --bg-card-hover: #f0ece4;
+  --bg-card: #fcfcfa;
+  --bg-card-hover: #f5f5f0;
   --text: #1e1e1e;
-  --text-muted: #555555;
-  --text-dim: #888888;
-  --accent-blue: #1e90ff;
-  --accent-green: #2ecc71;
-  --accent-orange: #e67e22;
-  --accent-red: #e74c3c;
-  --accent-purple: #9b59b6;
-  --accent-yellow: #f1c40f;
-  --border: rgba(0,0,0,0.12);
-  --border-hover: rgba(0,0,0,0.25);
+  --text-muted: #505050;
+  --text-dim: #999999;
+  --accent-blue: #1971c2;
+  --accent-green: #2f9e44;
+  --accent-orange: #e8590c;
+  --accent-red: #e03131;
+  --accent-purple: #9c36b5;
+  --accent-yellow: #e8b627;
+  --border: #1e1e1e;
+  --border-hover: #1e1e1e;
 }
+
+/* ====== EXCALIDRAW OVERRIDES ====== */
+
+/* Kill all border-radius globally */
+.flip-front, .flip-back,
+.flip-card,
+.flip-bounce-wrap,
+.card-v2,
+.card-v2::before,
+.stat-card,
+.arch-box,
+.vs-card,
+.vs-badge,
+.vs-plus,
+.auth-front, .auth-back,
+.auth-flip,
+.status-item,
+.chart-container,
+.table-wrap,
+.cta-box,
+.code-window,
+.code-dot,
+.nav-hints kbd {
+  border-radius: 14px !important;
+}
+
+/* All card-like elements: sketch borders + rough filter */
+.flip-front, .flip-back,
+.card-v2,
+.stat-card,
+.arch-box,
+.vs-card,
+.auth-front, .auth-back,
+.status-item,
+.chart-container,
+.table-wrap,
+.cta-box {
+  border: none !important;
+  position: relative;
+}
+
+/* Rough.js SVG overlay */
+.rough-border {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: visible;
+}
+
+/* Cross-hatch fill — colorful, like Excalidraw's colored fills */
+.flip-front,
+.card-v2,
+.stat-card,
+.arch-box,
+.vs-card,
+.auth-front,
+.status-item,
+.chart-container,
+.table-wrap {
+  background:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 5px,
+      rgba(25,113,194,0.06) 5px,
+      rgba(25,113,194,0.06) 6px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 5px,
+      rgba(156,54,181,0.04) 5px,
+      rgba(156,54,181,0.04) 6px
+    ),
+    var(--bg-card) !important;
+}
+
+/* Per-component colored fills */
+.flip-front.border-orange,
+.card-v2.glow-orange {
+  background:
+    repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(232,89,12,0.08) 5px, rgba(232,89,12,0.08) 6px),
+    repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(232,89,12,0.04) 5px, rgba(232,89,12,0.04) 6px),
+    var(--bg-card) !important;
+}
+.flip-front.border-yellow {
+  background:
+    repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(232,182,39,0.08) 5px, rgba(232,182,39,0.08) 6px),
+    repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(232,182,39,0.04) 5px, rgba(232,182,39,0.04) 6px),
+    var(--bg-card) !important;
+}
+.flip-front.border-red {
+  background:
+    repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(224,49,49,0.08) 5px, rgba(224,49,49,0.08) 6px),
+    repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(224,49,49,0.04) 5px, rgba(224,49,49,0.04) 6px),
+    var(--bg-card) !important;
+}
+.card-v2.glow-blue {
+  background:
+    repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(25,113,194,0.08) 5px, rgba(25,113,194,0.08) 6px),
+    repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(25,113,194,0.04) 5px, rgba(25,113,194,0.04) 6px),
+    var(--bg-card) !important;
+}
+.card-v2.glow-purple {
+  background:
+    repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(156,54,181,0.08) 5px, rgba(156,54,181,0.08) 6px),
+    repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(156,54,181,0.04) 5px, rgba(156,54,181,0.04) 6px),
+    var(--bg-card) !important;
+}
+.card-v2.glow-green {
+  background:
+    repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(47,158,68,0.08) 5px, rgba(47,158,68,0.08) 6px),
+    repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(47,158,68,0.04) 5px, rgba(47,158,68,0.04) 6px),
+    var(--bg-card) !important;
+}
+.arch-box.box-blue {
+  background:
+    repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(25,113,194,0.08) 5px, rgba(25,113,194,0.08) 6px),
+    repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(25,113,194,0.04) 5px, rgba(25,113,194,0.04) 6px),
+    var(--bg-card) !important;
+}
+.arch-box.box-yellow {
+  background:
+    repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(232,182,39,0.08) 5px, rgba(232,182,39,0.08) 6px),
+    repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(232,182,39,0.04) 5px, rgba(232,182,39,0.04) 6px),
+    var(--bg-card) !important;
+}
+.arch-box.box-green {
+  background:
+    repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(47,158,68,0.08) 5px, rgba(47,158,68,0.08) 6px),
+    repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(47,158,68,0.04) 5px, rgba(47,158,68,0.04) 6px),
+    var(--bg-card) !important;
+}
+.vs-card.card-left {
+  background:
+    repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(156,54,181,0.08) 5px, rgba(156,54,181,0.08) 6px),
+    repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(156,54,181,0.04) 5px, rgba(156,54,181,0.04) 6px),
+    var(--bg-card) !important;
+}
+.vs-card.card-right {
+  background:
+    repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(25,113,194,0.08) 5px, rgba(25,113,194,0.08) 6px),
+    repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(25,113,194,0.04) 5px, rgba(25,113,194,0.04) 6px),
+    var(--bg-card) !important;
+}
+.auth-front.bad {
+  background:
+    repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(224,49,49,0.08) 5px, rgba(224,49,49,0.08) 6px),
+    repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(224,49,49,0.04) 5px, rgba(224,49,49,0.04) 6px),
+    var(--bg-card) !important;
+}
+.auth-front.good {
+  background:
+    repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(47,158,68,0.08) 5px, rgba(47,158,68,0.08) 6px),
+    repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(47,158,68,0.04) 5px, rgba(47,158,68,0.04) 6px),
+    var(--bg-card) !important;
+}
+
+.flip-back,
+.auth-back {
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 5px,
+      rgba(25,113,194,0.06) 5px,
+      rgba(25,113,194,0.06) 6px
+    ),
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 5px,
+      rgba(156,54,181,0.04) 5px,
+      rgba(156,54,181,0.04) 6px
+    ),
+    var(--bg-card) !important;
+}
+
+/* Hover: offset shadow like hand-drawn drop shadow */
+.flip-card:hover .flip-front,
+.card-v2:hover,
+.stat-card:hover,
+.arch-box:hover,
+.vs-card:hover,
+.auth-flip:hover .auth-front,
+.chart-container:hover,
+.table-wrap:hover {
+  box-shadow: 5px 5px 0 rgba(0,0,0,0.18) !important;
+  transform: translate(-2px, -2px);
+}
+
+/* Resting state: subtle offset shadow */
+.flip-front,
+.card-v2,
+.stat-card,
+.arch-box,
+.vs-card,
+.auth-front,
+.status-item,
+.chart-container,
+.table-wrap,
+.cta-box {
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.1) !important;
+}
+
+/* Code block */
+.code-window {
+  border: none !important;
+  position: relative;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.15) !important;
+}
+.code-window:hover {
+  box-shadow: 6px 6px 0 rgba(0,0,0,0.2) !important;
+  transform: translate(-1px, -1px);
+}
+
+/* Architecture arrows: thicker, rougher */
+.arrow-line {
+  height: 3px !important;
+  }
+
+/* VS plus connector */
+.vs-plus {
+  border: 2px solid var(--border) !important;
+  background: var(--bg-card) !important;
+  }
+
+/* Progress bar: solid color */
+.progress-bar {
+  background: var(--accent-blue) !important;
+}
+
+/* Nav dots: solid, no glow */
+.slide-nav-dot {
+  background: rgba(0,0,0,0.15) !important;
+}
+.slide-nav-dot.active {
+  background: var(--accent-blue) !important;
+  box-shadow: none !important;
+}
+
+/* Glow blobs: very subtle on white */
+.glow-blob { opacity: 0.04 !important; }
+
+/* Rainbow line: single dark stroke */
+.rainbow-line {
+  background: var(--border) !important;
+  height: 2px;
+  }
+
+/* Particles: dark dots for light bg */
+.particle {
+  background: rgba(0,0,0,0.06) !important;
+}
+
+/* Table header */
+.table-wrap thead th {
+  background:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 5px,
+      rgba(0,0,0,0.04) 5px,
+      rgba(0,0,0,0.04) 6px
+    ),
+    rgba(0,0,0,0.02) !important;
+}
+
+/* Status dots: no glow */
+.status-dot { box-shadow: none !important; }
+
+/* Nav hints kbd: sketch style */
+.nav-hints kbd {
+  background: rgba(0,0,0,0.04) !important;
+  border: 2px solid var(--border) !important;
+  }
+
+/* Colored borders: keep sketch feel */
+.flip-front.border-orange,
+.flip-front.border-yellow,
+.flip-front.border-red { border-width: 2px !important; }
+.arch-box.box-blue,
+.arch-box.box-yellow,
+.arch-box.box-green { border-width: 2px !important; }
+.vs-card.card-left,
+.vs-card.card-right { border-width: 2px !important; }
+.auth-front.bad { border-color: var(--accent-red) !important; }
+.auth-front.good { border-color: var(--accent-green) !important; }

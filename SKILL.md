@@ -250,42 +250,40 @@ Every generated presentation must include a separate `.notes.json` file alongsid
 
 **Format:** Object keyed by `data-slide` index (as string). Each entry has:
 - `title` — Slide heading (for presenter app navigation)
-- `script` — One sentence summary of this slide's key message
-- `notes` — Array of talking points the presenter should cover
+- `script` — Brief summary of what this slide delivers, in presenter tone
+- `notes` — Key points from the slide content, summarized as short phrases
 
-**Guidelines for generating notes:**
-- `script`: One brief sentence capturing what this slide is about.
-- `notes`: Brief talking points — the key facts, claims, or ideas the presenter should mention. Short phrases, not full sentences.
-- Every slide must have an entry, including title and CTA slides.
+Both `script` and `notes` summarize the **slide content** — what the slide is saying to the audience. Write in presenter tone, as if the presenter is reading these to remind themselves what this slide covers.
 
-**NEVER include these in notes:**
-- Delivery instructions ("Pause here", "Slow down", "Keep brisk")
-- Transition cues ("Transition to next slide", "Move on to...")
+**NEVER include:**
+- Delivery instructions ("Pause here", "Slow down")
+- Transition cues ("Move to next slide")
 - Presentation advice ("Emphasize this", "If short on time skip")
-- Meta commentary ("This is the summary slide", "Use as closing")
+- Meta commentary ("This is the summary slide")
 
-Notes are CONTENT, not stage directions.
-
-**Good example — Stats slide showing "3.2x faster, 47% fewer incidents, 89% satisfaction":**
+**Example — slide about AI agent capabilities with 4 flip cards:**
 ```json
 {
-  "script": "AI-assisted development delivers measurable results.",
+  "title": "Four Core Capabilities",
+  "script": "Agents need four things working together: reasoning, memory, tools, and evaluation.",
   "notes": [
-    "3.2x faster code review",
-    "47% fewer production incidents",
-    "89% developer satisfaction"
+    "Reasoning — choose the next step",
+    "Memory — carry context across steps",
+    "Tools — take actions in the real world",
+    "Evaluation — detect errors, confirm completion"
   ]
 }
 ```
 
-**Bad example — delivery instructions instead of content:**
+**Example — stats slide showing "3.2x faster, 47% fewer incidents, 89% satisfaction":**
 ```json
 {
-  "script": "AI-assisted development delivers measurable results.",
+  "title": "By the Numbers",
+  "script": "AI-assisted development delivers measurable improvements across speed, quality, and satisfaction.",
   "notes": [
-    "Emphasize the 3.2x number",
-    "Keep this slide brisk",
-    "Transition to the next section"
+    "3.2x faster code review",
+    "47% fewer production incidents",
+    "89% developer satisfaction"
   ]
 }
 ```

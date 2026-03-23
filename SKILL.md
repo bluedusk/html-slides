@@ -10,6 +10,10 @@ description: Generate polished single-file HTML slide presentations with interac
 
 Create zero-dependency, animation-rich HTML presentations that run entirely in the browser.
 
+## Agent Compatibility
+
+This skill is optimized for **Claude Code** and uses `AskUserQuestion` for interactive prompts. If `AskUserQuestion` is not available (Gemini CLI, GitHub Copilot, OpenAI Codex, or other agents), ask the same questions as plain text in the conversation and wait for the user to respond before proceeding.
+
 ## Core Principles
 
 1. **Zero Dependencies** — Single HTML files with inline CSS/JS. No npm, no build tools.

@@ -80,15 +80,31 @@ Determine what the user wants:
 
 ### Mode C: Modification Rules
 
-When enhancing existing presentations, viewport fitting is the biggest risk:
+When modifying existing presentations, make **minimal changes** — only touch what the user asked about.
 
-1. **Before adding content:** Count existing elements, check against density limits
-2. **Adding images:** Must have `max-height: min(50vh, 400px)`. If slide already has max content, split into two slides
-3. **Adding text:** Max 4-6 bullets per slide. Exceeds limits? Split into continuation slides
-4. **After ANY modification, verify:** `.slide` has `overflow: hidden`, new elements use `clamp()`, images have viewport-relative max-height, content fits at 1280x720
-5. **Proactively reorganize:** If modifications will cause overflow, automatically split content and inform the user. Don't wait to be asked
+**Editing slides:**
+- Read the existing HTML file first
+- Modify only the requested slide(s), keep everything else intact
+- If adding/removing slides, renumber all `data-slide` attributes sequentially from 0
+- If changing a component type (e.g., code block → table), use the template from component-templates.md
+- Update the `.notes.json` file to match any content changes
 
-**When adding images to existing slides:** Move image to new slide or reduce other content first. Never add images without checking if existing content already fills the viewport.
+**Viewport fitting (always check):**
+- Before adding content, check against density limits
+- Adding images: must have `max-height: min(50vh, 400px)`
+- Adding text: max 4-6 bullets per slide. Exceeds? Split into multiple slides
+- If modifications will cause overflow, split content and inform the user
+
+**After ANY modification, verify all 7 spec rules:**
+1. `<div class="deck" id="deck">` exists
+2. All slides are `<div class="slide">` with sequential `data-slide="0"` through `data-slide="N"`
+3. First slide has `class="slide active"`, no other slide has `active`
+4. Global `goTo()`, `next()`, `prev()` functions exist
+5. All CSS inline (except font imports)
+6. All JS inline (except Chart.js CDN)
+7. No broken numbering gaps after insertions or deletions
+
+**If any rule fails after editing, fix it before saving.**
 
 ---
 

@@ -134,6 +134,7 @@ or specify a theme:
 | Dark Interactive (default) | Dark background, blue/green/orange accents |
 | Excalidraw Light | Hand-drawn, sketchy, whiteboard on white |
 | Excalidraw Dark | Hand-drawn, sketchy, whiteboard on dark |
+| Editorial Light | Luminous, editorial, tech-forward minimalism |
 
 **Components included:**
 

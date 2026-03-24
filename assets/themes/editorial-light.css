@@ -1,0 +1,300 @@
+/* Editorial Light Theme
+   "The Lucid Gallery" — luminous clarity, editorial elegance, tech-forward accents.
+   Zero-line rule: boundaries via tonal shifts, not borders.
+   Ambient shadows with wide blur, ghost borders at 15% opacity. */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'Space Grotesk', 'JetBrains Mono', monospace;
+
+  /* Surface hierarchy — layers of translucent paper */
+  --bg: #f9f9ff;                       /* surface */
+  --bg-card: #ffffff;                  /* surface-container-lowest */
+  --bg-card-hover: #f2f3fc;            /* surface-container-low */
+  --surface-container: #ecedf6;        /* structural sections */
+
+  /* Text — never pure black */
+  --text: #191c22;                     /* on-surface */
+  --text-muted: #414752;               /* on-surface-variant */
+  --text-dim: #747a87;
+
+  /* Accents — tech-forward, vibrant */
+  --accent-blue: #0060aa;             /* primary */
+  --accent-blue-container: #58a6ff;   /* primary-container */
+  --accent-green: #006e21;            /* tertiary */
+  --accent-orange: #e8590c;
+  --accent-red: #ba1a1a;
+  --accent-purple: #733fc4;           /* secondary */
+  --accent-purple-container: #aa78ff; /* secondary-container */
+  --accent-yellow: #c48f00;
+
+  /* Ghost borders — the "No-Line" rule */
+  --border: rgba(192, 199, 212, 0.15);
+  --border-hover: rgba(192, 199, 212, 0.35);
+  --outline-variant: #c0c7d4;
+}
+
+/* ====== EDITORIAL LIGHT OVERRIDES ====== */
+
+/* -- Surface toning -- */
+html, body {
+  background: var(--bg) !important;
+  color: var(--text) !important;
+}
+
+/* -- Particles: subtle dark motes on light bg -- */
+.particle {
+  background: rgba(0, 96, 170, 0.06) !important;
+}
+
+/* -- Chrome -- */
+.branding { color: var(--text-dim) !important; }
+.branding-icon { border-color: var(--text-dim) !important; }
+
+.progress-bar {
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-blue-container), var(--accent-purple)) !important;
+}
+
+.slide-counter { color: var(--text-dim) !important; }
+.nav-hints { color: var(--text-dim) !important; }
+.nav-hints kbd {
+  background: rgba(0, 0, 0, 0.03) !important;
+  border: 1px solid rgba(192, 199, 212, 0.25) !important;
+  border-radius: 6px !important;
+  color: var(--text-dim) !important;
+}
+
+/* Nav dots — primary accent, ghost inactive */
+.slide-nav-dot {
+  background: rgba(192, 199, 212, 0.3) !important;
+}
+.slide-nav-dot.active {
+  background: var(--accent-blue) !important;
+  box-shadow: 0 0 12px rgba(0, 96, 170, 0.25) !important;
+}
+.slide-nav-dot:hover {
+  background: rgba(0, 96, 170, 0.3) !important;
+}
+
+/* -- Glow blobs: very soft tints -- */
+.glow-blob { opacity: 0.06 !important; }
+.glow-blue { background: var(--accent-blue-container) !important; }
+.glow-purple { background: var(--accent-purple-container) !important; }
+.glow-green { background: var(--accent-green) !important; }
+
+/* -- Rainbow / gradient text — primary gradient -- */
+.rainbow-line {
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-blue-container), var(--accent-purple), var(--accent-green)) !important;
+}
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+.rainbow-text {
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple), var(--accent-green), var(--accent-orange)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+/* -- Tags: use Space Grotesk for technical labels -- */
+.slide-tag {
+  font-family: 'Space Grotesk', sans-serif !important;
+  color: var(--accent-blue) !important;
+}
+
+/* -- Subtitle: softer for light bg -- */
+.subtitle { color: var(--text-muted) !important; }
+
+/* ====== CARD SURFACES ====== */
+/* Ghost border + ambient shadow — no hard lines */
+
+.flip-front, .flip-back,
+.card-v2,
+.stat-card,
+.arch-box,
+.vs-card,
+.auth-front, .auth-back,
+.status-item,
+.chart-container,
+.table-wrap,
+.cta-box {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 32px rgba(25, 28, 34, 0.04) !important;
+}
+
+/* Hover: ambient lift — wide blur, low opacity */
+.flip-card:hover .flip-front,
+.card-v2:hover,
+.stat-card:hover,
+.arch-box:hover,
+.vs-card:hover,
+.auth-flip:hover .auth-front,
+.chart-container:hover,
+.table-wrap:hover {
+  border-color: var(--border-hover) !important;
+  box-shadow: 0 8px 48px rgba(25, 28, 34, 0.08) !important;
+  transform: translateY(-3px);
+}
+
+/* ====== FLIP CARDS ====== */
+.flip-back {
+  background: var(--bg-card-hover) !important;
+}
+.flip-back .flip-detail { color: var(--text-muted) !important; }
+.flip-back .flip-detail strong { color: var(--text) !important; }
+.flip-front .flip-hint { color: var(--text-dim) !important; }
+
+/* Colored borders — subtle tints */
+.flip-front.border-orange { border-color: rgba(232, 89, 12, 0.2) !important; }
+.flip-front.border-yellow { border-color: rgba(196, 143, 0, 0.2) !important; }
+.flip-front.border-red { border-color: rgba(186, 26, 26, 0.2) !important; }
+.flip-card:hover .flip-front.border-orange { border-color: rgba(232, 89, 12, 0.4) !important; box-shadow: 0 8px 48px rgba(232, 89, 12, 0.06) !important; }
+.flip-card:hover .flip-front.border-yellow { border-color: rgba(196, 143, 0, 0.4) !important; box-shadow: 0 8px 48px rgba(196, 143, 0, 0.06) !important; }
+.flip-card:hover .flip-front.border-red { border-color: rgba(186, 26, 26, 0.4) !important; box-shadow: 0 8px 48px rgba(186, 26, 26, 0.06) !important; }
+
+/* ====== EXPANDABLE CARDS ====== */
+.card-v2::before { display: none !important; }
+.card-v2:hover {
+  background: var(--bg-card-hover) !important;
+}
+.card-v2.glow-orange:hover { border-color: rgba(232, 89, 12, 0.3) !important; box-shadow: 0 8px 48px rgba(232, 89, 12, 0.06) !important; }
+.card-v2.glow-blue:hover { border-color: rgba(0, 96, 170, 0.3) !important; box-shadow: 0 8px 48px rgba(0, 96, 170, 0.06) !important; }
+.card-v2.glow-green:hover { border-color: rgba(0, 110, 33, 0.3) !important; box-shadow: 0 8px 48px rgba(0, 110, 33, 0.06) !important; }
+.card-v2.glow-purple:hover { border-color: rgba(115, 63, 196, 0.3) !important; box-shadow: 0 8px 48px rgba(115, 63, 196, 0.06) !important; }
+
+.card-expand-inner {
+  border-top: 1px solid var(--border) !important;
+  color: var(--text-dim) !important;
+}
+.card-expand-inner code {
+  background: var(--bg-card-hover) !important;
+  color: var(--accent-blue) !important;
+}
+.card-v2 .expand-hint { color: var(--text-dim) !important; }
+
+/* ====== CODE BLOCKS ====== */
+/* Keep dark code window — editorial contrast */
+.code-window {
+  background: #1e1e2e !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 48px rgba(25, 28, 34, 0.12) !important;
+}
+.code-window:hover {
+  box-shadow: 0 12px 56px rgba(25, 28, 34, 0.16) !important;
+  transform: translateY(-2px);
+}
+.code-titlebar {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+/* ====== ARCHITECTURE FLOW ====== */
+.arch-box.box-blue { border-color: rgba(0, 96, 170, 0.2) !important; }
+.arch-box.box-yellow { border-color: rgba(196, 143, 0, 0.2) !important; }
+.arch-box.box-green { border-color: rgba(0, 110, 33, 0.2) !important; }
+.arch-box:hover.box-blue { border-color: rgba(0, 96, 170, 0.4) !important; box-shadow: 0 8px 48px rgba(0, 96, 170, 0.06) !important; }
+.arch-box:hover.box-yellow { border-color: rgba(196, 143, 0, 0.4) !important; box-shadow: 0 8px 48px rgba(196, 143, 0, 0.06) !important; }
+.arch-box:hover.box-green { border-color: rgba(0, 110, 33, 0.4) !important; box-shadow: 0 8px 48px rgba(0, 110, 33, 0.06) !important; }
+
+.arch-detail {
+  background: var(--bg-card-hover) !important;
+  color: var(--text-dim) !important;
+}
+.arch-arrow { color: var(--text-dim) !important; }
+.arrow-line { background: var(--text-dim) !important; }
+.arrow-line::after { border-left-color: var(--text-dim) !important; }
+
+/* ====== STATS ====== */
+.stat-number.blue { color: var(--accent-blue) !important; }
+.stat-number.green { color: var(--accent-green) !important; }
+.stat-number.orange { color: var(--accent-orange) !important; }
+
+/* ====== VS / COMPARISON ====== */
+.vs-card.card-left { border-color: rgba(115, 63, 196, 0.2) !important; }
+.vs-card.card-right { border-color: rgba(0, 96, 170, 0.2) !important; }
+.vs-card.card-left:hover { border-color: rgba(115, 63, 196, 0.4) !important; box-shadow: 0 8px 48px rgba(115, 63, 196, 0.06) !important; }
+.vs-card.card-right:hover { border-color: rgba(0, 96, 170, 0.4) !important; box-shadow: 0 8px 48px rgba(0, 96, 170, 0.06) !important; }
+
+.vs-badge {
+  background: var(--bg-card-hover) !important;
+  color: var(--text-dim) !important;
+}
+.vs-plus {
+  background: linear-gradient(135deg, rgba(115, 63, 196, 0.1), rgba(0, 96, 170, 0.1)) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text-dim) !important;
+  animation: pulseGlow 3s ease infinite !important;
+}
+
+/* ====== AUTH COMPARE ====== */
+.auth-front.bad { border-color: rgba(186, 26, 26, 0.2) !important; }
+.auth-front.good { border-color: rgba(0, 110, 33, 0.2) !important; }
+.auth-flip:hover .auth-front.bad { border-color: rgba(186, 26, 26, 0.4) !important; box-shadow: 0 8px 48px rgba(186, 26, 26, 0.06) !important; }
+.auth-flip:hover .auth-front.good { border-color: rgba(0, 110, 33, 0.4) !important; box-shadow: 0 8px 48px rgba(0, 110, 33, 0.06) !important; }
+.auth-back {
+  background: var(--bg-card-hover) !important;
+}
+.auth-desc { color: var(--text-dim) !important; }
+.auth-vs { color: var(--text-dim) !important; }
+.auth-front .flip-hint { color: var(--text-dim) !important; }
+
+/* ====== STATUS TIMELINE ====== */
+.status-item:hover {
+  background: var(--bg-card-hover) !important;
+  border-color: var(--border-hover) !important;
+}
+.status-dot.green { background: var(--accent-green) !important; box-shadow: 0 0 8px rgba(0, 110, 33, 0.3) !important; }
+.status-dot.yellow { background: var(--accent-yellow) !important; box-shadow: 0 0 8px rgba(196, 143, 0, 0.3) !important; }
+.status-dot.orange { background: var(--accent-orange) !important; box-shadow: 0 0 8px rgba(232, 89, 12, 0.3) !important; }
+.status-dot.red { background: var(--accent-red) !important; box-shadow: 0 0 8px rgba(186, 26, 26, 0.3) !important; }
+
+/* ====== CTA BOX ====== */
+.cta-box {
+  background: linear-gradient(135deg, rgba(0, 96, 170, 0.04), rgba(115, 63, 196, 0.04)) !important;
+  border: 1px solid rgba(0, 96, 170, 0.12) !important;
+}
+.cta-box:hover {
+  border-color: rgba(0, 96, 170, 0.25) !important;
+  box-shadow: 0 8px 48px rgba(0, 96, 170, 0.06) !important;
+}
+
+/* ====== TABLE ====== */
+.table-wrap thead th {
+  background: var(--bg-card-hover) !important;
+  color: var(--text-muted) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+.table-wrap tbody td {
+  color: var(--text) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+.table-wrap tbody tr:hover { background: var(--bg-card-hover) !important; }
+
+/* ====== CHART ====== */
+.chart-container:hover {
+  box-shadow: 0 8px 48px rgba(25, 28, 34, 0.08) !important;
+}
+
+/* ====== FULLSTACK BAR ====== */
+.fullstack-half.backend {
+  background: rgba(115, 63, 196, 0.06) !important;
+  color: var(--accent-purple) !important;
+}
+.fullstack-half.frontend {
+  background: rgba(0, 96, 170, 0.06) !important;
+  color: var(--accent-blue) !important;
+}
+
+/* ====== @keyframes override for light pulseGlow ====== */
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 rgba(0, 96, 170, 0); }
+  50% { box-shadow: 0 0 20px rgba(0, 96, 170, 0.1); }
+}

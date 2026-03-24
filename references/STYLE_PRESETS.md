@@ -314,6 +314,7 @@ Curated visual styles for Frontend Slides. Each preset is inspired by real desig
 | Terminal Green | JetBrains Mono | JetBrains Mono | JetBrains |
 | Excalidraw Light | Virgil | Virgil / Caveat | Bundled / Google |
 | Excalidraw Dark | Virgil | Virgil / Caveat | Bundled / Google |
+| Editorial Light | Inter | Space Grotesk | Google |
 
 ---
 
@@ -430,6 +431,48 @@ Curated visual styles for Frontend Slides. Each preset is inspired by real desig
 **Special:** Uses the same component templates as Dark Interactive. Load [excalidraw-dark.css](../assets/themes/excalidraw-dark.css) as the theme CSS alongside the shared component CSS.
 
 **Best for:** Informal presentations in dark mode, brainstorming sessions, educational content with a cozy feel.
+
+---
+
+### 16. Editorial Light
+
+**Vibe:** Luminous, editorial, tech-forward minimalism — "The Lucid Gallery"
+
+**Layout:** Same structured component system as Dark Interactive, with an airy light-mode aesthetic. Elements float in generous white space with ambient shadows.
+
+**Typography:**
+- Display/Body: `Inter` (300–900) — tight letter-spacing (-0.02em) for headlines
+- Labels/Mono: `Space Grotesk` (400–700) — tech-forward sans-serif for metadata and tags
+
+**Colors:**
+```css
+:root {
+    --bg: #f9f9ff;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f2f3fc;
+    --text: #191c22;
+    --text-muted: #414752;
+    --accent-blue: #0060aa;
+    --accent-green: #006e21;
+    --accent-orange: #e8590c;
+    --accent-red: #ba1a1a;
+    --accent-purple: #733fc4;
+    --accent-yellow: #c48f00;
+    --border: rgba(192, 199, 212, 0.15);
+}
+```
+
+**Signature Elements:**
+- "No-Line Rule" — no 1px solid borders; boundaries via tonal shifts and ghost borders (15% opacity)
+- Ambient shadows with 32–48px blur at 4–8% opacity (soft glow, not hard drop)
+- Primary-to-container gradient accents (blue #0060aa → #58a6ff)
+- Code windows stay dark (editorial contrast against light canvas)
+- Surface hierarchy: surface → surface-container-low → surface-container-lowest
+- Same 13 component templates as Dark Interactive
+
+**Special:** Uses the same component templates as Dark Interactive. Load [editorial-light.css](../assets/themes/editorial-light.css) as the theme CSS alongside the shared component CSS.
+
+**Best for:** Product launches, investor decks, design-forward technical presentations, any context where editorial polish matters.
 
 ---
 

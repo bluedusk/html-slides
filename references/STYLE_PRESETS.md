@@ -315,6 +315,7 @@ Curated visual styles for Frontend Slides. Each preset is inspired by real desig
 | Excalidraw Light | Virgil | Virgil / Caveat | Bundled / Google |
 | Excalidraw Dark | Virgil | Virgil / Caveat | Bundled / Google |
 | Editorial Light | Inter | Space Grotesk | Google |
+| Binary Architect | Space Grotesk | JetBrains Mono | Google / JetBrains |
 
 ---
 
@@ -473,6 +474,49 @@ Curated visual styles for Frontend Slides. Each preset is inspired by real desig
 **Special:** Uses the same component templates as Obsidian. Load [editorial-light.css](../assets/themes/editorial-light.css) as the theme CSS alongside the shared component CSS.
 
 **Best for:** Product launches, investor decks, design-forward technical presentations, any context where editorial polish matters.
+
+---
+
+### 17. Binary Architect
+
+**Vibe:** Hacker-elite, organic brutalism, "command center" aesthetic
+
+**Layout:** Same structured component system as Obsidian, with sharp 0px corners, void-black canvas, and neon signal accents. 24px grid overlay.
+
+**Typography:**
+- Display: `Space Grotesk` (500–700) — all-caps, +0.05em letter-spacing ("System Headers")
+- Body/Data: `JetBrains Mono` / `Fira Code` — monospaced throughout for terminal feel
+
+**Colors:**
+```css
+:root {
+    --bg: #0e0e0e;
+    --bg-card: #131313;
+    --bg-void: #000000;
+    --bg-elevated: #201f1f;
+    --text: #e8e8e8;
+    --text-muted: #adaaaa;
+    --accent-blue: #00eefc;
+    --accent-green: #9cff93;
+    --accent-orange: #ff7351;
+    --accent-purple: #c4a5ff;
+    --accent-yellow: #ffda6e;
+    --border: rgba(72, 72, 71, 0.2);
+}
+```
+
+**Signature Elements:**
+- **Zero border-radius** — 0px on all elements, including nav dots (squares)
+- 24px grid pattern overlay on the deck background
+- Glow states instead of shadows (neon color at 4–6% opacity)
+- Ghost borders (outline-variant at 20% opacity)
+- Monospaced body text throughout (JetBrains Mono)
+- All headings uppercase with letter-spacing
+- Same 13 component templates as Obsidian
+
+**Special:** Uses the same component templates as Obsidian. Load [binary-architect.css](../assets/themes/binary-architect.css) as the theme CSS alongside the shared component CSS.
+
+**Best for:** Developer talks, security/infosec presentations, CLI tool demos, anything where a terminal/hacker aesthetic fits the content.
 
 ---
 

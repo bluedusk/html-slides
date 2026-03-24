@@ -115,6 +115,7 @@ Create a presentation about our startup using the Editorial Light theme
 | Excalidraw Light | Hand-drawn look on white, like a whiteboard |
 | Excalidraw Dark | Hand-drawn look on dark background |
 | Editorial Light | Clean, bright, magazine-like elegance |
+| Binary Architect | Hacker-elite, neon on void-black, zero rounded corners |
 
 Want a more artistic, non-technical style? Say "simple":
 

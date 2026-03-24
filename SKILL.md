@@ -205,6 +205,7 @@ Ask which theme they want (header: "Theme"):
 - **Excalidraw Light** — Hand-drawn, white background, sketch borders
 - **Excalidraw Dark** — Hand-drawn, dark background, sketch borders
 - **Editorial Light** — Luminous, editorial, tech-forward minimalism
+- **Binary Architect** — Hacker-elite, sharp corners, neon on void-black
 
 If the user already specified a theme in their prompt, skip this question and use that theme. If no preference, default to Obsidian.
 
@@ -240,6 +241,7 @@ If images were provided, the slide outline already incorporates them from Step 1
 | Excalidraw Light | `assets/themes/excalidraw.css` | Hand-drawn, white background, sketch borders |
 | Excalidraw Dark | `assets/themes/excalidraw-dark.css` | Hand-drawn, dark background, sketch borders |
 | Editorial Light | `assets/themes/editorial-light.css` | Luminous, editorial, tech-forward minimalism |
+| Binary Architect | `assets/themes/binary-architect.css` | Hacker-elite, sharp corners, neon on void-black |
 
 **Key requirements:**
 - Single self-contained HTML file, all CSS/JS inline
@@ -417,7 +419,7 @@ Before saving, verify all 7 spec rules pass. Fix any that fail. Save both the HT
 | [animation-patterns.md](references/animation-patterns.md) | CSS/JS animation snippets and effect-to-feeling guide (presets 1-12) | Phase 3 (generation) |
 | [component-templates.md](references/component-templates.md) | Structured HTML component templates with decision table | Phase 3 (Advanced) |
 | [components.css](assets/components.css) | Shared component CSS for all Advanced themes — copy verbatim | Phase 3 (Advanced) |
-| [themes/](assets/themes/) | Theme CSS files (dark-interactive, excalidraw, excalidraw-dark, editorial-light) — pick one | Phase 3 (Advanced) |
+| [themes/](assets/themes/) | Theme CSS files (dark-interactive, excalidraw, excalidraw-dark, editorial-light, binary-architect) — pick one | Phase 3 (Advanced) |
 | [dark-interactive-nav.js](assets/dark-interactive-nav.js) | Navigation JS — copy verbatim | Phase 3 (Advanced) |
 | [scripts/extract-pptx.py](scripts/extract-pptx.py) | Python script for PPT content extraction | Phase 4 (PPT conversion) |
 | [conversion-patterns.md](references/conversion-patterns.md) | Framework detection patterns and extraction rules | Phase 5 (HTML conversion) |

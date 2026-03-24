@@ -135,6 +135,7 @@ or specify a theme:
 | Excalidraw Light | Hand-drawn, sketchy, whiteboard on white |
 | Excalidraw Dark | Hand-drawn, sketchy, whiteboard on dark |
 | Editorial Light | Luminous, editorial, tech-forward minimalism |
+| Binary Architect | Hacker-elite, sharp corners, neon on void-black |
 
 **Components included:**
 

@@ -95,7 +95,7 @@ When modifying existing presentations, make **minimal changes** — only touch w
 - Adding text: max 4-6 bullets per slide. Exceeds? Split into multiple slides
 - If modifications will cause overflow, split content and inform the user
 
-**After ANY modification, verify all 7 spec rules:**
+**After ANY modification, verify all 8 spec rules:**
 1. `<div class="deck" id="deck">` exists
 2. All slides are `<div class="slide">` with sequential `data-slide="0"` through `data-slide="N"`
 3. First slide has `class="slide active"`, no other slide has `active`
@@ -103,6 +103,7 @@ When modifying existing presentations, make **minimal changes** — only touch w
 5. All CSS inline (except font imports)
 6. All JS inline (except Chart.js CDN)
 7. No broken numbering gaps after insertions or deletions
+8. `<meta name="generator" content="html-slides vX.Y.Z">` exists in `<head>`
 
 **If any rule fails after editing, fix it before saving.**
 
@@ -393,7 +394,7 @@ Always generate the `.notes.json` file. If the source had speaker notes, preserv
 
 ### Step 5.5: Validate & Save
 
-Before saving, verify all 7 spec rules pass. Fix any that fail. Save both the HTML and `.notes.json` files.
+Before saving, verify all 8 spec rules pass. Fix any that fail. Save both the HTML and `.notes.json` files.
 
 ---
 

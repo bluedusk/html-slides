@@ -2,17 +2,18 @@
 
 ## Version Locations
 
-The version number lives in **3 files**. All must be updated together:
+The version number lives in **4 locations**. All must be updated together:
 
 | File | Field |
 |------|-------|
 | `.claude-plugin/plugin.json` | `"version"` |
 | `.claude-plugin/marketplace.json` | `"version"` (2 entries — both plugins) |
 | `SKILL.md` | frontmatter `version` |
+| `references/html-template.md` | `<meta name="generator" content="html-slides vX.Y.Z">` |
 
 ## How to Bump
 
-1. Update all 3 files to the new version
+1. Update all 4 locations to the new version
 2. Commit with message: `Bump to vX.Y.Z`
 3. Push to main
 

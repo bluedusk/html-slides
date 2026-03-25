@@ -13,6 +13,7 @@ Every generated HTML file **must** comply with these rules:
 5. Global `function goTo()`, `function next()`, `function prev()` in `<script>`
 6. All CSS inline (no external `<link rel="stylesheet">` except font imports)
 7. All JS inline (no external `<script src>` except Chart.js CDN when needed)
+8. Has `<meta name="generator" content="html-slides vX.Y.Z">` in `<head>`
 
 ## Base HTML Structure
 
@@ -22,6 +23,7 @@ Every generated HTML file **must** comply with these rules:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="html-slides v0.6.6">
     <title>Presentation Title</title>
 
     <!-- Fonts: use Fontshare or Google Fonts — never system fonts -->

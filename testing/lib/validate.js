@@ -15,6 +15,7 @@ export function validateSlides(html) {
     checkGlobalGoTo(root),
     checkInlineCSS(root, html),
     checkInlineJS(root),
+    checkGeneratorMeta(root),
   ];
 }
 
@@ -170,6 +171,19 @@ function checkInlineJS(root) {
     return fail('inline-js', `Found external script(s): ${violations.join(', ')} — only Chart.js CDN allowed`);
   }
   return pass('inline-js', 'All JS is inline (Chart.js CDN allowed)');
+}
+
+// Rule 8: Generator meta tag
+function checkGeneratorMeta(root) {
+  const meta = root.querySelector('meta[name="generator"]');
+  if (!meta) {
+    return fail('generator-meta', 'Missing <meta name="generator" content="html-slides vX.Y.Z"> in <head>');
+  }
+  const content = meta.getAttribute('content') || '';
+  if (!content.startsWith('html-slides')) {
+    return fail('generator-meta', `Generator meta found but content is "${content}" — expected "html-slides vX.Y.Z"`);
+  }
+  return pass('generator-meta', `Generator meta: ${content}`);
 }
 
 // --- Helpers ---

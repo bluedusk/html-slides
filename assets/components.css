@@ -509,3 +509,44 @@ h2 { font-size: clamp(28px,3.5vw,48px); font-weight: 800; line-height: 1.15; let
 .table-wrap tbody tr:hover { background: var(--bg-card-hover); }
 .table-wrap .cell-highlight { font-weight: 600; }
 .table-wrap .cell-muted { color: var(--text-muted); }
+
+/* ====== IMAGE SLIDE ====== */
+.image-frame {
+  margin-top: 24px; display: flex; flex-direction: column; align-items: center;
+  max-width: 920px; width: 100%;
+}
+.image-frame .slide-image {
+  max-width: 100%; max-height: min(50vh, 400px);
+  object-fit: contain; border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.image-frame:hover .slide-image {
+  transform: scale(1.01);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+.image-frame.image-screenshot .slide-image {
+  border: 1px solid var(--border); border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+.image-frame.image-screenshot:hover .slide-image {
+  border-color: var(--border-hover);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+}
+.image-frame.image-logo .slide-image {
+  max-height: min(30vh, 200px);
+}
+.image-fullbleed {
+  position: absolute; inset: 0; z-index: 0;
+}
+.image-fullbleed img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(0.25) saturate(1.2);
+}
+.image-overlay {
+  position: relative; z-index: 1; text-align: center; padding: 36px 48px;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  width: 100%; height: 100%;
+}
+.image-overlay h2, .image-overlay .subtitle {
+  text-shadow: 0 2px 16px rgba(0,0,0,0.8);
+}

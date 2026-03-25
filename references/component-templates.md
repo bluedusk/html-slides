@@ -6,7 +6,7 @@ Structured, copy-ready HTML component templates for building slide presentations
 
 Use these templates when:
 - You need **deterministic, consistent output** across different AI agents
-- The content fits naturally into one of the 13 component types below
+- The content fits naturally into one of the 14 component types below
 - You want interactive elements (flip cards, expandable cards, code blocks)
 
 For more creative, style-diverse presentations, use the style presets in [STYLE_PRESETS.md](STYLE_PRESETS.md) instead.
@@ -31,6 +31,7 @@ Use this table to pick the right component for each piece of content:
 | 3-6 status items or timeline | **Status Timeline** | Vertical list with colored dots |
 | Data visualization, trends, distributions | **Chart** | Canvas-rendered Chart.js with automatic theming |
 | Structured data, comparisons, specs | **Table** | Styled rows with hover and highlights |
+| Single image, screenshot, diagram, photo | **Image Slide** | Heading + image with optional caption |
 | Resources, links, next steps | **CTA Box** | Gradient box with bullet list |
 
 ## Recommended Slide Narrative Structure
@@ -41,7 +42,7 @@ Use this table to pick the right component for each piece of content:
 | 2 | **Hook** — dramatic statement or question | Statement Slide |
 | 3-4 | **Problem** — what's broken/missing | Flip Cards or Statement |
 | 5-6 | **Solution** — introduce the answer | VS/Comparison or Architecture |
-| 7-9 | **Evidence** — show how it works | Code Block, Stats, Chart, Table, Expandable Cards |
+| 7-9 | **Evidence** — show how it works | Code Block, Stats, Chart, Table, Image Slide, Expandable Cards |
 | 10-11 | **Depth** — deeper details or comparison | Auth Flip Compare, Status Timeline |
 | 12-13 | **Impact** — results, metrics, outcomes | Stats Cards or Statement |
 | Last | **CTA** — resources and next steps | CTA Box (always) |
@@ -496,6 +497,62 @@ Use `cell-highlight` on the first column (or key cells) for emphasis. Use `cell-
 **Content limits**: Max 5 columns, 6 rows to fit 100vh. If data exceeds this, split across multiple slides or use a Chart instead.
 
 **When to use**: Feature comparisons, pricing tables, spec sheets, benchmark results, structured data with multiple attributes.
+
+### 14. Image Slide
+
+A single image with heading, optional subtitle, and optional caption. Supports screenshots, diagrams, photos, and logos.
+
+```html
+<div class="slide" data-slide="[N]">
+  <p class="slide-tag anim-1">[TAG]</p>
+  <h2 class="anim-2">[HEADING] <span class="highlight-[COLOR]">[HIGHLIGHT]</span></h2>
+  <div class="image-frame anim-3">
+    <img src="assets/[IMAGE_FILE]" alt="[ALT_TEXT]" class="slide-image">
+  </div>
+  <p class="subtitle anim-4" style="font-size:clamp(12px,1.1vw,14px);color:var(--text-dim);">[CAPTION_OR_CREDIT]</p>
+</div>
+```
+
+**Variants:**
+
+Screenshot with border (product demos, UI screenshots):
+```html
+<div class="image-frame anim-3 image-screenshot">
+  <img src="assets/[IMAGE_FILE]" alt="[ALT_TEXT]" class="slide-image">
+</div>
+```
+
+Logo on title/closing slide (smaller, centered):
+```html
+<div class="image-frame anim-3 image-logo">
+  <img src="assets/[LOGO_FILE]" alt="[ALT_TEXT]" class="slide-image">
+</div>
+```
+
+Full-bleed background with text overlay (use sparingly):
+```html
+<div class="slide" data-slide="[N]" style="padding:0;">
+  <div class="image-fullbleed anim-1">
+    <img src="assets/[IMAGE_FILE]" alt="[ALT_TEXT]">
+  </div>
+  <div class="image-overlay anim-2">
+    <h2>[HEADING]</h2>
+    <p class="subtitle">[SUBTITLE]</p>
+  </div>
+</div>
+```
+
+**Image sources:**
+- User-provided files → copy to `assets/` folder, use relative path `src="assets/filename.png"`
+- User-pasted images → save to `assets/` folder (the AI agent writes the file), use relative path
+- Never use base64 for images larger than 50KB — always use file paths
+
+**Processing rules:**
+- Images > 1MB → resize to max 1200px dimension (see Image Pipeline in `html-template.md`)
+- Logos on rounded themes → circular crop
+- Always preserve original files, save processed versions with `_processed` suffix
+
+**When to use**: Product screenshots, architecture diagrams, photos, logos, any visual that tells the story better than text. One image per slide — if you have multiple images, use multiple image slides.
 
 ---
 

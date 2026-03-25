@@ -2,7 +2,7 @@
 
 [![Version](https://img.shields.io/github/v/tag/bluedusk/html-slides?label=version)](https://github.com/bluedusk/html-slides/releases) [![frontend-slides compatible](https://img.shields.io/badge/frontend--slides-v2.0.0_compatible-blue)](https://github.com/zarazhangrui/frontend-slides) [![Agent Skills](https://img.shields.io/badge/Agent_Skills-compatible-green)](https://agentskills.io) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A skill for creating stunning, animation-rich HTML presentations — from scratch, by converting PowerPoint files, or by converting any existing HTML. Works with AI coding agents (Claude Code, Gemini CLI, GitHub Copilot, OpenAI Codex).
+A skill for creating stunning, animation-rich HTML presentations — from scratch, by converting PowerPoint files, or by converting any existing HTML. Works with AI coding agents (Claude Code, Gemini CLI, OpenAI Codex).
 
 **[htmlslides.com](https://htmlslides.com)** | **[Quick Start](QUICKSTART.md)** | **[Live Demo: Introducing HTML Slides](https://bluedusk.github.io/html-slides/introducing-html-slides.html)**
 
@@ -17,7 +17,7 @@ It also offers a **Vibe mode** with 12 creative themes for non-technical present
 ### Key Features
 
 - **Zero Dependencies** — Single HTML files with inline CSS/JS. No npm, no build tools, no frameworks.
-- **Agent Skills Standard** — One install works across Claude Code, Gemini CLI, GitHub Copilot, and OpenAI Codex.
+- **Agent Skills Standard** — One install works across Claude Code, Gemini CLI, and OpenAI Codex.
 - **Visual Style Discovery** — Can't articulate design preferences? Pick from generated visual previews.
 - **Rich Component Library** — Flip cards, expandable cards, code blocks, architecture flows, stats cards, charts (via Chart.js), tables, timelines, and more.
 - **PPT Conversion** — Convert existing PowerPoint files to web, preserving all images and content.
@@ -75,13 +75,6 @@ ln -s /path/to/html-slides ~/.gemini/skills/html-slides
 
 # Project-level (available only in current project)
 ln -s /path/to/html-slides .gemini/skills/html-slides
-```
-
-#### GitHub Copilot
-
-```bash
-# Project-level only (Copilot reads .github/skills/)
-ln -s /path/to/html-slides .github/skills/html-slides
 ```
 
 #### OpenAI Codex

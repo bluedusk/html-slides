@@ -35,22 +35,22 @@ function assertRulePasses(results, ruleName) {
 // --- Positive tests ---
 
 describe('valid files', () => {
-  it('passes all 7 rules for valid-minimal.html', () => {
+  it('passes all 8 rules for valid-minimal.html', () => {
     const results = validateSlides(loadFixture('valid-minimal.html'));
-    assert.equal(results.length, 7);
+    assert.equal(results.length, 8);
     assertAllPass(results);
   });
 
-  it('passes all 7 rules for valid-with-chartjs.html', () => {
+  it('passes all 8 rules for valid-with-chartjs.html', () => {
     const results = validateSlides(loadFixture('valid-with-chartjs.html'));
-    assert.equal(results.length, 7);
+    assert.equal(results.length, 8);
     assertAllPass(results);
   });
 
-  it('passes all 7 rules for intro-to-mcp.html', () => {
+  it('passes all 8 rules for intro-to-mcp.html', () => {
     const html = fs.readFileSync(path.join(examplesDir, 'intro-to-mcp.html'), 'utf-8');
     const results = validateSlides(html);
-    assert.equal(results.length, 7);
+    assert.equal(results.length, 8);
     assertAllPass(results);
   });
 });
@@ -190,9 +190,9 @@ describe('edge cases', () => {
     assertRulePasses(results, 'global-goto');
   });
 
-  it('returns 7 results always', () => {
+  it('returns 8 results always', () => {
     const results = validateSlides('<html><body></body></html>');
-    assert.equal(results.length, 7);
+    assert.equal(results.length, 8);
   });
 });
 

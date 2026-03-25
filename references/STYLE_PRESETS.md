@@ -389,7 +389,7 @@ Curated visual styles for Frontend Slides. Each preset is inspired by real desig
 - Offset drop shadows (hand-drawn feel)
 - Rounded corners (14px) on all components
 - Subdued glow blobs and particles for light background
-- Same 13 component templates as Obsidian
+- Same 14 component templates as Obsidian
 
 **Special:** Uses the same component templates as Obsidian. Load [excalidraw.css](../assets/themes/excalidraw.css) as the theme CSS alongside the shared component CSS.
 
@@ -427,7 +427,7 @@ Curated visual styles for Frontend Slides. Each preset is inspired by real desig
 - Light offset drop shadows
 - Rounded corners (14px) on all components
 - Subtle glow blobs and particles
-- Same 13 component templates as Obsidian
+- Same 14 component templates as Obsidian
 
 **Special:** Uses the same component templates as Obsidian. Load [excalidraw-dark.css](../assets/themes/excalidraw-dark.css) as the theme CSS alongside the shared component CSS.
 
@@ -469,7 +469,7 @@ Curated visual styles for Frontend Slides. Each preset is inspired by real desig
 - Primary-to-container gradient accents (blue #0060aa → #58a6ff)
 - Code windows stay dark (editorial contrast against light canvas)
 - Surface hierarchy: surface → surface-container-low → surface-container-lowest
-- Same 13 component templates as Obsidian
+- Same 14 component templates as Obsidian
 
 **Special:** Uses the same component templates as Obsidian. Load [editorial-light.css](../assets/themes/editorial-light.css) as the theme CSS alongside the shared component CSS.
 
@@ -512,7 +512,7 @@ Curated visual styles for Frontend Slides. Each preset is inspired by real desig
 - Ghost borders (outline-variant at 20% opacity)
 - Monospaced body text throughout (JetBrains Mono)
 - All headings uppercase with letter-spacing
-- Same 13 component templates as Obsidian
+- Same 14 component templates as Obsidian
 
 **Special:** Uses the same component templates as Obsidian. Load [binary-architect.css](../assets/themes/binary-architect.css) as the theme CSS alongside the shared component CSS.
 

@@ -165,4 +165,4 @@ Export my presentation as a PDF
 curl -sSL https://raw.githubusercontent.com/bluedusk/html-slides/main/remote-install.sh | bash
 ```
 
-Works with Claude Code, Gemini CLI, GitHub Copilot, and OpenAI Codex. See [README](README.md) for details.
+Works with Claude Code, Gemini CLI, and OpenAI Codex. See [README](README.md) for details.

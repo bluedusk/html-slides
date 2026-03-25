@@ -12,7 +12,7 @@ Create zero-dependency, animation-rich HTML presentations that run entirely in t
 
 ## Agent Compatibility
 
-This skill is optimized for **Claude Code** and uses `AskUserQuestion` for interactive prompts. If `AskUserQuestion` is not available (Gemini CLI, GitHub Copilot, OpenAI Codex, or other agents), ask the same questions as plain text in the conversation and wait for the user to respond before proceeding.
+This skill is optimized for **Claude Code** and uses `AskUserQuestion` for interactive prompts. If `AskUserQuestion` is not available (Gemini CLI, OpenAI Codex, or other agents), ask the same questions as plain text in the conversation and wait for the user to respond before proceeding.
 
 ## Core Principles
 
@@ -115,7 +115,7 @@ When modifying existing presentations, make **minimal changes** — only touch w
 
 Ask which mode they want (header: "Mode"):
 
-- **Pro (Recommended)** — Structured interactive components: flip cards, charts, tables, code blocks, architecture flows, and more. Multiple themes available. Best for technical talks, product demos, and data-rich presentations.
+- **Pro (Recommended)** — Structured interactive components: flip cards, charts, tables, code blocks, architecture flows, image slides, and more. Multiple themes available. Supports user-provided images. Best for technical talks, product demos, and data-rich presentations.
 - **Vibe** (Creative themes) — AI interprets your content freely with distinctive visual styles. Best for pitch decks, keynotes, and non-technical presentations.
 
 If the user already specified a mode or theme in their prompt, skip this question.
@@ -147,9 +147,26 @@ Do you need to edit text directly in the browser after generation? Options:
 
 If the user already specified a theme in their prompt, skip Question 3 and use that theme. If no preference, default to Obsidian.
 
+**Question 4 — Images** (header: "Images"):
+Do you have images to include? Options:
+- "No images" — CSS-generated visuals only
+- "Yes, I have an image folder" — Provide a folder path to scan
+- "Yes, I'll paste/provide images" — Share images inline during content review
+
+If user already provided or pasted images in their prompt, skip this question and note the images for Phase 3.
+
 **Remember the editing choice — it determines whether edit-related code is included in Phase 3.**
 
-If user has content, ask them to share it. Then go to Phase 3.
+If user has content, ask them to share it.
+
+**If images were provided (folder or inline):**
+1. **View each image** — Use the Read tool (Claude is multimodal)
+2. **Evaluate** — For each: what it shows, usable or not (with reason), dominant colors
+3. **Plan placement** — Match images to slides using the **Image Slide** component template. Logos go on title/closing slides. Screenshots and diagrams get dedicated image slides.
+4. **Process if needed** — Oversized images (>1MB): resize. Logos on rounded themes: circular crop. See Image Pipeline in `references/html-template.md`.
+5. **Copy to assets/** — Place images in an `assets/` folder next to the HTML file. Use relative `src="assets/..."` paths.
+
+Then go to Phase 3.
 
 Each theme uses the same components and navigation — only the visual style changes. Theme files are in `assets/themes/`.
 

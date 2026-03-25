@@ -243,11 +243,36 @@ This skill uses **progressive disclosure** — the main `SKILL.md` is a concise 
 | `assets/dark-interactive-nav.js` | Navigation JS + Chart.js integration | Phase 3 (Pro) |
 | `scripts/extract-pptx.py` | PPT content extraction | Phase 4 (PPT conversion) |
 | `references/conversion-patterns.md` | Framework detection patterns | Phase 5 (HTML conversion) |
+| `scripts/deploy.sh` | Deploy to Vercel | Phase 7 (sharing) |
+| `scripts/export-pdf.sh` | Export slides to PDF | Phase 7 (sharing) |
+
+## Sharing Your Presentations
+
+After creating a presentation, the skill offers two ways to share:
+
+### Deploy to a Live URL
+
+```bash
+bash scripts/deploy.sh ./presentation.html
+```
+
+Deploys to a permanent, shareable URL via [Vercel](https://vercel.com) (free). Works on any device.
+
+### Export to PDF
+
+```bash
+bash scripts/export-pdf.sh ./presentation.html
+bash scripts/export-pdf.sh ./presentation.html --compact   # smaller file
+```
+
+Screenshots each slide and combines into a PDF. Uses [Playwright](https://playwright.dev) (auto-installs).
 
 ## Requirements
 
 - Any agent supporting the [Agent Skills standard](https://agentskills.io)
 - For PPT conversion: Python with `python-pptx` library
+- For URL deployment: Node.js + Vercel account (free)
+- For PDF export: Node.js (Playwright installs automatically)
 
 ## Credits
 

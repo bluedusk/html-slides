@@ -147,6 +147,18 @@ Change the theme to Excalidraw Light
 
 ---
 
+## Share it
+
+```
+Deploy my presentation to a live URL
+```
+
+```
+Export my presentation as a PDF
+```
+
+---
+
 ## Install
 
 ```bash

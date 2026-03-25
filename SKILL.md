@@ -1,7 +1,7 @@
 ---
 name: html-slides
 metadata:
-  version: "0.6.5"
+  version: "0.6.6"
   author: danzhu
 description: Generate polished single-file HTML slide presentations with interactive components (flip cards, charts, tables, code blocks, architecture flows, stats, timelines, and more) or creative visual themes. Use this skill whenever the user wants to create slides, presentations, decks, or any visual slide-based content as HTML. Also trigger when the user invokes /html-slides or mentions creating an HTML presentation, pitch deck, or slide deck.
 ---
@@ -409,6 +409,51 @@ Before saving, verify all 7 spec rules pass. Fix any that fail. Save both the HT
 
 ---
 
+## Phase 7: Share & Export (Optional)
+
+After delivery, ask: _"Would you like to share this presentation? I can deploy it to a live URL or export it as a PDF."_
+
+Options: **Deploy to URL** / **Export to PDF** / **Both** / **No thanks**
+
+If the user declines, stop here.
+
+### 7A: Deploy to a Live URL (Vercel)
+
+Deploys the presentation to a permanent shareable URL. Works on any device.
+
+1. **Check prerequisites** — Run `npx vercel --version`. If not found, user needs Node.js first.
+2. **Check login** — Run `npx vercel whoami`. If not logged in, guide through:
+   - Sign up at https://vercel.com/signup (free)
+   - Run `vercel login` to authorize
+3. **Deploy** — Run:
+   ```bash
+   bash scripts/deploy.sh <path-to-presentation>
+   ```
+   Accepts a single HTML file or a folder with index.html.
+4. **Share the URL** — Tell the user the live URL, that it works on any device, and that they can delete it from https://vercel.com/dashboard later.
+
+**Requires:** Node.js + Vercel account (free tier)
+
+### 7B: Export to PDF
+
+Captures each slide as a screenshot and combines into a single PDF. Animations are not preserved (static snapshot).
+
+1. **Run:**
+   ```bash
+   bash scripts/export-pdf.sh <path-to-html> [output.pdf]
+   ```
+   If no output path given, saves next to the HTML file.
+2. **What happens:** Playwright opens a headless browser, screenshots each slide at 1920x1080, assembles PDF. Auto-installs Playwright + Chromium on first run.
+3. **Large files:** If PDF exceeds 10MB, offer compact mode:
+   ```bash
+   bash scripts/export-pdf.sh <path-to-html> [output.pdf] --compact
+   ```
+   Renders at 1280x720 — typically 50-70% smaller.
+
+**Requires:** Node.js (Playwright auto-installs)
+
+---
+
 ## Supporting Files
 
 | File | Purpose | When to Read |
@@ -423,3 +468,5 @@ Before saving, verify all 7 spec rules pass. Fix any that fail. Save both the HT
 | [dark-interactive-nav.js](assets/dark-interactive-nav.js) | Navigation JS — copy verbatim | Phase 3 (Pro) |
 | [scripts/extract-pptx.py](scripts/extract-pptx.py) | Python script for PPT content extraction | Phase 4 (PPT conversion) |
 | [conversion-patterns.md](references/conversion-patterns.md) | Framework detection patterns and extraction rules | Phase 5 (HTML conversion) |
+| [scripts/deploy.sh](scripts/deploy.sh) | Deploy slides to Vercel for instant sharing | Phase 7 (sharing) |
+| [scripts/export-pdf.sh](scripts/export-pdf.sh) | Export slides to PDF | Phase 7 (sharing) |

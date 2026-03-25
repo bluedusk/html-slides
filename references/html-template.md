@@ -23,7 +23,7 @@ Every generated HTML file **must** comply with these rules:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="html-slides v0.6.6">
+    <meta name="generator" content="html-slides v0.6.7">
     <title>Presentation Title</title>
 
     <!-- Fonts: use Fontshare or Google Fonts — never system fonts -->

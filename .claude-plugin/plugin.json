@@ -1,7 +1,7 @@
 {
   "name": "html-slides",
   "description": "Generate or convert single-file HTML slide presentations with interactive components (flip cards, charts, tables, code blocks, stats, architecture flows, and more) or creative visual themes.",
-  "version": "0.6.6",
+  "version": "0.6.7",
   "author": {
     "name": "danzhu"
   }

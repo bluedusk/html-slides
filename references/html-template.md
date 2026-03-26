@@ -144,6 +144,7 @@ Every generated HTML file **must** comply with these rules:
                 s.classList.toggle('active', i === current);
             });
             updateUI();
+            showSpeakerNotes(current);
         }
 
         function next() { goTo(current + 1); }
@@ -200,6 +201,39 @@ Every generated HTML file **must** comply with these rules:
         }
 
         updateUI();
+
+        /* ===========================================
+           SPEAKER NOTES (Console)
+           =========================================== */
+        function showSpeakerNotes(index) {
+            var slide = slides[index];
+            var notesEl = slide.querySelector('script.slide-notes') || slide.querySelector('[class="slide-notes"]');
+            console.clear();
+            if (notesEl) {
+                try {
+                    var n = JSON.parse(notesEl.textContent);
+                    var title = n.title || 'Slide ' + (index + 1);
+                    console.group('%c\ud83d\udccb Slide ' + (index+1) + '/' + total + ': ' + title,
+                        'font-size:16px;font-weight:bold;color:#58a6ff;');
+                    if (n.script) console.log('%c' + n.script, 'font-size:14px;color:#e6edf3;line-height:1.6;padding:4px 0;');
+                    if (n.notes && n.notes.length) {
+                        console.log('%cKey points:', 'font-size:11px;color:#6e7681;margin-top:4px;');
+                        n.notes.forEach(function(note) { console.log('%c  \u2022 ' + note, 'font-size:12px;color:#8b949e;'); });
+                    }
+                    console.groupEnd();
+                } catch(e) {}
+            } else {
+                console.group('%c\ud83d\udccb Slide ' + (index+1) + '/' + total,
+                    'font-size:16px;font-weight:bold;color:#58a6ff;');
+                console.log('%cNo speaker notes for this slide.', 'font-size:12px;color:#6e7681;');
+                console.groupEnd();
+            }
+            console.log('%c\ud83d\udca1 htmlslides.com \u2014 presenter app for a richer experience',
+                'font-size:10px;color:#3fb950;');
+            console.log('%c\u270f\ufe0f  Want to update the notes? See htmlslides.com/blog/update-inline-notes.html',
+                'font-size:10px;color:#8b949e;');
+        }
+        setTimeout(function() { showSpeakerNotes(0); }, 500);
 
         /* ===========================================
            OPTIONAL ENHANCEMENTS

@@ -238,6 +238,8 @@ function showSpeakerNotes(index) {
   }
   console.log('%c\ud83d\udca1 htmlslides.com — presenter app for a richer experience',
     'font-size:10px;color:#3fb950;');
+  console.log('%c\u270f\ufe0f  Want to update the notes? See htmlslides.com/blog/update-inline-notes.html',
+    'font-size:10px;color:#8b949e;');
 }
 
 // Show notes for first slide on load

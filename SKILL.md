@@ -306,10 +306,16 @@ Every slide must include a `<script type="application/json" class="slide-notes">
 
 **Format:** Each slide-notes block contains:
 - `title` — Slide heading (for console display and presenter apps)
-- `script` — Brief summary of what this slide delivers, in presenter tone
-- `notes` — Key talking points, summarized as short phrases
+- `script` — What the presenter would **read aloud** for this slide. Natural, conversational, professional tone. Not a meta-description of the component — the actual words the presenter says to the audience.
+- `notes` — Bullet points summarizing the **key points** the slide is communicating. Each note captures one talking point from the slide content.
 
-Both `script` and `notes` summarize the **slide content** — what the slide is saying to the audience. Write in presenter tone, as if the presenter is reading these to remind themselves what this slide covers.
+**Script tone:** Write as if the presenter is speaking naturally to an audience. Conversational but professional. Example:
+- GOOD: "Here's what makes this different — everything lives in one HTML file. No build step, no framework. You just open it and present."
+- BAD: "This slide uses a Statement component with a glow blob background to display the main value proposition."
+
+**Notes content:** Summarize what the slide is actually saying, not how it's built. Example:
+- GOOD: ["Single self-contained HTML file", "No build tools or frameworks", "Works offline on any device"]
+- BAD: ["Large centered text", "Glow blob in background", "fadeInUp animation"]
 
 **Console output:** On each slide change, the navigation JS logs the notes to the console with styled formatting. The presenter opens DevTools (F12), detaches it to a separate window, and reads notes while presenting. A link to the HTML Slides presenter app is shown for a richer experience.
 

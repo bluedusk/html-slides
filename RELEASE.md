@@ -2,7 +2,7 @@
 
 ## Version Locations
 
-The version number lives in **4 locations**. All must be updated together:
+The version number lives in **5 locations**. All must be updated together:
 
 | File | Field |
 |------|-------|
@@ -10,6 +10,7 @@ The version number lives in **4 locations**. All must be updated together:
 | `.claude-plugin/marketplace.json` | `"version"` (2 entries — both plugins) |
 | `SKILL.md` | frontmatter `version` |
 | `references/html-template.md` | `<meta name="generator" content="html-slides vX.Y.Z">` |
+| `references/presentation-layer.md` | `<meta name="generator" content="html-slides vX.Y.Z">` |
 
 ## How to Bump
 

@@ -6,12 +6,13 @@ This project (html-slides) builds on top of **frontend-slides** (https://github.
 
 ## Version Bumps
 
-See [RELEASE.md](RELEASE.md) for the release process. Version must be updated in **all 4 locations** simultaneously — never update just one:
+See [RELEASE.md](RELEASE.md) for the release process. Version must be updated in **all 5 locations** simultaneously — never update just one:
 
 1. `.claude-plugin/plugin.json`
 2. `.claude-plugin/marketplace.json` (2 entries)
 3. `SKILL.md` frontmatter
 4. `references/html-template.md` — the `<meta name="generator">` tag version
+5. `references/presentation-layer.md` — the `<meta name="generator">` tag version
 
 ## Project Structure
 

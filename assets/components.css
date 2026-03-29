@@ -550,3 +550,104 @@ h2 { font-size: clamp(28px,3.5vw,48px); font-weight: 800; line-height: 1.15; let
 .image-overlay h2, .image-overlay .subtitle {
   text-shadow: 0 2px 16px rgba(0,0,0,0.8);
 }
+
+/* ====== CONTENT BLOCK ====== */
+/* The default content slide component: title + text.
+   4 variants: Statement (default), Numbered, Problem/Fix, Key Point.
+   Uses theme variables for automatic theming. */
+
+.cb-wrap {
+  width: 100%; max-width: 800px; text-align: left;
+  display: flex; flex-direction: column; gap: clamp(8px, 1.5vh, 16px);
+}
+
+/* Number badge — for numbered/listicle slides */
+.cb-number {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: clamp(13px, 1.2vw, 16px); font-weight: 700;
+  letter-spacing: 0.1em; color: var(--text-dim);
+  opacity: 0.5;
+}
+
+/* Heading — left-aligned slide title */
+.cb-heading {
+  font-size: clamp(28px, 3.5vw, 48px); font-weight: 800;
+  line-height: 1.15; letter-spacing: -0.5px;
+  color: var(--text);
+}
+
+/* Body text — the main paragraph(s) */
+.cb-body {
+  font-size: clamp(15px, 1.5vw, 20px); line-height: 1.6;
+  color: var(--text-muted); max-width: 680px;
+}
+
+/* Accent span inside body text */
+.cb-body .cb-accent {
+  font-weight: 600; color: var(--text);
+}
+
+/* -- Problem / Fix pair -- */
+.cb-pair {
+  display: flex; gap: clamp(10px, 1.5vw, 20px);
+  width: 100%; margin-top: clamp(4px, 1vh, 8px);
+}
+@media (max-width: 700px) {
+  .cb-pair { flex-direction: column; }
+}
+
+.cb-card {
+  flex: 1; padding: clamp(14px, 2vw, 24px);
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 14px;
+  transition: all 0.3s ease;
+}
+.cb-card:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.cb-card.problem {
+  background: rgba(248, 81, 73, 0.04);
+  border-color: rgba(248, 81, 73, 0.2);
+}
+.cb-card.fix {
+  border-color: rgba(88, 166, 255, 0.25);
+}
+
+/* Accent-colored fix cards — set via inline style or accent class */
+.cb-card.fix.accent-green { border-color: rgba(63, 185, 80, 0.25); }
+.cb-card.fix.accent-orange { border-color: rgba(240, 136, 62, 0.25); }
+.cb-card.fix.accent-purple { border-color: rgba(163, 113, 247, 0.25); }
+
+.cb-card-label {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: clamp(10px, 0.9vw, 12px); font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  margin-bottom: clamp(6px, 1vh, 10px);
+  display: flex; align-items: center; gap: 0.5em;
+}
+.cb-card-label.problem-label { color: var(--accent-red); }
+.cb-card-label.fix-label { color: var(--accent-blue); }
+
+.cb-card-text {
+  font-size: clamp(13px, 1.2vw, 16px); line-height: 1.55;
+  color: var(--text-muted);
+}
+.cb-card-text .cb-cmd {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-weight: 600; color: var(--accent-blue);
+}
+
+/* -- Key Point variant -- */
+.cb-keyquote {
+  font-size: clamp(24px, 3vw, 40px); font-weight: 700;
+  line-height: 1.25; color: var(--text);
+  border-left: 3px solid var(--accent-blue);
+  padding-left: clamp(12px, 2vw, 24px);
+}
+.cb-detail {
+  font-size: clamp(14px, 1.3vw, 18px); line-height: 1.6;
+  color: var(--text-muted); max-width: 640px;
+  margin-top: clamp(6px, 1vh, 12px);
+}

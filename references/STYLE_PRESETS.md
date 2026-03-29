@@ -313,8 +313,8 @@ Curated visual styles for Frontend Slides. Each preset is inspired by real desig
 | Neon Cyber | Clash Display | Satoshi | Fontshare |
 | Terminal Green | JetBrains Mono | JetBrains Mono | JetBrains |
 | Obsidian | Inter | JetBrains Mono | Google / JetBrains |
-| Excalidraw Light | Caveat | Caveat | Google |
-| Excalidraw Dark | Caveat | Caveat | Google |
+| Excalidraw Light | Excalifont | Cascadia Code | Local / Google fallback |
+| Excalidraw Dark | Excalifont | Cascadia Code | Local / Google fallback |
 | Editorial Light | Inter | Space Grotesk | Google |
 | Binary Architect | Space Grotesk | JetBrains Mono | Google / JetBrains |
 
@@ -365,7 +365,7 @@ Curated visual styles for Frontend Slides. Each preset is inspired by real desig
 **Layout:** Centered content on white background. Sketch-style borders and fills.
 
 **Typography:**
-- Body: `Caveat` (hand-drawn feel), cursive
+- Body: `Excalifont` (Excalidraw's hand-drawn font), cursive
 - Mono: `Cascadia Code`
 
 **Colors:**
@@ -408,7 +408,7 @@ Curated visual styles for Frontend Slides. Each preset is inspired by real desig
 **Layout:** Centered content on dark background. Sketch-style borders and fills.
 
 **Typography:**
-- Body: `Caveat` (hand-drawn feel), cursive
+- Body: `Excalifont` (Excalidraw's hand-drawn font), cursive
 - Mono: `Cascadia Code`
 
 **Colors:**

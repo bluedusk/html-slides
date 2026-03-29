@@ -631,3 +631,99 @@ For code blocks, use `<span>` classes following the One Dark Pro theme:
 
 ### Color cycling rule
 Rotate through blue → purple → green → orange → yellow → red across slides. Don't use the same accent on consecutive slides.
+
+---
+
+## Content Block Component (#15)
+
+The default content slide: title + text. Use this when no other component fits — it's the bread-and-butter slide type. Four variants cover the most common content patterns.
+
+### 15a. Statement (Default)
+
+Title + one or two paragraphs. The simplest, most common slide type.
+
+```html
+<div class="slide" data-slide="[N]">
+  <div class="glow-blob glow-blue" style="top:30%;left:-10%;"></div>
+  <div class="cb-wrap anim-3">
+    <p class="slide-tag anim-1">[TAG]</p>
+    <h2 class="cb-heading anim-2">[HEADING] <span class="highlight-[COLOR]">[HIGHLIGHT]</span></h2>
+    <p class="cb-body anim-3">[PARAGRAPH_TEXT with <span class="cb-accent">emphasized phrases</span> for key points.]</p>
+    <p class="cb-body anim-4">[OPTIONAL_SECOND_PARAGRAPH]</p>
+  </div>
+  <script type="application/json" class="slide-notes">
+  {"title":"[TITLE]","script":"[PRESENTER_SCRIPT]","notes":["[NOTE_1]","[NOTE_2]"]}
+  </script>
+</div>
+```
+
+**When to use**: General title + paragraph content. The fallback when no other component fits. If you're unsure which component to use, use this one.
+
+### 15b. Numbered Content
+
+Number badge + title + text. For listicle-style slides (5 tips, 3 rules, 7 principles).
+
+```html
+<div class="slide" data-slide="[N]">
+  <div class="glow-blob glow-[COLOR]" style="top:-10%;right:-10%;"></div>
+  <div class="cb-wrap anim-3">
+    <span class="cb-number anim-1">[01]</span>
+    <h2 class="cb-heading anim-2">[HEADING] <span class="highlight-[COLOR]">[HIGHLIGHT]</span></h2>
+    <p class="cb-body anim-3">[PARAGRAPH_TEXT]</p>
+  </div>
+  <script type="application/json" class="slide-notes">
+  {"title":"[TITLE]","script":"[PRESENTER_SCRIPT]","notes":["[NOTE_1]","[NOTE_2]"]}
+  </script>
+</div>
+```
+
+**When to use**: Numbered items in a series — tips, steps, rules, features. Each item gets its own slide with a sequential number badge.
+
+### 15c. Problem / Fix
+
+Two side-by-side cards: a problem card and a fix card. Each card has a label and body text.
+
+```html
+<div class="slide" data-slide="[N]">
+  <div class="glow-blob glow-[COLOR]" style="top:20%;left:50%;"></div>
+  <div class="cb-wrap">
+    <span class="cb-number anim-1">[01]</span>
+    <h2 class="cb-heading anim-2">[HEADING] <span class="highlight-[COLOR]">[HIGHLIGHT]</span></h2>
+    <div class="cb-pair">
+      <div class="cb-card problem bounce-1">
+        <div class="cb-card-label problem-label">&#x26A0; The Problem</div>
+        <p class="cb-card-text">[PROBLEM_TEXT]</p>
+      </div>
+      <div class="cb-card fix bounce-2">
+        <div class="cb-card-label fix-label">&#x2713; The Fix</div>
+        <p class="cb-card-text">[FIX_TEXT with <span class="cb-cmd">/command</span> inline highlights]</p>
+      </div>
+    </div>
+  </div>
+  <script type="application/json" class="slide-notes">
+  {"title":"[TITLE]","script":"[PRESENTER_SCRIPT]","notes":["[NOTE_1]","[NOTE_2]"]}
+  </script>
+</div>
+```
+
+**When to use**: Problem + solution pairs, before/after, challenge + approach, myth vs reality. Any content with a natural two-part structure where one side is negative and the other is positive.
+
+### 15d. Key Point
+
+Large emphasis text with a left accent border, plus supporting detail below.
+
+```html
+<div class="slide" data-slide="[N]">
+  <div class="glow-blob glow-[COLOR]" style="top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+  <div class="cb-wrap anim-3">
+    <p class="slide-tag anim-1">[TAG]</p>
+    <blockquote class="cb-keyquote anim-2">[KEY_POINT_TEXT — a bold, memorable claim or insight]</blockquote>
+    <p class="cb-detail anim-3">[SUPPORTING_DETAIL — evidence, context, or explanation]</p>
+  </div>
+  <script type="application/json" class="slide-notes">
+  {"title":"[TITLE]","script":"[PRESENTER_SCRIPT]","notes":["[NOTE_1]","[NOTE_2]"]}
+  </script>
+</div>
+```
+
+**When to use**: A single impactful statement, key takeaway, memorable quote, or bold claim that deserves its own slide with visual emphasis.

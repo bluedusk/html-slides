@@ -293,6 +293,35 @@ html, body {
   color: var(--accent-blue) !important;
 }
 
+/* ====== CONTENT BLOCK ====== */
+.cb-card {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 32px rgba(25, 28, 34, 0.04) !important;
+}
+.cb-card:hover {
+  border-color: var(--border-hover) !important;
+  box-shadow: 0 8px 48px rgba(25, 28, 34, 0.08) !important;
+  transform: translateY(-3px);
+}
+.cb-card.problem {
+  border-color: rgba(186, 26, 26, 0.15) !important;
+  background: rgba(186, 26, 26, 0.02) !important;
+}
+.cb-card.problem:hover { border-color: rgba(186, 26, 26, 0.3) !important; box-shadow: 0 8px 48px rgba(186, 26, 26, 0.06) !important; }
+.cb-card.fix {
+  border-color: rgba(0, 96, 170, 0.15) !important;
+}
+.cb-card.fix:hover { border-color: rgba(0, 96, 170, 0.3) !important; box-shadow: 0 8px 48px rgba(0, 96, 170, 0.06) !important; }
+.cb-card-label { font-family: 'Space Grotesk', sans-serif !important; }
+.cb-card-label.problem-label { color: var(--accent-red) !important; }
+.cb-card-label.fix-label { color: var(--accent-blue) !important; }
+.cb-card-text { color: var(--text-muted) !important; }
+.cb-keyquote { border-left-color: var(--accent-blue) !important; }
+.cb-body { color: var(--text-muted) !important; }
+.cb-number { font-family: 'Space Grotesk', sans-serif !important; }
+
 /* ====== @keyframes override for light pulseGlow ====== */
 @keyframes pulseGlow {
   0%, 100% { box-shadow: 0 0 0 rgba(0, 96, 170, 0); }

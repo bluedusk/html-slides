@@ -5,15 +5,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Cascadia+Code:wght@400;600&display=swap');
 
 @font-face {
-  font-family: 'Virgil';
-  src: url('../fonts/Virgil.woff2') format('woff2');
+  font-family: 'Excalifont';
+  src: url('../fonts/Excalifont-Regular.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 
 :root {
-  --font-body: 'Virgil', 'Caveat', 'Segoe Print', cursive;
+  --font-body: 'Excalifont', 'Caveat', 'Segoe Print', cursive;
   --font-mono: 'Cascadia Code', monospace;
 
   --bg: #ffffff;
@@ -282,3 +282,34 @@
 .vs-card.card-right { border-width: 2px !important; }
 .auth-front.bad { border-color: var(--accent-red) !important; }
 .auth-front.good { border-color: var(--accent-green) !important; }
+
+/* ====== CONTENT BLOCK ====== */
+.cb-card {
+  border: none !important;
+  border-radius: 14px !important;
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.1) !important;
+  background:
+    repeating-linear-gradient(-37deg, transparent, transparent 4px, rgba(25,113,194,0.12) 4px, rgba(25,113,194,0.12) 5px),
+    repeating-linear-gradient(-41deg, transparent, transparent 6px, rgba(25,113,194,0.08) 6px, rgba(25,113,194,0.08) 7px),
+    var(--bg-card) !important;
+}
+.cb-card:hover {
+  box-shadow: 5px 5px 0 rgba(0,0,0,0.18) !important;
+  transform: translate(-2px, -2px);
+}
+.cb-card.problem {
+  background:
+    repeating-linear-gradient(-37deg, transparent, transparent 4px, rgba(224,49,49,0.14) 4px, rgba(224,49,49,0.14) 5px),
+    repeating-linear-gradient(-41deg, transparent, transparent 6px, rgba(224,49,49,0.09) 6px, rgba(224,49,49,0.09) 7px),
+    var(--bg-card) !important;
+}
+.cb-card.fix {
+  background:
+    repeating-linear-gradient(-37deg, transparent, transparent 4px, rgba(25,113,194,0.14) 4px, rgba(25,113,194,0.14) 5px),
+    repeating-linear-gradient(-41deg, transparent, transparent 6px, rgba(25,113,194,0.09) 6px, rgba(25,113,194,0.09) 7px),
+    var(--bg-card) !important;
+}
+.cb-card-text { font-size: clamp(15px, 1.4vw, 19px) !important; }
+.cb-card-label { font-size: clamp(12px, 1.1vw, 14px) !important; }
+.cb-body { font-size: clamp(17px, 1.6vw, 22px) !important; }
+.cb-keyquote { border-left: 3px solid var(--accent-blue) !important; }

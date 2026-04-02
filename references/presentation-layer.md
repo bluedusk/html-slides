@@ -99,5 +99,5 @@ Build navigation inline following the pattern in [html-template.md](html-templat
 
 Every presentation must include in `<head>`:
 ```html
-<meta name="generator" content="html-slides v0.9.1">
+<meta name="generator" content="html-slides v0.9.2">
 ```

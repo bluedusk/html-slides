@@ -447,19 +447,14 @@
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.js"></script>
 <script src="assets/slides-runtime.js"></script>
 <script>
   // Theme switcher
   var themePicker = document.getElementById('themePicker');
   var slideInfo = document.getElementById('slideInfo');
-  var currentTheme = 'dark-interactive';
 
   themePicker.addEventListener('change', function(e) {
-    currentTheme = e.target.value;
-    document.getElementById('theme-css').href = 'assets/themes/' + currentTheme + '.css';
-    // Redraw rough borders after theme CSS loads
-    setTimeout(drawRoughBorders, 100);
+    document.getElementById('theme-css').href = 'assets/themes/' + e.target.value + '.css';
   });
 
   // Show component name for current slide
@@ -475,74 +470,6 @@
     slideInfo.textContent = 'Component: ' + (componentNames[current] || '');
   };
   slideInfo.textContent = 'Component: ' + componentNames[0];
-
-  // Rough.js hand-drawn borders for Excalidraw themes
-  function drawRoughBorders() {
-    // Remove existing rough borders
-    document.querySelectorAll('.rough-border').forEach(function(el) { el.remove(); });
-
-    // Only draw for excalidraw themes
-    if (!currentTheme.startsWith('excalidraw')) return;
-
-    var isDark = currentTheme === 'excalidraw-dark';
-    var strokeColor = isDark ? '#e3e3e8' : '#1e1e1e';
-
-    var targets = document.querySelectorAll(
-      '.flip-front, .flip-back, .card-v2, .stat-card, .arch-box, .vs-card, ' +
-      '.auth-front, .auth-back, .status-item, .chart-container, .table-wrap, ' +
-      '.cta-box, .code-window, .vs-plus'
-    );
-
-    targets.forEach(function(el) {
-      var w = el.offsetWidth;
-      var h = el.offsetHeight;
-      if (w === 0 || h === 0) return;
-
-      var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      svg.setAttribute('width', w);
-      svg.setAttribute('height', h);
-      svg.classList.add('rough-border');
-
-      var rc = rough.svg(svg);
-
-      // Detect accent color from element
-      var accentColor = strokeColor;
-      if (el.classList.contains('border-orange') || el.classList.contains('glow-orange') || el.classList.contains('box-yellow')) accentColor = isDark ? '#ff922b' : '#e8590c';
-      if (el.classList.contains('border-yellow')) accentColor = isDark ? '#fcc419' : '#e8b627';
-      if (el.classList.contains('border-red') || el.classList.contains('bad')) accentColor = isDark ? '#ff6b6b' : '#e03131';
-      if (el.classList.contains('glow-blue') || el.classList.contains('box-blue') || el.classList.contains('card-right')) accentColor = isDark ? '#4dabf7' : '#1971c2';
-      if (el.classList.contains('glow-purple') || el.classList.contains('card-left')) accentColor = isDark ? '#cc5de8' : '#9c36b5';
-      if (el.classList.contains('glow-green') || el.classList.contains('box-green') || el.classList.contains('good')) accentColor = isDark ? '#51cf66' : '#2f9e44';
-
-      // Draw rounded rectangle as a hand-drawn path
-      var r = 14;
-      var x1 = 1, y1 = 1, x2 = w - 2, y2 = h - 2;
-      var path = 'M ' + (x1+r) + ' ' + y1 +
-        ' L ' + (x2-r) + ' ' + y1 +
-        ' Q ' + x2 + ' ' + y1 + ' ' + x2 + ' ' + (y1+r) +
-        ' L ' + x2 + ' ' + (y2-r) +
-        ' Q ' + x2 + ' ' + y2 + ' ' + (x2-r) + ' ' + y2 +
-        ' L ' + (x1+r) + ' ' + y2 +
-        ' Q ' + x1 + ' ' + y2 + ' ' + x1 + ' ' + (y2-r) +
-        ' L ' + x1 + ' ' + (y1+r) +
-        ' Q ' + x1 + ' ' + y1 + ' ' + (x1+r) + ' ' + y1 +
-        ' Z';
-      var node = rc.path(path, {
-        stroke: accentColor,
-        strokeWidth: 2,
-        roughness: 1.2,
-        bowing: 1.5,
-        fill: 'none',
-        seed: Math.floor(Math.random() * 1000)
-      });
-      svg.appendChild(node);
-      el.appendChild(svg);
-    });
-  }
-
-  // Draw on load and on resize
-  window.addEventListener('load', function() { setTimeout(drawRoughBorders, 200); });
-  window.addEventListener('resize', function() { drawRoughBorders(); });
 </script>
 </body>
 </html>

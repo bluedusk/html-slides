@@ -23,3 +23,63 @@
   --border: rgba(255,255,255,0.07);
   --border-hover: rgba(255,255,255,0.18);
 }
+
+/* ====== OBSIDIAN BACKGROUND: GRADIENT MESH + HALFTONE ====== */
+
+/* Gradient mesh — layered color orbs for spatial depth */
+.deck::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 15% 85%, rgba(88, 166, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 15%, rgba(163, 113, 247, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(63, 185, 80, 0.04) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Halftone dot texture — subtle depth grain */
+.deck::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 6px 6px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ====== GLOW BLOBS: GRADIENT ORBS + DRIFT ====== */
+
+.glow-blob {
+  background: none !important;
+  animation: driftOrb 30s ease-in-out infinite !important;
+}
+.glow-blue {
+  background: radial-gradient(circle, rgba(88, 166, 255, 0.2) 0%, transparent 70%) !important;
+}
+.glow-purple {
+  background: radial-gradient(circle, rgba(163, 113, 247, 0.15) 0%, transparent 70%) !important;
+  animation-duration: 25s !important;
+  animation-direction: reverse !important;
+}
+.glow-green {
+  background: radial-gradient(circle, rgba(63, 185, 80, 0.12) 0%, transparent 70%) !important;
+  animation-duration: 35s !important;
+}
+
+/* ====== ANIMATION PERSONALITY: DRAMATIC, CINEMATIC ====== */
+
+.slide.active .anim-1 { animation: blurFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both !important; }
+.slide.active .anim-2 { animation: blurFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both !important; }
+.slide.active .anim-3 { animation: blurFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both !important; }
+.slide.active .anim-4 { animation: blurFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.55s both !important; }
+.slide.active .anim-5 { animation: blurFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.7s both !important; }
+.slide.active .bounce-1 { animation: bounceIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both !important; }
+.slide.active .bounce-2 { animation: bounceIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both !important; }
+.slide.active .bounce-3 { animation: bounceIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both !important; }
+.slide.active .bounce-4 { animation: bounceIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.65s both !important; }
+.slide.active .pop-1 { animation: countPop 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both !important; }
+.slide.active .pop-2 { animation: countPop 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both !important; }
+.slide.active .pop-3 { animation: countPop 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both !important; }

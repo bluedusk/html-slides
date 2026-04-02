@@ -327,3 +327,55 @@ html, body {
   0%, 100% { box-shadow: 0 0 0 rgba(0, 96, 170, 0); }
   50% { box-shadow: 0 0 20px rgba(0, 96, 170, 0.1); }
 }
+
+/* ====== EDITORIAL BACKGROUND: GRADIENT ZONES + ACCENT LINE ====== */
+
+/* Soft gradient zones — warm top-right, cool bottom-left */
+.deck::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 80% 10%, rgba(115, 63, 196, 0.03) 0%, transparent 40%),
+    radial-gradient(ellipse at 10% 90%, rgba(0, 96, 170, 0.025) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Geometric accent — thin vertical line at golden ratio */
+.deck::after {
+  content: '';
+  position: fixed;
+  top: 10%;
+  bottom: 10%;
+  left: 61.8%;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(192, 199, 212, 0.12), transparent);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ====== GLOW BLOBS: SLOW DRIFT ====== */
+
+.glow-blob {
+  animation: driftOrb 40s ease-in-out infinite !important;
+}
+.glow-purple {
+  animation-duration: 35s !important;
+  animation-direction: reverse !important;
+}
+
+/* ====== ANIMATION PERSONALITY: PROFESSIONAL, PRECISE ====== */
+
+.slide.active .anim-1 { animation: fadeInUp 0.35s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both !important; }
+.slide.active .anim-2 { animation: fadeInUp 0.35s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both !important; }
+.slide.active .anim-3 { animation: fadeInUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both !important; }
+.slide.active .anim-4 { animation: fadeInUp 0.35s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both !important; }
+.slide.active .anim-5 { animation: fadeInUp 0.35s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both !important; }
+.slide.active .bounce-1 { animation: scaleReveal 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both !important; }
+.slide.active .bounce-2 { animation: scaleReveal 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both !important; }
+.slide.active .bounce-3 { animation: scaleReveal 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both !important; }
+.slide.active .bounce-4 { animation: scaleReveal 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both !important; }
+.slide.active .pop-1 { animation: countPop 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both !important; }
+.slide.active .pop-2 { animation: countPop 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both !important; }
+.slide.active .pop-3 { animation: countPop 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both !important; }

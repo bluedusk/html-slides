@@ -1,5 +1,7 @@
 # HTML Slides
 
+`Yes I currently have time to maintain, so PR welcomed.`
+
 [![Version](https://img.shields.io/github/v/tag/bluedusk/html-slides?label=version)](https://github.com/bluedusk/html-slides/releases) [![frontend-slides compatible](https://img.shields.io/badge/frontend--slides-v2.0.0_compatible-blue)](https://github.com/zarazhangrui/frontend-slides) [![Agent Skills](https://img.shields.io/badge/Agent_Skills-compatible-green)](https://agentskills.io) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 A skill for creating stunning, animation-rich HTML presentations — from scratch, by converting PowerPoint files, or by converting any existing HTML. Works with AI coding agents (Claude Code, Gemini CLI, GitHub Copilot, OpenAI Codex).

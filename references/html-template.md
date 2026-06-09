@@ -126,7 +126,25 @@ Every generated HTML file **must** comply with these rules:
         var current = 0;
         var total = slides.length;
 
+        // True when an overlay owns navigation. Authors mark custom overlays
+        // with data-blocks-nav; the skill's own lightbox is covered with no wiring.
+        function navBlocked() {
+            return !!(document.querySelector('.diagram-lightbox.active') ||
+                      document.querySelector('[data-blocks-nav]:not([hidden])'));
+        }
+
+        // Restart the staggered entry animations on the current slide. Standalone
+        // so the next, prev, keyboard, and dot contract stays untouched.
+        function replayActiveSlide() {
+            var s = slides[current];
+            if (!s) return;
+            s.classList.remove('active');
+            void s.offsetWidth; // force reflow so the re-add restarts the animations
+            s.classList.add('active');
+        }
+
         function goTo(index) {
+            if (navBlocked()) return;
             if (index < 0 || index >= total || index === current) return;
             current = index;
             slides.forEach(function(s, i) {
@@ -163,20 +181,46 @@ Every generated HTML file **must** comply with these rules:
             if (e.key === 'End') { e.preventDefault(); goTo(total - 1); }
         });
 
+        // True when the target sits inside an element that can scroll under the
+        // pointer, so wheel and swipe deltas belong to the content, not the deck.
+        function inScrollable(target) {
+            var el = target;
+            while (el && el !== document.body) {
+                if (el.scrollWidth > el.clientWidth || el.scrollHeight > el.clientHeight) return true;
+                el = el.parentElement;
+            }
+            return false;
+        }
+
         // Touch/swipe navigation
-        var touchStart = 0;
-        document.addEventListener('touchstart', function(e) { touchStart = e.touches[0].clientX; });
+        var touchX = 0, touchY = 0, touchT = 0;
+        document.addEventListener('touchstart', function(e) {
+            touchX = e.touches[0].clientX;
+            touchY = e.touches[0].clientY;
+            touchT = Date.now();
+        });
         document.addEventListener('touchend', function(e) {
-            var diff = touchStart - e.changedTouches[0].clientX;
-            if (Math.abs(diff) > 50) { diff > 0 ? next() : prev(); }
+            if (e.changedTouches.length > 1) return; // ignore multi-touch gestures
+            // Let interactive and flippable targets keep their own gestures.
+            if (e.target.closest('.flip-card, a, button, input, textarea, select')) return;
+            var dx = e.changedTouches[0].clientX - touchX;
+            var dy = e.changedTouches[0].clientY - touchY;
+            if (Math.abs(dx) <= Math.abs(dy)) return; // require horizontal dominance
+            if (Math.abs(dx) < 50) return;            // require a deliberate distance
+            if (Date.now() - touchT > 600) return;    // reject slow drags
+            dx < 0 ? next() : prev();
         });
 
         // Mouse wheel navigation
         var wheelCD = false;
         document.addEventListener('wheel', function(e) {
+            if (inScrollable(e.target)) return; // let scrollable content keep the delta
+            if (Math.abs(e.deltaX) < 10 && Math.abs(e.deltaY) < 10) return; // ignore noise
             if (wheelCD) return; wheelCD = true;
             setTimeout(function() { wheelCD = false; }, 600);
-            if (e.deltaY > 0 || e.deltaX > 0) next(); else prev();
+            // Navigate on the dominant axis only, so a diagonal scroll never reverses.
+            var delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+            delta > 0 ? next() : prev();
         }, {passive: true});
 
         // Nav dots (generate)
@@ -247,6 +291,7 @@ Every presentation must include these **global functions**:
 1. **`goTo(index)`** — Navigate to slide at index. Toggle `.active` class.
 2. **`next()`** — Go to next slide.
 3. **`prev()`** — Go to previous slide.
+4. **`replayActiveSlide()`** - Restart the entry animations on the current slide without changing slides. Removes `.active`, forces a reflow, then re-adds `.active`.
 
 These must be plain functions on `window`, not inside an IIFE, class, or module.
 

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="generator" content="html-slides v0.9.4">
+  <title>Nav Hardening Fixture</title>
+  <style>
+    /* Generic fixture styling only. The runtime under test is inlined below. */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: sans-serif; background: #0a0f1c; color: #e6edf3; }
+    .deck { position: relative; height: 100vh; height: 100dvh; overflow: hidden; }
+    .slide {
+      position: absolute; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 16px;
+      opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+    }
+    .slide.active { opacity: 1; pointer-events: auto; }
+    .slide.active .reveal { animation: fadeInUp 0.5s ease both; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+
+    .progress-bar { position: fixed; bottom: 0; left: 0; height: 3px; background: #58a6ff; z-index: 50; }
+    .slide-counter { position: fixed; bottom: 20px; right: 20px; font-size: 13px; color: #8b949e; z-index: 50; }
+    .slide-nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 50; }
+    .slide-nav-dot { width: 8px; height: 8px; border-radius: 50%; background: #30363d; cursor: pointer; }
+    .slide-nav-dot.active { background: #58a6ff; }
+
+    /* Wide code block that must scroll horizontally without changing slides. */
+    .code-window { width: min(80vw, 640px); border-radius: 8px; overflow: hidden; background: #161b22; }
+    .code-body { padding: 18px 24px; font-family: monospace; font-size: 14px; line-height: 1.7; overflow-x: auto; white-space: pre; text-align: left; color: #abb2bf; }
+
+    /* Overlay that must block navigation while open. */
+    .diagram-lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 100; display: none; align-items: center; justify-content: center; }
+    .diagram-lightbox.active { display: flex; }
+    .diagram-lightbox .panel { background: #161b22; padding: 40px; border-radius: 12px; max-width: 60vw; }
+  </style>
+</head>
+<body>
+  <div class="progress-bar" id="progress"></div>
+  <div class="slide-counter" id="counter"></div>
+  <div class="slide-nav" id="slideNav"></div>
+
+  <div class="deck" id="deck">
+    <div class="slide active" data-slide="0">
+      <h1 class="reveal">Slide One</h1>
+      <p class="reveal">Title placeholder content.</p>
+    </div>
+
+    <div class="slide" data-slide="1">
+      <h2 class="reveal">Slide Two</h2>
+      <p class="reveal">Scroll the code block below. The deck must not advance.</p>
+      <div class="code-window reveal">
+        <div class="code-body"><span class="ln">1</span>const example = "a very wide placeholder line that overflows the code window so the horizontal scrollbar appears and can be scrolled under the pointer";</div>
+      </div>
+    </div>
+
+    <div class="slide" data-slide="2">
+      <h2 class="reveal">Slide Three</h2>
+      <p class="reveal">Closing placeholder content.</p>
+    </div>
+  </div>
+
+  <!-- Overlay starts open to prove navigation is blocked while it is active. -->
+  <div class="diagram-lightbox active" id="lightbox">
+    <div class="panel">
+      <p>Overlay open. Navigation is blocked.</p>
+      <button type="button" onclick="document.getElementById('lightbox').classList.remove('active')">Close overlay</button>
+    </div>
+  </div>
+
+  <script>
+    /* ===========================================
+       NAVIGATION (U3 hardened runtime, inlined)
+       =========================================== */
+    var slides = document.querySelectorAll('.slide');
+    var progress = document.getElementById('progress');
+    var counter = document.getElementById('counter');
+    var slideNav = document.getElementById('slideNav');
+    var current = 0;
+    var total = slides.length;
+
+    slides.forEach(function(_, i) {
+      var dot = document.createElement('div');
+      dot.className = 'slide-nav-dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', function() { goTo(i); });
+      slideNav.appendChild(dot);
+    });
+
+    function updateUI() {
+      progress.style.width = ((current + 1) / total * 100) + '%';
+      counter.textContent = (current + 1) + ' / ' + total;
+      document.querySelectorAll('.slide-nav-dot').forEach(function(d, i) { d.classList.toggle('active', i === current); });
+    }
+
+    // True when an overlay owns navigation. Authors mark custom overlays with
+    // data-blocks-nav; the skill's own lightbox is covered with no wiring.
+    function navBlocked() {
+      return !!(document.querySelector('.diagram-lightbox.active') ||
+                document.querySelector('[data-blocks-nav]:not([hidden])'));
+    }
+
+    // Restart the staggered entry animations on the current slide. Standalone so
+    // the next, prev, keyboard, and dot contract stays untouched.
+    function replayActiveSlide() {
+      var s = slides[current];
+      if (!s) return;
+      s.classList.remove('active');
+      void s.offsetWidth; // force reflow so the re-add restarts the animations
+      s.classList.add('active');
+    }
+
+    function goTo(index) {
+      if (navBlocked()) return;
+      if (index < 0 || index >= total || index === current) return;
+      current = index;
+      slides.forEach(function(s, i) { s.classList.toggle('active', i === current); });
+      updateUI();
+    }
+
+    function next() { goTo(current + 1); }
+    function prev() { goTo(current - 1); }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); next(); }
+      if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+      if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+      if (e.key === 'End') { e.preventDefault(); goTo(total - 1); }
+    });
+
+    // True when the target sits inside an element that can scroll under the
+    // pointer, so wheel and swipe deltas belong to the content, not the deck.
+    function inScrollable(target) {
+      var el = target;
+      while (el && el !== document.body) {
+        if (el.scrollWidth > el.clientWidth || el.scrollHeight > el.clientHeight) return true;
+        el = el.parentElement;
+      }
+      return false;
+    }
+
+    var touchX = 0, touchY = 0, touchT = 0;
+    document.addEventListener('touchstart', function(e) {
+      touchX = e.touches[0].clientX;
+      touchY = e.touches[0].clientY;
+      touchT = Date.now();
+    });
+    document.addEventListener('touchend', function(e) {
+      if (e.changedTouches.length > 1) return; // ignore multi-touch gestures
+      // Let interactive and flippable targets keep their own gestures.
+      if (e.target.closest('.flip-card, a, button, input, textarea, select')) return;
+      var dx = e.changedTouches[0].clientX - touchX;
+      var dy = e.changedTouches[0].clientY - touchY;
+      if (Math.abs(dx) <= Math.abs(dy)) return; // require horizontal dominance
+      if (Math.abs(dx) < 50) return;            // require a deliberate distance
+      if (Date.now() - touchT > 600) return;    // reject slow drags
+      dx < 0 ? next() : prev();
+    });
+
+    var wheelCD = false;
+    document.addEventListener('wheel', function(e) {
+      if (inScrollable(e.target)) return; // let scrollable content keep the delta
+      if (Math.abs(e.deltaX) < 10 && Math.abs(e.deltaY) < 10) return; // ignore noise
+      if (wheelCD) return; wheelCD = true;
+      setTimeout(function() { wheelCD = false; }, 600);
+      // Navigate on the dominant axis only, so a diagonal scroll never reverses.
+      var delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      delta > 0 ? next() : prev();
+    }, {passive: true});
+
+    updateUI();
+  </script>
+</body>
+</html>

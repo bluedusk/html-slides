@@ -123,8 +123,16 @@ Every generated HTML file **must** comply with these rules:
            NAVIGATION (REQUIRED — global functions)
            =========================================== */
         var slides = document.querySelectorAll('.slide');
-        var current = 0;
         var total = slides.length;
+
+        // Parse a one-based "#N" hash into a zero-based index, clamped to range.
+        function slideFromHash() {
+            var n = parseInt((location.hash || '').replace('#', ''), 10);
+            if (isNaN(n)) return 0;
+            return Math.min(Math.max(n, 1), total) - 1;
+        }
+
+        var current = slideFromHash();
 
         function goTo(index) {
             if (index < 0 || index >= total || index === current) return;
@@ -132,6 +140,7 @@ Every generated HTML file **must** comply with these rules:
             slides.forEach(function(s, i) {
                 s.classList.toggle('active', i === current);
             });
+            history.replaceState(null, '', '#' + (current + 1));
             slides[current].scrollIntoView({ behavior: 'smooth' });
             updateUI();
             showSpeakerNotes(current);
@@ -191,6 +200,11 @@ Every generated HTML file **must** comply with these rules:
         }
 
         updateUI();
+        // Reconcile the active class with a deep-linked "current" so the right slide shows on load.
+        slides.forEach(function(s, i) { s.classList.toggle('active', i === current); });
+
+        // The "index === current" guard in goTo prevents this from looping back on its own replaceState.
+        window.addEventListener('hashchange', function() { goTo(slideFromHash()); });
 
         /* ===========================================
            SPEAKER NOTES (Console)
@@ -223,7 +237,8 @@ Every generated HTML file **must** comply with these rules:
             console.log('%c\u270f\ufe0f  Want to update the notes? See htmlslides.com/blog/update-inline-notes.html',
                 'font-size:10px;color:#8b949e;');
         }
-        setTimeout(function() { showSpeakerNotes(0); }, 500);
+        // Show notes for the slide that loads first, which may be a deep-linked one.
+        setTimeout(function() { showSpeakerNotes(current); }, 500);
 
         /* ===========================================
            OPTIONAL ENHANCEMENTS

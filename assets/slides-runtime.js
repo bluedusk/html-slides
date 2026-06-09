@@ -23,8 +23,16 @@ const slides = document.querySelectorAll('.slide');
 const progress = document.getElementById('progress');
 const counter = document.getElementById('counter');
 const slideNav = document.getElementById('slideNav');
-let current = 0;
 const total = slides.length;
+
+// Parse a one-based "#N" hash into a zero-based index, clamped to range.
+function slideFromHash() {
+  const n = parseInt((location.hash || '').replace('#', ''), 10);
+  if (isNaN(n)) return 0;
+  return Math.min(Math.max(n, 1), total) - 1;
+}
+
+let current = slideFromHash();
 
 slides.forEach((_, i) => {
   const dot = document.createElement('div');
@@ -44,6 +52,7 @@ function goTo(index) {
   const prev = current;
   current = index;
   slides.forEach((s,i) => s.classList.toggle('active', i===current));
+  history.replaceState(null, '', '#' + (current + 1));
   updateUI();
   showSpeakerNotes(current);
 
@@ -81,6 +90,11 @@ document.addEventListener('wheel', (e) => {
 }, {passive:true});
 
 updateUI();
+// Reconcile the active class with a deep-linked "current" so the right slide shows on load.
+slides.forEach((s,i) => s.classList.toggle('active', i===current));
+
+// The "index === current" guard in goTo prevents this from looping back on its own replaceState.
+window.addEventListener('hashchange', () => goTo(slideFromHash()));
 
 // =========================================
 // Chart.js Integration
@@ -202,10 +216,10 @@ function destroyChart(canvasId) {
   }
 }
 
-// Initialize charts on first slide
+// Initialize charts on the slide that loads first, which may be a deep-linked one.
 if (typeof Chart !== 'undefined') {
   setTimeout(() => {
-    slides[0].querySelectorAll('.chart-container canvas').forEach(c => createChart(c.id));
+    slides[current].querySelectorAll('.chart-container canvas').forEach(c => createChart(c.id));
   }, 400);
 }
 
@@ -247,5 +261,5 @@ function showSpeakerNotes(index) {
   }
 }
 
-// Show notes for first slide on load
-setTimeout(function() { showSpeakerNotes(0); }, 500);
+// Show notes for the slide that loads first, which may be a deep-linked one.
+setTimeout(function() { showSpeakerNotes(current); }, 500);

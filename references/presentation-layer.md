@@ -95,6 +95,10 @@ The presentation must support:
 
 Build navigation inline following the pattern in [html-template.md](html-template.md). Generate `goTo()`, `next()`, `prev()` as global functions, plus speaker notes console logging on each slide change.
 
+## Deep-Linking
+
+Slides are addressable by a one-based `#N` URL hash. Loading `#5` opens the fifth slide directly, with its charts and speaker notes rendered for that slide rather than the first. Each navigation writes the current slide back to the hash, so a reload returns to the same slide and the browser Back button steps through the slides already visited. An out-of-range or malformed hash clamps to a valid slide, and a deck opened with no hash starts on slide one.
+
 ## Generator Meta Tag
 
 Every presentation must include in `<head>`:

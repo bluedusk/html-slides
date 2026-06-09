@@ -95,6 +95,19 @@ The presentation must support:
 
 Build navigation inline following the pattern in [html-template.md](html-template.md). Generate `goTo()`, `next()`, `prev()` as global functions, plus speaker notes console logging on each slide change.
 
+### Public functions
+
+| Function | Purpose |
+|----------|---------|
+| `goTo(index)` | Navigate to the slide at `index`. Toggles the `.active` class and updates the chrome. |
+| `next()` | Go to the next slide. |
+| `prev()` | Go to the previous slide. |
+| `replayActiveSlide()` | Restart the entry animations on the current slide without changing slides. Removes `.active`, forces a reflow, then re-adds `.active`. Useful after a slide returns from an overlay or a rotation. |
+
+Navigation is suppressed while an overlay is open. `goTo()` returns early when a `.diagram-lightbox.active` element exists or any element carries `data-blocks-nav` and is not hidden, so arrow keys, the wheel, and swipes do not move the slide behind a modal. Mark custom overlays with `data-blocks-nav` to opt into the same guard.
+
+The wheel and swipe handlers ignore deltas that originate inside a scrollable element, so wide code blocks and tall cards keep their own scroll. Wheel navigation reads the dominant axis only, and swipe navigation requires horizontal dominance, a minimum distance of about 50px, and a short gesture duration before it advances.
+
 ## Generator Meta Tag
 
 Every presentation must include in `<head>`:

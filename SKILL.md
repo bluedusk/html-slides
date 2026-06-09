@@ -457,6 +457,7 @@ Before saving, verify all 8 spec rules pass. Fix any that fail. Save the HTML fi
 3. **Summarize** — Tell the user:
    - File location, style name, slide count
    - Navigation: Arrow keys, Space, scroll/swipe, click nav dots
+   - Public functions: `goTo(index)`, `next()`, `prev()`, and `replayActiveSlide()` to restart the current slide's entry animations
    - Speaker notes: Open DevTools (F12), detach to separate window — notes appear in console on each slide change
    - How to customize: `:root` CSS variables for colors, font link for typography, `.reveal` class for animations
    - If inline editing was enabled: Hover top-left corner or press E to enter edit mode, click any text to edit, Ctrl+S to save

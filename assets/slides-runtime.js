@@ -39,7 +39,25 @@ function updateUI() {
   document.querySelectorAll('.slide-nav-dot').forEach((d,i) => d.classList.toggle('active', i===current));
 }
 
+// True when an overlay owns navigation. Authors mark custom overlays with
+// data-blocks-nav; the skill's own lightbox is covered with no wiring.
+function navBlocked() {
+  return !!(document.querySelector('.diagram-lightbox.active') ||
+            document.querySelector('[data-blocks-nav]:not([hidden])'));
+}
+
+// Restart the staggered entry animations on the current slide. Standalone so
+// the next, prev, keyboard, and dot contract stays untouched.
+function replayActiveSlide() {
+  const s = slides[current];
+  if (!s) return;
+  s.classList.remove('active');
+  void s.offsetWidth; // force reflow so the re-add restarts the animations
+  s.classList.add('active');
+}
+
 function goTo(index) {
+  if (navBlocked()) return;
   if (index<0 || index>=total || index===current) return;
   const prev = current;
   current = index;
@@ -66,18 +84,44 @@ document.addEventListener('keydown', (e) => {
   if (e.key==='End') { e.preventDefault(); goTo(total-1); }
 });
 
-let touchStart = 0;
-document.addEventListener('touchstart', (e) => { touchStart=e.touches[0].clientX; });
+// True when the target sits inside an element that can scroll under the
+// pointer, so wheel and swipe deltas belong to the content, not the deck.
+function inScrollable(target) {
+  let el = target;
+  while (el && el !== document.body) {
+    if (el.scrollWidth > el.clientWidth || el.scrollHeight > el.clientHeight) return true;
+    el = el.parentElement;
+  }
+  return false;
+}
+
+let touchX = 0, touchY = 0, touchT = 0;
+document.addEventListener('touchstart', (e) => {
+  touchX = e.touches[0].clientX;
+  touchY = e.touches[0].clientY;
+  touchT = Date.now();
+});
 document.addEventListener('touchend', (e) => {
-  const diff = touchStart - e.changedTouches[0].clientX;
-  if (Math.abs(diff)>50) { diff>0 ? next() : prev(); }
+  if (e.changedTouches.length > 1) return; // ignore multi-touch gestures
+  // Let interactive and flippable targets keep their own gestures.
+  if (e.target.closest('.flip-card, a, button, input, textarea, select')) return;
+  const dx = e.changedTouches[0].clientX - touchX;
+  const dy = e.changedTouches[0].clientY - touchY;
+  if (Math.abs(dx) <= Math.abs(dy)) return; // require horizontal dominance
+  if (Math.abs(dx) < 50) return;            // require a deliberate distance
+  if (Date.now() - touchT > 600) return;    // reject slow drags
+  dx < 0 ? next() : prev();
 });
 
 let wheelCD = false;
 document.addEventListener('wheel', (e) => {
+  if (inScrollable(e.target)) return; // let scrollable content keep the delta
+  if (Math.abs(e.deltaX) < 10 && Math.abs(e.deltaY) < 10) return; // ignore noise
   if (wheelCD) return; wheelCD = true;
   setTimeout(() => wheelCD=false, 600);
-  if (e.deltaY>0||e.deltaX>0) next(); else prev();
+  // Navigate on the dominant axis only, so a diagonal scroll never reverses.
+  const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+  delta > 0 ? next() : prev();
 }, {passive:true});
 
 updateUI();

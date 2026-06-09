@@ -56,9 +56,11 @@ Every slide **must** include an inline `<script type="application/json" class="s
 
 **Never include:** delivery instructions, transition cues, presentation advice, or meta commentary.
 
-## Spec Rules (8 total)
+**Warning:** these notes ship inside the public artifact. A deployed file carries every `slide-notes` block in plain text, readable by anyone with the URL, unless you strip them before deploy (see SKILL.md Phase 7A).
 
-After generating or modifying ANY presentation, verify all 8 rules:
+## Spec Rules (9 total)
+
+After generating or modifying ANY presentation, verify all 9 rules:
 
 1. `<div class="deck" id="deck">` exists
 2. All slides are `<div class="slide">` with sequential `data-slide="0"` through `data-slide="N"`
@@ -68,6 +70,7 @@ After generating or modifying ANY presentation, verify all 8 rules:
 6. All JS inline (except CDN libraries: Chart.js, Mermaid, anime.js)
 7. No broken numbering gaps after insertions or deletions
 8. `<meta name="generator" content="html-slides vX.Y.Z">` exists in `<head>`
+9. Every tag is balanced. Run `python scripts/validate-html.py <file>`, which exits non-zero and names the offending tag on any unclosed or mismatched tag.
 
 ## Content Density Limits
 

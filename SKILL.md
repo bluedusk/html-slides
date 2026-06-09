@@ -108,6 +108,8 @@ When modifying existing presentations, make **minimal changes** — only touch w
 
 **If any rule fails after editing, fix it before saving.**
 
+Then run the HTML tag-balance check: `python scripts/validate-html.py <file>`. It exits non-zero and names the offending tag on any unclosed or mismatched tag, which catches a broken edit the spec rules do not. Fix any reported tag before saving.
+
 ---
 
 ## Phase 1: Choose Mode
@@ -446,7 +448,7 @@ Always embed inline speaker notes in each slide. If the source had speaker notes
 
 ### Step 5.5: Validate & Save
 
-Before saving, verify all 8 spec rules pass. Fix any that fail. Save the HTML file.
+Before saving, verify all 8 spec rules pass. Fix any that fail. Then run `python scripts/validate-html.py <file>` to confirm every tag is balanced, and fix any unclosed or mismatched tag it names. Save the HTML file.
 
 ---
 
@@ -479,12 +481,13 @@ Deploys the presentation to a permanent shareable URL. Works on any device.
 2. **Check login** — Run `npx vercel whoami`. If not logged in, guide through:
    - Sign up at https://vercel.com/signup (free)
    - Run `vercel login` to authorize
-3. **Deploy** — Run:
+3. **Check confidentiality** - A public deploy ships the whole file, including every inline `<script class="slide-notes">` block, so speaker notes are readable by anyone with the URL. Grep the file for client or project identifiers across both visible text and the `slide-notes` blocks. If the notes must not ship, deploy a stripped copy instead: remove every `<script class="slide-notes">` block from the copy, deploy that copy, and keep the original so the presenter app still has the notes.
+4. **Deploy** — Run:
    ```bash
    bash scripts/deploy.sh <path-to-presentation>
    ```
    Accepts a single HTML file or a folder with index.html.
-4. **Share the URL** — Tell the user the live URL, that it works on any device, and that they can delete it from https://vercel.com/dashboard later.
+5. **Share the URL** — Tell the user the live URL, that it works on any device, and that they can delete it from https://vercel.com/dashboard later.
 
 **Requires:** Node.js + Vercel account (free tier)
 
@@ -523,6 +526,7 @@ Captures each slide as a screenshot and combines into a single PDF. Animations a
 | [libraries.md](references/libraries.md) | CDN libraries: Mermaid.js (diagrams), anime.js (animations), Chart.js (charts) | Phase 3 (when content needs them) |
 | [presentation-layer.md](references/presentation-layer.md) | Shared spec: slide structure, speaker notes, 8 validation rules, navigation | Phase 3 (reference) |
 | [scripts/extract-pptx.py](scripts/extract-pptx.py) | Python script for PPT content extraction | Phase 4 (PPT conversion) |
+| [scripts/validate-html.py](scripts/validate-html.py) | Stdlib HTML tag-balance check, exits non-zero on any unclosed or mismatched tag | Step 5.5 and after any modification |
 | [conversion-patterns.md](references/conversion-patterns.md) | Framework detection patterns and extraction rules | Phase 5 (HTML conversion) |
 | [scripts/deploy.sh](scripts/deploy.sh) | Deploy slides to Vercel for instant sharing | Phase 7 (sharing) |
 | [scripts/export-pdf.sh](scripts/export-pdf.sh) | Export slides to PDF | Phase 7 (sharing) |

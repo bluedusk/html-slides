@@ -94,6 +94,21 @@ Every generated HTML file **must** comply with these rules:
         .reveal:nth-child(3) { transition-delay: 0.3s; }
         .reveal:nth-child(4) { transition-delay: 0.4s; }
 
+        /* ===========================================
+           ACCESSIBILITY
+           =========================================== */
+        /* Reset the native button so the <button> dot matches the old <div> dot. */
+        .slide-nav-dot { appearance: none; -webkit-appearance: none; border: 0; padding: 0; margin: 0; }
+
+        /* Keyboard-only focus ring, suppressed for pointer users. */
+        .slide-nav-dot:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: 3px; }
+
+        /* Visually hidden, still read by screen readers. Used for the live region. */
+        .sr-only {
+            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+            overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+        }
+
         /* ... preset-specific styles ... */
     </style>
 </head>
@@ -131,9 +146,14 @@ Every generated HTML file **must** comply with these rules:
             current = index;
             slides.forEach(function(s, i) {
                 s.classList.toggle('active', i === current);
+                // Keep inactive slides out of the reading order and tab order.
+                if (i === current) { s.removeAttribute('inert'); s.removeAttribute('aria-hidden'); }
+                else { s.setAttribute('inert', ''); s.setAttribute('aria-hidden', 'true'); }
             });
             slides[current].scrollIntoView({ behavior: 'smooth' });
             updateUI();
+            slides[current].focus();
+            liveRegion.textContent = 'Slide ' + (current + 1) + ' of ' + total;
             showSpeakerNotes(current);
         }
 
@@ -152,6 +172,8 @@ Every generated HTML file **must** comply with these rules:
             // Nav dots
             document.querySelectorAll('.slide-nav-dot').forEach(function(d, i) {
                 d.classList.toggle('active', i === current);
+                if (i === current) d.setAttribute('aria-current', 'true');
+                else d.removeAttribute('aria-current');
             });
         }
 
@@ -183,12 +205,31 @@ Every generated HTML file **must** comply with these rules:
         var slideNav = document.getElementById('slideNav');
         if (slideNav) {
             slides.forEach(function(_, i) {
-                var dot = document.createElement('div');
+                // Buttons give keyboard focus and Enter/Space activation for free.
+                var dot = document.createElement('button');
+                dot.type = 'button';
                 dot.className = 'slide-nav-dot' + (i === 0 ? ' active' : '');
+                dot.setAttribute('aria-label', 'Go to slide ' + (i + 1) + ' of ' + total);
+                if (i === 0) dot.setAttribute('aria-current', 'true');
                 dot.addEventListener('click', function() { goTo(i); });
                 slideNav.appendChild(dot);
             });
         }
+
+        // Visually hidden region that announces slide changes to screen readers.
+        var liveRegion = document.createElement('div');
+        liveRegion.className = 'sr-only';
+        liveRegion.setAttribute('aria-live', 'polite');
+        document.body.appendChild(liveRegion);
+
+        // Inactive slides start outside the accessibility tree and tab order.
+        slides.forEach(function(s, i) {
+            s.setAttribute('tabindex', '-1');
+            if (i !== current) {
+                s.setAttribute('inert', '');
+                s.setAttribute('aria-hidden', 'true');
+            }
+        });
 
         updateUI();
 

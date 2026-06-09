@@ -27,24 +27,54 @@ let current = 0;
 const total = slides.length;
 
 slides.forEach((_, i) => {
-  const dot = document.createElement('div');
+  // Buttons give keyboard focus and Enter/Space activation for free.
+  const dot = document.createElement('button');
+  dot.type = 'button';
   dot.className = 'slide-nav-dot' + (i===0?' active':'');
+  dot.setAttribute('aria-label', 'Go to slide ' + (i+1) + ' of ' + total);
+  if (i===0) dot.setAttribute('aria-current', 'true');
   dot.addEventListener('click', () => goTo(i));
   slideNav.appendChild(dot);
+});
+
+// Visually hidden region that announces slide changes to screen readers.
+const liveRegion = document.createElement('div');
+liveRegion.className = 'sr-only';
+liveRegion.setAttribute('aria-live', 'polite');
+document.body.appendChild(liveRegion);
+
+// Inactive slides start outside the accessibility tree and tab order.
+slides.forEach((s, i) => {
+  s.setAttribute('tabindex', '-1');
+  if (i !== current) {
+    s.setAttribute('inert', '');
+    s.setAttribute('aria-hidden', 'true');
+  }
 });
 
 function updateUI() {
   progress.style.width = ((current+1)/total*100)+'%';
   counter.textContent = `${current+1} / ${total}`;
-  document.querySelectorAll('.slide-nav-dot').forEach((d,i) => d.classList.toggle('active', i===current));
+  document.querySelectorAll('.slide-nav-dot').forEach((d,i) => {
+    d.classList.toggle('active', i===current);
+    if (i===current) d.setAttribute('aria-current', 'true');
+    else d.removeAttribute('aria-current');
+  });
 }
 
 function goTo(index) {
   if (index<0 || index>=total || index===current) return;
   const prev = current;
   current = index;
-  slides.forEach((s,i) => s.classList.toggle('active', i===current));
+  slides.forEach((s,i) => {
+    s.classList.toggle('active', i===current);
+    // Keep inactive slides out of the reading order and tab order.
+    if (i===current) { s.removeAttribute('inert'); s.removeAttribute('aria-hidden'); }
+    else { s.setAttribute('inert', ''); s.setAttribute('aria-hidden', 'true'); }
+  });
   updateUI();
+  slides[current].focus();
+  liveRegion.textContent = 'Slide ' + (current+1) + ' of ' + total;
   showSpeakerNotes(current);
 
   // Chart lifecycle: destroy on exit, create on entry

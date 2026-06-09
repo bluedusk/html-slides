@@ -54,6 +54,10 @@ These invariants apply to EVERY slide in EVERY presentation:
 
 **When generating, read `viewport-base.css` and include its full contents in every presentation.**
 
+### Content Scale
+
+`components.css` routes every component font size and the content-column width through `:root` tokens. An author retunes the whole deck by setting `--scale` (a multiplier, default `1`) and `--max-content-width` once on `.deck` or `:root`. Put sizing on the component classes, not on per-element inline `font-size` styles. An inline `font-size` wins over the class and that element no longer responds to `--scale`, so the knob fights the markup instead of driving it.
+
 ### Content Density Limits Per Slide
 
 | Slide Type | Maximum Content |

@@ -52,16 +52,17 @@ html, body {
   font-size: 10px; font-weight: 800;
 }
 .progress-bar {
-  position: fixed; bottom: 0; left: 0; height: 3px; z-index: 100;
+  /* env() resolves to 0 on non-notched and desktop, so those layouts are unchanged. */
+  position: fixed; bottom: calc(0px + env(safe-area-inset-bottom, 0px)); left: 0; height: 3px; z-index: 100;
   background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple), var(--accent-green));
   transition: width 0.4s ease;
 }
 .slide-counter {
-  position: fixed; bottom: 20px; right: 32px; font-size: 13px;
+  position: fixed; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); right: 32px; font-size: 13px;
   font-weight: 500; color: var(--text-dim); z-index: 100; font-variant-numeric: tabular-nums;
 }
 .nav-hints {
-  position: fixed; bottom: 20px; left: 32px; font-size: 12px;
+  position: fixed; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); left: 32px; font-size: 12px;
   color: var(--text-dim); z-index: 100;
 }
 .nav-hints kbd {
@@ -664,4 +665,21 @@ h2 { font-size: clamp(28px,3.5vw,48px); font-weight: 800; line-height: 1.15; let
   font-size: clamp(14px, 1.3vw, 18px); line-height: 1.6;
   color: var(--text-muted); max-width: 640px;
   margin-top: clamp(6px, 1vh, 12px);
+}
+
+/* ===========================================
+   REDUCED MOTION
+   Respect user preferences
+   =========================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    /* iteration-count 1 stops the infinite particle, glow, and bob loops. */
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.2s !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
 }

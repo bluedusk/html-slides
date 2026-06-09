@@ -85,6 +85,8 @@ Each slide must fit exactly within 100vh. No scrolling, ever.
 
 Content exceeds limits? Split into multiple slides. Never cram, never scroll.
 
+**Density tiering and the legible floor:** the clamp minimums on body and small text in `viewport-base.css` are floored at a readable size, so text holds a legible floor instead of shrinking out of sight on a small or projected viewport. When a slide would breach that floor it overflows, which is the signal to split it rather than pack it tighter. This is the same projection-readability constraint documented for diagram text in [libraries.md](libraries.md) (the 18px Mermaid `fontSize` floor). Pick a density tier per slide so every component clears the floor at the smallest viewport the deck will run on.
+
 ## Navigation Requirements
 
 The presentation must support:

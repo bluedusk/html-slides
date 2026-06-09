@@ -310,6 +310,7 @@ Before writing any HTML, analyze the content and plan each slide. For each slide
 - Add detailed comments explaining each section
 - Every section needs a clear `/* === SECTION NAME === */` comment block
 - **Always generate speaker notes** — see Speaker Notes below
+- Portrait phones are handled by the reflow block in components.css, which collapses multi-column components to a single column so the deck adapts in place. The optional `.rotate-hint` overlay is only for decks you intentionally author landscape only. Add a `<div class="rotate-hint">` with generic prompt text when you want to ask the viewer to turn the device, and leave it out otherwise. It is CSS-only and clears itself on rotation to landscape.
 
 ### Speaker Notes (Mandatory)
 

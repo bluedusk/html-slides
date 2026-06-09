@@ -45,9 +45,11 @@ html {
     --h2-size: clamp(1.25rem, 3.5vw, 2.5rem);
     --h3-size: clamp(1rem, 2.5vw, 1.75rem);
 
-    /* Body text */
-    --body-size: clamp(0.75rem, 1.5vw, 1.125rem);
-    --small-size: clamp(0.65rem, 1vw, 0.875rem);
+    /* Body text. The clamp minimums are floored at a legible size, because an
+       honest overflow the author then splits is better than text that shrinks
+       past readability. Preferred and max values are unchanged. */
+    --body-size: clamp(1rem, 1.5vw, 1.125rem);
+    --small-size: clamp(0.8125rem, 1vw, 0.875rem);
 
     /* Spacing scales with viewport */
     --slide-padding: clamp(1rem, 4vw, 4rem);

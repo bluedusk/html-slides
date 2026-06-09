@@ -665,3 +665,43 @@ h2 { font-size: clamp(28px,3.5vw,48px); font-weight: 800; line-height: 1.15; let
   color: var(--text-muted); max-width: 640px;
   margin-top: clamp(6px, 1vh, 12px);
 }
+
+/* ====== PORTRAIT REFLOW ====== */
+/* Landscape-composed decks degrade to one column on narrow phones.
+   Reflowing the columns keeps the .slide { overflow: hidden } no-scroll
+   invariant intact, where forcing scroll would break it. */
+@media (max-width: 700px) {
+  .flip-grid,
+  .use-case-grid {
+    grid-template-columns: 1fr;
+  }
+  .arch-flow,
+  .stats-row,
+  .vs-container,
+  .auth-compare,
+  .fullstack-bar {
+    flex-direction: column;
+  }
+  /* The arrow sits horizontal by default. Rotate it a quarter turn so it
+     points down between the now-stacked architecture boxes. */
+  .arch-arrow {
+    transform: rotate(90deg);
+  }
+}
+
+/* ====== ROTATE HINT (opt-in) ====== */
+/* CSS-only affordance for decks that are intentionally landscape only.
+   Hidden by default. The portrait, narrow-width query below reveals it,
+   so rotating the device back to landscape clears it with no JavaScript. */
+.rotate-hint {
+  display: none;
+  position: fixed; inset: 0; z-index: 9999;
+  flex-direction: column; align-items: center; justify-content: center;
+  gap: 16px; padding: 32px; text-align: center;
+  background: var(--bg, #000); color: var(--text, #fff);
+  font-size: clamp(16px, 4vw, 22px); font-weight: 600;
+}
+.rotate-hint-icon { font-size: clamp(40px, 12vw, 64px); }
+@media (orientation: portrait) and (max-width: 700px) {
+  .rotate-hint { display: flex; }
+}

@@ -8,14 +8,18 @@
 
 // Particles
 const pc = document.getElementById('particles');
-for (let i = 0; i < 35; i++) {
-  const p = document.createElement('div');
-  p.className = 'particle';
-  p.style.left = Math.random()*100+'%';
-  p.style.animationDuration = (8+Math.random()*14)+'s';
-  p.style.animationDelay = Math.random()*10+'s';
-  p.style.width = p.style.height = (1+Math.random()*2)+'px';
-  pc.appendChild(p);
+// Particles are decorative, so a deck can omit the container. Guard the loop
+// or a missing element throws here and the whole deck stops loading.
+if (pc) {
+  for (let i = 0; i < 35; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random()*100+'%';
+    p.style.animationDuration = (8+Math.random()*14)+'s';
+    p.style.animationDelay = Math.random()*10+'s';
+    p.style.width = p.style.height = (1+Math.random()*2)+'px';
+    pc.appendChild(p);
+  }
 }
 
 // Navigation
@@ -26,16 +30,20 @@ const slideNav = document.getElementById('slideNav');
 let current = 0;
 const total = slides.length;
 
-slides.forEach((_, i) => {
-  const dot = document.createElement('div');
-  dot.className = 'slide-nav-dot' + (i===0?' active':'');
-  dot.addEventListener('click', () => goTo(i));
-  slideNav.appendChild(dot);
-});
+// The dot rail is optional chrome, so skip generation when it is absent.
+if (slideNav) {
+  slides.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'slide-nav-dot' + (i===0?' active':'');
+    dot.addEventListener('click', () => goTo(i));
+    slideNav.appendChild(dot);
+  });
+}
 
 function updateUI() {
-  progress.style.width = ((current+1)/total*100)+'%';
-  counter.textContent = `${current+1} / ${total}`;
+  // Progress bar and counter are optional chrome, so guard each write.
+  if (progress) progress.style.width = ((current+1)/total*100)+'%';
+  if (counter) counter.textContent = `${current+1} / ${total}`;
   document.querySelectorAll('.slide-nav-dot').forEach((d,i) => d.classList.toggle('active', i===current));
 }
 

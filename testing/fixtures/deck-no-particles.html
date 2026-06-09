@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="generator" content="html-slides v0.9.4">
+  <title>Regression Fixture: deck without optional chrome</title>
+  <!--
+    Regression fixture for the runtime null-guards.
+    This deck deliberately omits #particles, #progress, and #counter to prove
+    the runtime stays interactive without them. It keeps #slideNav and three
+    slides so dot, keyboard, wheel, and touch navigation can be exercised.
+    Generic placeholder content only.
+  -->
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0b0e14;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --accent-blue: #58a6ff;
+      --font-body: 'Inter', -apple-system, sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    /* Same height fallback as components.css so the fixture mirrors the fix. */
+    .deck { position: relative; width: 100vw; height: 100vh; height: 100dvh; }
+
+    .slide {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      padding: 36px 48px; text-align: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.45s ease;
+    }
+    .slide.active { opacity: 1; pointer-events: auto; }
+
+    h2 { font-size: clamp(28px, 3.5vw, 48px); font-weight: 800; margin-bottom: 12px; }
+    .subtitle { font-size: clamp(17px, 1.8vw, 24px); color: var(--text-muted); }
+
+    /* Dot rail, present so #slideNav generation is covered by the fixture. */
+    .slide-nav {
+      position: fixed; right: 16px; top: 50%; transform: translateY(-50%);
+      z-index: 100; display: flex; flex-direction: column; gap: 6px;
+    }
+    .slide-nav-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(255,255,255,0.15); cursor: pointer; transition: all 0.3s ease;
+    }
+    .slide-nav-dot.active {
+      background: var(--accent-blue); transform: scale(1.6);
+    }
+  </style>
+</head>
+<body>
+  <!-- No #particles, #progress, or #counter on purpose. Only the dot rail. -->
+  <div class="slide-nav" id="slideNav"></div>
+
+  <div class="deck" id="deck">
+    <div class="slide active" data-slide="0">
+      <h2>Slide One</h2>
+      <p class="subtitle">Example subtitle for the first slide.</p>
+    </div>
+
+    <div class="slide" data-slide="1">
+      <h2>Slide Two</h2>
+      <p class="subtitle">Example bullet content for the second slide.</p>
+    </div>
+
+    <div class="slide" data-slide="2">
+      <h2>Slide Three</h2>
+      <p class="subtitle">Closing placeholder for the third slide.</p>
+    </div>
+  </div>
+
+  <script>
+/* ===========================================
+   SLIDES RUNTIME
+   Shared by all Pro themes. Copy verbatim into
+   the <script> tag at the end of <body>.
+   Handles: particles, navigation, charts,
+   speaker notes console logging.
+   =========================================== */
+
+// Particles
+const pc = document.getElementById('particles');
+// Particles are decorative, so a deck can omit the container. Guard the loop
+// or a missing element throws here and the whole deck stops loading.
+if (pc) {
+  for (let i = 0; i < 35; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random()*100+'%';
+    p.style.animationDuration = (8+Math.random()*14)+'s';
+    p.style.animationDelay = Math.random()*10+'s';
+    p.style.width = p.style.height = (1+Math.random()*2)+'px';
+    pc.appendChild(p);
+  }
+}
+
+// Navigation
+const slides = document.querySelectorAll('.slide');
+const progress = document.getElementById('progress');
+const counter = document.getElementById('counter');
+const slideNav = document.getElementById('slideNav');
+let current = 0;
+const total = slides.length;
+
+// The dot rail is optional chrome, so skip generation when it is absent.
+if (slideNav) {
+  slides.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'slide-nav-dot' + (i===0?' active':'');
+    dot.addEventListener('click', () => goTo(i));
+    slideNav.appendChild(dot);
+  });
+}
+
+function updateUI() {
+  // Progress bar and counter are optional chrome, so guard each write.
+  if (progress) progress.style.width = ((current+1)/total*100)+'%';
+  if (counter) counter.textContent = `${current+1} / ${total}`;
+  document.querySelectorAll('.slide-nav-dot').forEach((d,i) => d.classList.toggle('active', i===current));
+}
+
+function goTo(index) {
+  if (index<0 || index>=total || index===current) return;
+  const prev = current;
+  current = index;
+  slides.forEach((s,i) => s.classList.toggle('active', i===current));
+  updateUI();
+  showSpeakerNotes(current);
+
+  // Chart lifecycle: destroy on exit, create on entry
+  if (typeof Chart !== 'undefined') {
+    slides[prev].querySelectorAll('.chart-container canvas').forEach(c => destroyChart(c.id));
+    setTimeout(() => {
+      slides[current].querySelectorAll('.chart-container canvas').forEach(c => createChart(c.id));
+    }, 350);
+  }
+}
+
+function next() { goTo(current+1); }
+function prev() { goTo(current-1); }
+
+document.addEventListener('keydown', (e) => {
+  if (e.key==='ArrowRight'||e.key===' '||e.key==='PageDown') { e.preventDefault(); next(); }
+  if (e.key==='ArrowLeft'||e.key==='PageUp') { e.preventDefault(); prev(); }
+  if (e.key==='Home') { e.preventDefault(); goTo(0); }
+  if (e.key==='End') { e.preventDefault(); goTo(total-1); }
+});
+
+let touchStart = 0;
+document.addEventListener('touchstart', (e) => { touchStart=e.touches[0].clientX; });
+document.addEventListener('touchend', (e) => {
+  const diff = touchStart - e.changedTouches[0].clientX;
+  if (Math.abs(diff)>50) { diff>0 ? next() : prev(); }
+});
+
+let wheelCD = false;
+document.addEventListener('wheel', (e) => {
+  if (wheelCD) return; wheelCD = true;
+  setTimeout(() => wheelCD=false, 600);
+  if (e.deltaY>0||e.deltaX>0) next(); else prev();
+}, {passive:true});
+
+updateUI();
+
+// Speaker notes are a no-op here, so a minimal stub keeps goTo() callable.
+function showSpeakerNotes(index) {}
+  </script>
+</body>
+</html>

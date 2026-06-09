@@ -16,7 +16,9 @@ html, body {
 }
 
 /* -- Deck & Slides -- */
-.deck { position: relative; width: 100vw; height: 100vh; }
+/* Declare height twice so browsers without dvh keep 100vh and modern mobile
+   browsers use 100dvh, which excludes the URL bar and home indicator. */
+.deck { position: relative; width: 100vw; height: 100vh; height: 100dvh; }
 
 .slide {
   position: absolute; inset: 0;

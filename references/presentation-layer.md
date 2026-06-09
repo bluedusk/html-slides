@@ -95,6 +95,15 @@ The presentation must support:
 
 Build navigation inline following the pattern in [html-template.md](html-template.md). Generate `goTo()`, `next()`, `prev()` as global functions, plus speaker notes console logging on each slide change.
 
+## Accessibility Contract
+
+The navigation runtime holds to the following contract so keyboard and screen-reader users can drive the deck:
+
+- Nav dots are `<button type="button">` elements, so each dot is reachable by Tab and activates on Enter or Space. Every dot carries an `aria-label` of the form "Go to slide N of M".
+- The active dot carries `aria-current="true"`, and the others carry none. `updateUI()` keeps this in sync on every slide change.
+- Only the active slide is in the accessibility tree. Inactive slides carry `inert` and `aria-hidden="true"`, so a screen reader reads just the current slide and Tab skips controls inside hidden slides. Each slide also carries `tabindex="-1"` so it can receive focus.
+- On every slide change, focus moves to the active slide, and a visually hidden `aria-live="polite"` region announces "Slide N of M". The region is created once at startup and uses the `.sr-only` utility.
+
 ## Generator Meta Tag
 
 Every presentation must include in `<head>`:

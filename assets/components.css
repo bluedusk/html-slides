@@ -75,6 +75,8 @@ html, body {
   z-index: 100; display: flex; flex-direction: column; gap: 6px;
 }
 .slide-nav-dot {
+  /* Reset the native button so the <button> dot matches the old <div> dot. */
+  appearance: none; -webkit-appearance: none; border: 0; padding: 0; margin: 0;
   width: 6px; height: 6px; border-radius: 50%;
   background: rgba(255,255,255,0.15); cursor: pointer; transition: all 0.3s ease;
 }
@@ -83,6 +85,14 @@ html, body {
   box-shadow: 0 0 8px var(--accent-blue);
 }
 .slide-nav-dot:hover { background: rgba(255,255,255,0.4); transform: scale(1.3); }
+/* Keyboard-only focus ring, suppressed for pointer users. */
+.slide-nav-dot:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: 3px; }
+
+/* Visually hidden, still read by screen readers. Used for the live region. */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
 
 /* -- Typography -- */
 .slide-tag {

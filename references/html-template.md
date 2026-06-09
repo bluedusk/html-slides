@@ -22,7 +22,7 @@ Every generated HTML file **must** comply with these rules:
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="generator" content="html-slides v0.9.4">
     <title>Presentation Title</title>
 
@@ -421,7 +421,7 @@ Save processed images with `_processed` suffix. Never overwrite originals.
 **Accessibility:**
 - Keyboard navigation works fully
 - ARIA labels where needed
-- `prefers-reduced-motion` support (included in viewport-base.css)
+- `prefers-reduced-motion` support lives in viewport-base.css for the Vibe path and components.css for the Pro path
 
 ## File Structure
 

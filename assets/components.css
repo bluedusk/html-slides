@@ -4,6 +4,85 @@
    along with a theme file from themes/.
    =========================================== */
 
+/* -- Scale tokens --
+   One knob (--scale) and one width (--max-content-width) retune component
+   density without touching every selector. Each token default is the exact
+   clamp() or width that shipped before, so --scale: 1 is a no-op. The ramp
+   names below mirror the orphaned :root ramp in viewport-base.css so a deck
+   that already sets --title-size etc. tunes both files at once. Author override:
+   set --scale or --max-content-width on .deck or :root. */
+:root {
+  --scale: 1;
+  --max-content-width: 800px;
+
+  /* Ramp shared with viewport-base.css. Defaults match that file's values. */
+  --title-size: clamp(1.5rem, 5vw, 4rem);
+  --h2-size: clamp(1.25rem, 3.5vw, 2.5rem);
+  --h3-size: clamp(1rem, 2.5vw, 1.75rem);
+  --body-size: clamp(0.75rem, 1.5vw, 1.125rem);
+  --small-size: clamp(0.65rem, 1vw, 0.875rem);
+
+  /* Headings and lead text. */
+  --cmp-tag: calc(clamp(13px, 1.2vw, 15px) * var(--scale));
+  --cmp-h1: calc(clamp(36px, 5vw, 64px) * var(--scale));
+  --cmp-h2: calc(clamp(28px, 3.5vw, 48px) * var(--scale));
+  --cmp-subtitle: calc(clamp(17px, 1.8vw, 24px) * var(--scale));
+
+  /* Flip cards. */
+  --cmp-flip-detail: calc(clamp(14px, 1.3vw, 16px) * var(--scale));
+  --cmp-flip-title: calc(clamp(17px, 1.5vw, 20px) * var(--scale));
+  --cmp-flip-subtitle: calc(clamp(14px, 1.2vw, 16px) * var(--scale));
+
+  /* Expandable cards. */
+  --cmp-card-title: calc(clamp(16px, 1.4vw, 19px) * var(--scale));
+  --cmp-card-desc: calc(clamp(14px, 1.2vw, 16px) * var(--scale));
+  --cmp-card-expand: calc(clamp(12px, 1.1vw, 14px) * var(--scale));
+  --cmp-card-expand-code: calc(clamp(11px, 1vw, 13px) * var(--scale));
+
+  /* Code blocks. */
+  --cmp-code-filename: calc(clamp(12px, 1.1vw, 14px) * var(--scale));
+  --cmp-code-body: calc(clamp(13px, 1.2vw, 15px) * var(--scale));
+
+  /* Architecture flow. */
+  --cmp-arch-label: calc(clamp(20px, 1.8vw, 24px) * var(--scale));
+  --cmp-arch-role: calc(clamp(14px, 1.2vw, 16px) * var(--scale));
+  --cmp-arch-detail: calc(clamp(12px, 1vw, 14px) * var(--scale));
+  --cmp-arch-arrow: calc(clamp(11px, 1vw, 13px) * var(--scale));
+
+  /* Stats. */
+  --cmp-stat-number: calc(clamp(52px, 7vw, 80px) * var(--scale));
+  --cmp-stat-label: calc(clamp(16px, 1.5vw, 20px) * var(--scale));
+  --cmp-stat-desc: calc(clamp(14px, 1.2vw, 16px) * var(--scale));
+
+  /* Comparison. */
+  --cmp-vs-label: calc(clamp(12px, 1vw, 14px) * var(--scale));
+  --cmp-vs-name: calc(clamp(32px, 3vw, 40px) * var(--scale));
+  --cmp-vs-desc: calc(clamp(14px, 1.3vw, 17px) * var(--scale));
+  --cmp-vs-badge: calc(clamp(12px, 1.1vw, 14px) * var(--scale));
+
+  /* Auth compare. */
+  --cmp-auth-name: calc(clamp(18px, 1.5vw, 22px) * var(--scale));
+  --cmp-auth-desc: calc(clamp(13px, 1.1vw, 15px) * var(--scale));
+  --cmp-auth-vs: calc(clamp(18px, 1.5vw, 22px) * var(--scale));
+
+  /* Status timeline and fullstack bar. */
+  --cmp-status-text: calc(clamp(15px, 1.3vw, 18px) * var(--scale));
+  --cmp-fullstack: calc(clamp(14px, 1.3vw, 17px) * var(--scale));
+
+  /* Tables. */
+  --cmp-table-body: calc(clamp(13px, 1.3vw, 16px) * var(--scale));
+  --cmp-table-head: calc(clamp(12px, 1.1vw, 14px) * var(--scale));
+
+  /* Content block. */
+  --cmp-cb-number: calc(clamp(13px, 1.2vw, 16px) * var(--scale));
+  --cmp-cb-heading: calc(clamp(28px, 3.5vw, 48px) * var(--scale));
+  --cmp-cb-body: calc(clamp(15px, 1.5vw, 20px) * var(--scale));
+  --cmp-cb-card-label: calc(clamp(10px, 0.9vw, 12px) * var(--scale));
+  --cmp-cb-card-text: calc(clamp(13px, 1.2vw, 16px) * var(--scale));
+  --cmp-cb-keyquote: calc(clamp(24px, 3vw, 40px) * var(--scale));
+  --cmp-cb-detail: calc(clamp(14px, 1.3vw, 18px) * var(--scale));
+}
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
@@ -86,12 +165,12 @@ html, body {
 
 /* -- Typography -- */
 .slide-tag {
-  font-size: clamp(13px, 1.2vw, 15px); font-weight: 600; letter-spacing: 2.5px;
+  font-size: var(--cmp-tag); font-weight: 600; letter-spacing: 2.5px;
   text-transform: uppercase; color: var(--accent-blue); margin-bottom: 16px;
 }
-h1 { font-size: clamp(36px,5vw,64px); font-weight: 900; line-height: 1.1; letter-spacing: -1px; margin-bottom: 20px; text-align: center; }
-h2 { font-size: clamp(28px,3.5vw,48px); font-weight: 800; line-height: 1.15; letter-spacing: -0.5px; margin-bottom: 12px; text-align: center; }
-.subtitle { font-size: clamp(17px, 1.8vw, 24px); color: var(--text-muted); font-weight: 400; line-height: 1.5; text-align: center; max-width: 800px; }
+h1 { font-size: var(--cmp-h1); font-weight: 900; line-height: 1.1; letter-spacing: -1px; margin-bottom: 20px; text-align: center; }
+h2 { font-size: var(--cmp-h2); font-weight: 800; line-height: 1.15; letter-spacing: -0.5px; margin-bottom: 12px; text-align: center; }
+.subtitle { font-size: var(--cmp-subtitle); color: var(--text-muted); font-weight: 400; line-height: 1.5; text-align: center; max-width: var(--max-content-width); }
 
 .highlight-orange { color: var(--accent-orange); }
 .highlight-blue { color: var(--accent-blue); }
@@ -211,7 +290,7 @@ h2 { font-size: clamp(28px,3.5vw,48px); font-weight: 800; line-height: 1.15; let
   transform: rotateY(180deg);
   justify-content: center; align-items: center; text-align: center;
 }
-.flip-back .flip-detail { font-size: clamp(14px, 1.3vw, 16px); color: var(--text-muted); line-height: 1.6; }
+.flip-back .flip-detail { font-size: var(--cmp-flip-detail); color: var(--text-muted); line-height: 1.6; }
 .flip-back .flip-detail strong { color: var(--text); }
 .flip-back .flip-icon-big { font-size: 36px; margin-bottom: 12px; }
 
@@ -222,8 +301,8 @@ h2 { font-size: clamp(28px,3.5vw,48px); font-weight: 800; line-height: 1.15; let
 .flip-card:hover .flip-front.border-yellow { border-color: rgba(210,153,34,0.7); box-shadow: 0 0 24px rgba(210,153,34,0.1); }
 .flip-card:hover .flip-front.border-red { border-color: rgba(248,81,73,0.7); box-shadow: 0 0 24px rgba(248,81,73,0.1); }
 
-.flip-title { font-size: clamp(17px, 1.5vw, 20px); font-weight: 700; margin-bottom: 4px; }
-.flip-subtitle { font-size: clamp(14px, 1.2vw, 16px); font-weight: 600; }
+.flip-title { font-size: var(--cmp-flip-title); font-weight: 700; margin-bottom: 4px; }
+.flip-subtitle { font-size: var(--cmp-flip-subtitle); font-weight: 600; }
 .flip-icon { font-size: 28px; margin-bottom: 10px; }
 
 /* ====== EXPANDABLE CARDS ====== */
@@ -251,8 +330,8 @@ h2 { font-size: clamp(28px,3.5vw,48px); font-weight: 800; line-height: 1.15; let
 
 .card-v2 .card-icon { font-size: 28px; margin-bottom: 12px; transition: transform 0.3s ease; }
 .card-v2:hover .card-icon { transform: scale(1.15); }
-.card-v2 .card-title { font-size: clamp(16px, 1.4vw, 19px); font-weight: 700; margin-bottom: 3px; }
-.card-v2 .card-desc { font-size: clamp(14px, 1.2vw, 16px); color: var(--text-muted); line-height: 1.4; }
+.card-v2 .card-title { font-size: var(--cmp-card-title); font-weight: 700; margin-bottom: 3px; }
+.card-v2 .card-desc { font-size: var(--cmp-card-desc); color: var(--text-muted); line-height: 1.4; }
 
 .card-expand {
   max-height: 0; overflow: hidden; opacity: 0;
@@ -262,12 +341,12 @@ h2 { font-size: clamp(28px,3.5vw,48px); font-weight: 800; line-height: 1.15; let
 .card-v2.expanded .card-expand { max-height: 140px; opacity: 1; margin-top: 12px; }
 .card-expand-inner {
   padding-top: 12px; border-top: 1px solid var(--border);
-  font-size: clamp(12px, 1.1vw, 14px); color: var(--text-dim); line-height: 1.5;
+  font-size: var(--cmp-card-expand); color: var(--text-dim); line-height: 1.5;
 }
 .card-expand-inner code {
   font-family: var(--font-mono, 'JetBrains Mono, monospace');
   background: rgba(255,255,255,0.04); padding: 2px 6px; border-radius: 4px;
-  font-size: clamp(11px, 1vw, 13px);
+  font-size: var(--cmp-card-expand-code);
 }
 .card-v2 .expand-hint {
   position: absolute; bottom: 8px; right: 12px;
@@ -299,12 +378,12 @@ h2 { font-size: clamp(28px,3.5vw,48px); font-weight: 800; line-height: 1.15; let
 .code-dot.yellow { background: #ffbd2e; }
 .code-dot.green { background: #27c93f; }
 .code-filename {
-  font-size: clamp(12px, 1.1vw, 14px); color: var(--text-dim);
+  font-size: var(--cmp-code-filename); color: var(--text-dim);
   font-family: var(--font-mono, 'JetBrains Mono, monospace'); margin-left: 8px;
 }
 .code-body {
   padding: 18px 24px; font-family: var(--font-mono, 'JetBrains Mono, monospace');
-  font-size: clamp(13px, 1.2vw, 15px); line-height: 1.7; overflow-x: auto;
+  font-size: var(--cmp-code-body); line-height: 1.7; overflow-x: auto;
   white-space: pre; text-align: left; color: #abb2bf;
 }
 .code-body .ln { color: #4b5263; user-select: none; display: inline-block; width: 24px; text-align: right; margin-right: 20px; }
@@ -338,13 +417,13 @@ h2 { font-size: clamp(28px,3.5vw,48px); font-weight: 800; line-height: 1.15; let
 
 .arch-icon { font-size: 40px; margin-bottom: 14px; transition: transform 0.3s ease; }
 .arch-box:hover .arch-icon { transform: scale(1.15); animation: floatBob 1.5s ease infinite; }
-.arch-label { font-size: clamp(20px, 1.8vw, 24px); font-weight: 800; }
+.arch-label { font-size: var(--cmp-arch-label); font-weight: 800; }
 .arch-label.text-blue { color: var(--accent-blue); }
 .arch-label.text-yellow { color: var(--accent-yellow); }
 .arch-label.text-green { color: var(--accent-green); }
-.arch-role { font-size: clamp(14px, 1.2vw, 16px); color: var(--text-muted); margin-top: 4px; font-weight: 500; }
+.arch-role { font-size: var(--cmp-arch-role); color: var(--text-muted); margin-top: 4px; font-weight: 500; }
 .arch-detail {
-  font-size: clamp(12px, 1vw, 14px); color: var(--text-dim); margin-top: 10px;
+  font-size: var(--cmp-arch-detail); color: var(--text-dim); margin-top: 10px;
   font-family: var(--font-mono, 'JetBrains Mono, monospace');
   background: rgba(255,255,255,0.03); padding: 6px 10px; border-radius: 6px;
 }
@@ -354,7 +433,7 @@ h2 { font-size: clamp(28px,3.5vw,48px); font-weight: 800; line-height: 1.15; let
   display: flex; flex-direction: column; align-items: center; gap: 4px;
   flex-shrink: 0; min-width: 60px;
 }
-.arch-arrow span { font-size: clamp(11px, 1vw, 13px); white-space: nowrap; }
+.arch-arrow span { font-size: var(--cmp-arch-arrow); white-space: nowrap; }
 .arrow-line { width: 40px; height: 2px; background: var(--text-dim); position: relative; }
 .arrow-line::after {
   content: ''; position: absolute; right: -1px; top: -4px;
@@ -371,12 +450,12 @@ h2 { font-size: clamp(28px,3.5vw,48px); font-weight: 800; line-height: 1.15; let
   transform: translateY(-6px) scale(1.02); border-color: var(--border-hover);
   box-shadow: 0 16px 48px rgba(0,0,0,0.35);
 }
-.stat-number { font-size: clamp(52px,7vw,80px); font-weight: 900; line-height: 1; margin-bottom: 8px; }
+.stat-number { font-size: var(--cmp-stat-number); font-weight: 900; line-height: 1; margin-bottom: 8px; }
 .stat-number.blue { color: var(--accent-blue); }
 .stat-number.green { color: var(--accent-green); }
 .stat-number.orange { color: var(--accent-orange); }
-.stat-label { font-size: clamp(16px, 1.5vw, 20px); font-weight: 700; margin-bottom: 4px; }
-.stat-desc { font-size: clamp(14px, 1.2vw, 16px); color: var(--text-muted); }
+.stat-label { font-size: var(--cmp-stat-label); font-weight: 700; margin-bottom: 4px; }
+.stat-desc { font-size: var(--cmp-stat-desc); color: var(--text-muted); }
 
 /* ====== VS / COMPARISON ====== */
 .vs-container { display: flex; align-items: center; gap: 28px; margin-top: 32px; width: 100%; max-width: 960px; }
@@ -390,10 +469,10 @@ h2 { font-size: clamp(28px,3.5vw,48px); font-weight: 800; line-height: 1.15; let
 .vs-card.card-right { border-color: rgba(88,166,255,0.35); }
 .vs-card.card-left:hover { border-color: rgba(163,113,247,0.7); box-shadow: 0 12px 40px rgba(163,113,247,0.1); }
 .vs-card.card-right:hover { border-color: rgba(88,166,255,0.7); box-shadow: 0 12px 40px rgba(88,166,255,0.1); }
-.vs-label-top { font-size: clamp(12px, 1vw, 14px); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
-.vs-name { font-size: clamp(32px, 3vw, 40px); font-weight: 900; margin-bottom: 12px; }
-.vs-desc { font-size: clamp(14px, 1.3vw, 17px); color: var(--text-muted); margin-bottom: 8px; }
-.vs-badge { display: inline-block; font-size: clamp(12px, 1.1vw, 14px); font-family: var(--font-mono, 'JetBrains Mono, monospace'); padding: 4px 12px; border-radius: 20px; background: rgba(255,255,255,0.05); color: var(--text-dim); }
+.vs-label-top { font-size: var(--cmp-vs-label); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+.vs-name { font-size: var(--cmp-vs-name); font-weight: 900; margin-bottom: 12px; }
+.vs-desc { font-size: var(--cmp-vs-desc); color: var(--text-muted); margin-bottom: 8px; }
+.vs-badge { display: inline-block; font-size: var(--cmp-vs-badge); font-family: var(--font-mono, 'JetBrains Mono, monospace'); padding: 4px 12px; border-radius: 20px; background: rgba(255,255,255,0.05); color: var(--text-dim); }
 .vs-plus {
   width: 48px; height: 48px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
@@ -425,17 +504,17 @@ h2 { font-size: clamp(28px,3.5vw,48px); font-weight: 800; line-height: 1.15; let
 .auth-flip:hover .auth-front.bad { border-color: rgba(248,81,73,0.6); box-shadow: 0 8px 32px rgba(248,81,73,0.08); }
 .auth-flip:hover .auth-front.good { border-color: rgba(63,185,80,0.6); box-shadow: 0 8px 32px rgba(63,185,80,0.08); }
 .auth-icon { font-size: 40px; margin-bottom: 14px; }
-.auth-name { font-size: clamp(18px, 1.5vw, 22px); font-weight: 700; margin-bottom: 8px; }
+.auth-name { font-size: var(--cmp-auth-name); font-weight: 700; margin-bottom: 8px; }
 .auth-status { font-size: 36px; margin-bottom: 8px; }
-.auth-desc { font-size: clamp(13px, 1.1vw, 15px); color: var(--text-dim); font-family: var(--font-mono, 'JetBrains Mono, monospace'); }
-.auth-vs { font-size: clamp(18px, 1.5vw, 22px); font-weight: 800; color: var(--text-dim); flex-shrink: 0; }
+.auth-desc { font-size: var(--cmp-auth-desc); color: var(--text-dim); font-family: var(--font-mono, 'JetBrains Mono, monospace'); }
+.auth-vs { font-size: var(--cmp-auth-vs); font-weight: 800; color: var(--text-dim); flex-shrink: 0; }
 .auth-front .flip-hint { position: absolute; bottom: 10px; font-size: 11px; color: var(--text-dim); opacity: 0.4; letter-spacing: 1px; text-transform: uppercase; }
 
 /* ====== USE CASES (expand grid) ====== */
 .use-case-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%; max-width: 920px; margin-top: 28px; }
 
 /* ====== STATUS TIMELINE ====== */
-.status-timeline { width: 100%; max-width: 800px; margin-top: 28px; display: flex; flex-direction: column; gap: 12px; }
+.status-timeline { width: 100%; max-width: var(--max-content-width); margin-top: 28px; display: flex; flex-direction: column; gap: 12px; }
 .status-item {
   display: flex; align-items: center; gap: 16px;
   padding: 14px 20px; background: var(--bg-card); border: 1px solid var(--border);
@@ -447,7 +526,7 @@ h2 { font-size: clamp(28px,3.5vw,48px); font-weight: 800; line-height: 1.15; let
 .status-dot.yellow { background: var(--accent-yellow); box-shadow: 0 0 8px var(--accent-yellow); }
 .status-dot.orange { background: var(--accent-orange); box-shadow: 0 0 8px var(--accent-orange); }
 .status-dot.red { background: var(--accent-red); box-shadow: 0 0 8px var(--accent-red); }
-.status-text { font-size: clamp(15px, 1.3vw, 18px); font-weight: 500; }
+.status-text { font-size: var(--cmp-status-text); font-weight: 500; }
 .status-text strong { font-weight: 700; color: var(--text); }
 .slide.active .stag-1 { animation: bounceInSoft 0.5s ease 0.15s both; }
 .slide.active .stag-2 { animation: bounceInSoft 0.5s ease 0.25s both; }
@@ -457,10 +536,10 @@ h2 { font-size: clamp(28px,3.5vw,48px); font-weight: 800; line-height: 1.15; let
 
 /* ====== FULLSTACK BAR ====== */
 .fullstack-bar {
-  display: flex; width: 100%; max-width: 800px; margin-top: 24px;
+  display: flex; width: 100%; max-width: var(--max-content-width); margin-top: 24px;
   border-radius: 10px; overflow: hidden; border: 1px solid var(--border);
 }
-.fullstack-half { flex: 1; padding: 16px 24px; text-align: center; font-weight: 700; font-size: clamp(14px, 1.3vw, 17px); transition: all 0.3s ease; }
+.fullstack-half { flex: 1; padding: 16px 24px; text-align: center; font-weight: 700; font-size: var(--cmp-fullstack); transition: all 0.3s ease; }
 .fullstack-half.backend { background: rgba(163,113,247,0.1); color: var(--accent-purple); border-right: 1px solid var(--border); }
 .fullstack-half.frontend { background: rgba(88,166,255,0.1); color: var(--accent-blue); }
 .fullstack-half:hover { filter: brightness(1.3); }
@@ -506,11 +585,11 @@ h2 { font-size: clamp(28px,3.5vw,48px); font-weight: 800; line-height: 1.15; let
 }
 .table-wrap table {
   width: 100%; border-collapse: collapse;
-  font-size: clamp(13px, 1.3vw, 16px);
+  font-size: var(--cmp-table-body);
 }
 .table-wrap thead th {
   padding: 14px 20px; text-align: left;
-  font-weight: 600; font-size: clamp(12px, 1.1vw, 14px);
+  font-weight: 600; font-size: var(--cmp-table-head);
   color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;
   background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border);
 }
@@ -571,28 +650,28 @@ h2 { font-size: clamp(28px,3.5vw,48px); font-weight: 800; line-height: 1.15; let
    Uses theme variables for automatic theming. */
 
 .cb-wrap {
-  width: 100%; max-width: 800px; text-align: left;
+  width: 100%; max-width: var(--max-content-width); text-align: left;
   display: flex; flex-direction: column; gap: clamp(8px, 1.5vh, 16px);
 }
 
 /* Number badge — for numbered/listicle slides */
 .cb-number {
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
-  font-size: clamp(13px, 1.2vw, 16px); font-weight: 700;
+  font-size: var(--cmp-cb-number); font-weight: 700;
   letter-spacing: 0.1em; color: var(--text-dim);
   opacity: 0.5;
 }
 
 /* Heading — left-aligned slide title */
 .cb-heading {
-  font-size: clamp(28px, 3.5vw, 48px); font-weight: 800;
+  font-size: var(--cmp-cb-heading); font-weight: 800;
   line-height: 1.15; letter-spacing: -0.5px;
   color: var(--text);
 }
 
 /* Body text — the main paragraph(s) */
 .cb-body {
-  font-size: clamp(15px, 1.5vw, 20px); line-height: 1.6;
+  font-size: var(--cmp-cb-body); line-height: 1.6;
   color: var(--text-muted); max-width: 680px;
 }
 
@@ -636,7 +715,7 @@ h2 { font-size: clamp(28px,3.5vw,48px); font-weight: 800; line-height: 1.15; let
 
 .cb-card-label {
   font-family: var(--font-mono, 'JetBrains Mono', monospace);
-  font-size: clamp(10px, 0.9vw, 12px); font-weight: 700;
+  font-size: var(--cmp-cb-card-label); font-weight: 700;
   letter-spacing: 0.15em; text-transform: uppercase;
   margin-bottom: clamp(6px, 1vh, 10px);
   display: flex; align-items: center; gap: 0.5em;
@@ -645,7 +724,7 @@ h2 { font-size: clamp(28px,3.5vw,48px); font-weight: 800; line-height: 1.15; let
 .cb-card-label.fix-label { color: var(--accent-blue); }
 
 .cb-card-text {
-  font-size: clamp(13px, 1.2vw, 16px); line-height: 1.55;
+  font-size: var(--cmp-cb-card-text); line-height: 1.55;
   color: var(--text-muted);
 }
 .cb-card-text .cb-cmd {
@@ -655,13 +734,13 @@ h2 { font-size: clamp(28px,3.5vw,48px); font-weight: 800; line-height: 1.15; let
 
 /* -- Key Point variant -- */
 .cb-keyquote {
-  font-size: clamp(24px, 3vw, 40px); font-weight: 700;
+  font-size: var(--cmp-cb-keyquote); font-weight: 700;
   line-height: 1.25; color: var(--text);
   border-left: 3px solid var(--accent-blue);
   padding-left: clamp(12px, 2vw, 24px);
 }
 .cb-detail {
-  font-size: clamp(14px, 1.3vw, 18px); line-height: 1.6;
+  font-size: var(--cmp-cb-detail); line-height: 1.6;
   color: var(--text-muted); max-width: 640px;
   margin-top: clamp(6px, 1vh, 12px);
 }

@@ -85,6 +85,8 @@ Each slide must fit exactly within 100vh. No scrolling, ever.
 
 Content exceeds limits? Split into multiple slides. Never cram, never scroll.
 
+These are ceilings. Speaker-led decks use much less (1-3 bullets or up to 3 cards per slide); reading-first decks may use the full limits. See "Content Density Modes" in SKILL.md.
+
 ## Navigation Requirements
 
 The presentation must support:
@@ -99,5 +101,5 @@ Build navigation inline following the pattern in [html-template.md](html-templat
 
 Every presentation must include in `<head>`:
 ```html
-<meta name="generator" content="html-slides v0.9.4">
+<meta name="generator" content="html-slides v0.9.5">
 ```

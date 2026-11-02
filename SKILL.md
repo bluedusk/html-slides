@@ -1,7 +1,7 @@
 ---
 name: html-slides
 metadata:
-  version: "0.9.4"
+  version: "0.9.5"
   author: danzhu
 description: Generate polished single-file HTML slide presentations with interactive components (flip cards, charts, tables, code blocks, architecture flows, stats, timelines, and more) or creative visual themes. Use this skill whenever the user wants to create slides, presentations, decks, or any visual slide-based content as HTML. Also trigger when the user invokes /html-slides or mentions creating an HTML presentation, pitch deck, or slide deck.
 ---
@@ -68,6 +68,17 @@ These invariants apply to EVERY slide in EVERY presentation:
 
 **Content exceeds limits? Split into multiple slides. Never cram, never scroll.**
 
+### Content Density Modes
+
+Every new deck has a density mode, chosen in Phase 2 (the "Density" question). The table above is the ceiling for both modes. Speaker-led decks stay well below it.
+
+| Density mode | Best for | Design behavior |
+|--------------|----------|-----------------|
+| **Speaker-led** (low density) | Talks, pitches, keynotes, live walkthroughs | One idea per slide, large type, generous negative space, 1-3 bullets or up to 3 cards per slide. Detail goes in speaker notes, not on the slide. More slides is fine. |
+| **Reading-first** (high density) | Reports, handouts, async review, docs sent ahead | Each slide makes sense without a presenter. Use the full limits in the table: grids, tables, annotated charts, 4-6 bullets or up to 6 cards. Tighter spacing, but still no overflow. |
+
+If the user's prompt already makes the mode clear ("for my talk", "a handout", "people will read this on their own"), use it and skip the question. For Mode C, keep the existing deck's density. For Modes B and D, default to reading-first unless the user says the deck will be presented live.
+
 ---
 
 ## Phase 0: Detect Mode
@@ -93,7 +104,7 @@ When modifying existing presentations, make **minimal changes** — only touch w
 **Viewport fitting (always check):**
 - Before adding content, check against density limits
 - Adding images: must have `max-height: min(50vh, 400px)`
-- Adding text: max 4-6 bullets per slide. Exceeds? Split into multiple slides
+- Adding text: match the deck's density (1-3 bullets if speaker-led, max 4-6 if reading-first). Exceeds? Split into multiple slides
 - If modifications will cause overflow, split content and inform the user
 
 **After ANY modification, verify all 8 spec rules:**
@@ -155,7 +166,14 @@ Do you have images to include? Options:
 
 If user already provided or pasted images in their prompt, skip this question and note the images for Phase 3.
 
-**Remember the editing choice — it determines whether edit-related code is included in Phase 3.**
+**Question 5 — Density** (header: "Density"):
+Will you present this live, or will people read it on their own? Options:
+- "Presenting live" — Speaker-led: fewer words per slide, big type, detail in speaker notes
+- "Reading on their own" — Reading-first: denser, self-explanatory slides
+
+Skip this if the prompt already makes it clear (see Content Density Modes). AskUserQuestion takes at most 4 questions per call, so if Questions 1-4 are all needed, ask Density in a second call right after.
+
+**Remember the editing and density choices — they shape the code and layout in Phase 3.**
 
 If user has content, ask them to share it.
 
@@ -194,7 +212,14 @@ Do you need to edit text directly in the browser after generation? Options:
 - "Yes (Recommended)" — Can edit text in-browser, auto-save to localStorage, export file
 - "No" — Presentation only, keeps file smaller
 
-**Remember the editing choice — it determines whether edit-related code is included in Phase 3.**
+**Question 5 — Density** (header: "Density"):
+Will you present this live, or will people read it on their own? Options:
+- "Presenting live" — Speaker-led: fewer words per slide, big type, detail in speaker notes
+- "Reading on their own" — Reading-first: denser, self-explanatory slides
+
+Skip this if the prompt or the Purpose answer already makes it clear (a conference talk or pitch is speaker-led). AskUserQuestion takes at most 4 questions per call, so if Questions 1-4 are all needed, ask Density in a second call right after.
+
+**Remember the editing and density choices — they shape the code and layout in Phase 3.**
 
 If user has content, ask them to share it.
 
@@ -268,6 +293,7 @@ Before writing any HTML, analyze the content and plan each slide. For each slide
 1. **Purpose** — What is this slide communicating?
 2. **Content elements** — What specific content goes on this slide?
 3. **Visual treatment** — What's the best way to present this visually?
+4. **Density** — Does it fit the deck's density mode? Speaker-led: one idea, split anything more. Reading-first: self-contained, up to the table's limits.
 
 **Key principle:** If two slides have similar content (e.g., four roadmap themes each with status items), do NOT give them all the same treatment. Vary the visual approach — different layouts, different component types, different visual metaphors. Repetition kills engagement.
 

@@ -23,7 +23,7 @@ Every generated HTML file **must** comply with these rules:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="html-slides v0.9.4">
+    <meta name="generator" content="html-slides v0.9.5">
     <title>Presentation Title</title>
 
     <!-- Fonts: use Fontshare or Google Fonts — never system fonts -->
@@ -182,6 +182,7 @@ Every generated HTML file **must** comply with these rules:
         // Nav dots (generate)
         var slideNav = document.getElementById('slideNav');
         if (slideNav) {
+            slideNav.innerHTML = ''; // clear dots baked in by a saved/edited copy
             slides.forEach(function(_, i) {
                 var dot = document.createElement('div');
                 dot.className = 'slide-nav-dot' + (i === 0 ? ' active' : '');

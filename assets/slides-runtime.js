@@ -26,6 +26,7 @@ const slideNav = document.getElementById('slideNav');
 let current = 0;
 const total = slides.length;
 
+slideNav.innerHTML = ''; // clear dots baked in by a saved/edited copy
 slides.forEach((_, i) => {
   const dot = document.createElement('div');
   dot.className = 'slide-nav-dot' + (i===0?' active':'');
